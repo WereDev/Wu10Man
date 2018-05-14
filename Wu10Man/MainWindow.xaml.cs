@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -13,7 +12,7 @@ namespace WereDev.Utils.Wu10Man
             if (Elevator.IsElevated)
                 InitializeComponent();
             else
-              Elevator.Elevate();
+                Elevator.Elevate();
         }
     }
 }

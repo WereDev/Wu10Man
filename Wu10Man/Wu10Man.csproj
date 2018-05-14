@@ -73,8 +73,8 @@
     <Compile Include="UserControls\HostsFileControl.xaml.cs">
       <DependentUpon>HostsFileControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Models\HostFileItem.cs" />
-    <Compile Include="UserControls\Models\HostFileModel.cs" />
+    <Compile Include="UserControls\Models\HostsFileModel.cs" />
+    <Compile Include="UserControls\Models\HostStatus.cs" />
     <Compile Include="UserControls\Models\ModelBase.cs" />
     <Compile Include="UserControls\Models\WindowsServicesModel.cs" />
     <Compile Include="UserControls\WindowsServicesControl.xaml.cs">
