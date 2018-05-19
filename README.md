@@ -24,6 +24,8 @@ You could try to disable those tasks, but I went another router.  When disabling
 
 There are also a number of URLs that have been identified as being use by Windows Update.  That list is included in the app config file so you can alter it if need be. You can set which URLs to block individually or as a group.  This updates the hosts file at C:\Windows\System32\drivers\etc.
 
+## Additional Info
+
 ### Admin Access
 
 This application does need administrative access as it is trying to write to the registry, alter services, and change the hosts file.  As a result, some anti-virus software may also pick this up as potentially hostile.
@@ -32,8 +34,8 @@ This application does need administrative access as it is trying to write to the
 
 There was a fair amount of research that went into this, but a couple sites stood out as references as I was writing this.
 
-[Windows Update Group Policy Settings](https://support.microsoft.com/en-us/help/328010/how-to-configure-automatic-updates-by-using-group-policy-or-registry-s)
-[Windows Update Server List](https://www.tenforums.com/windows-updates-activation/38771-windows-updates-white-list-proxy-server.html)
-[Windows Service Authorization](https://stackoverflow.com/questions/17031552/how-do-you-take-file-ownership-with-powershell/17047190#17047190)
-[Change Windows Service Password](https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268)
+- [Windows Update Group Policy Settings](https://support.microsoft.com/en-us/help/328010/how-to-configure-automatic-updates-by-using-group-policy-or-registry-s)
+- [Windows Update Server List](https://www.tenforums.com/windows-updates-activation/38771-windows-updates-white-list-proxy-server.html)
+- [Windows Service Authorization](https://stackoverflow.com/questions/17031552/how-do-you-take-file-ownership-with-powershell/17047190#17047190)
+- [Change Windows Service Password](https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268)
 
