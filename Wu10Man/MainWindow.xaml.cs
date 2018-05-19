@@ -22,6 +22,20 @@ namespace WereDev.Utils.Wu10Man
 
             Application.Current.Shutdown();
         }
+
+        private void ExitItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AboutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var aboutWindow = new About();
+            aboutWindow.Owner = this;
+            aboutWindow.Left = this.Left + ((this.Width - aboutWindow.Width) / 2);
+            aboutWindow.Top = this.Top + ((this.Height - aboutWindow.Height) / 2);
+            aboutWindow.ShowDialog();
+        }
     }
 }
 
