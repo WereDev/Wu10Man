@@ -26,29 +26,19 @@ namespace WereDev.Utils.Wu10Man.Editors
         {
             StopService();
             SetStartupType(ServiceStartMode.Disabled);
-            //SetAccountAsFake();
+            SetAccountAsLocalService();
         }
 
         public void EnableService()
         {
             SetAccountAsLocalSystem();
             SetStartupType(ServiceStartMode.Manual);
-            //StartService();
         }
 
         public bool IsServiceEnabled()
         {
             return _serviceController.StartType != ServiceStartMode.Disabled;
         }
-
-        //public void StartService()
-        //{
-        //    if (_serviceController.Status != ServiceControllerStatus.Running)
-        //    {
-        //        _serviceController.Start();
-        //        _serviceController.WaitForStatus(ServiceControllerStatus.Running);
-        //    }
-        //}
 
         public void StopService()
         {
@@ -59,24 +49,28 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
 
-        public void SetAccountAsFake()
+        public void SetAccountAsLocalService()
         {
-            ServiceCredentialsEditor.SetWindowsServiceCreds(_serviceController.ServiceName, @"fakeUser", "fakePassword");
+            ServiceCredentialsEditor.SetWindowsServiceCreds(_serviceController.ServiceName, ServiceCredentialsEditor.LOCAL_SERVICE_USER, null);
         }
 
         public void SetAccountAsLocalSystem()
         {
-            ServiceCredentialsEditor.SetWindowsServiceCreds_LocalService(_serviceController.ServiceName);
-        }
-
-        ~ServiceEditor()
-        {
-            this.Dispose();
+            ServiceCredentialsEditor.SetWindowsServiceCreds(_serviceController.ServiceName, ServiceCredentialsEditor.LOCAL_SYSTEM_USER, null);
         }
 
         public void Dispose()
         {
-            _serviceController.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && _serviceController != null)
+            {
+                _serviceController.Dispose();
+            }
         }
     }
 

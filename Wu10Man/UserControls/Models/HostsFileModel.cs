@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WereDev.Utils.Wu10Man.UserControls.Models
+﻿namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
     public class HostsFileModel : ModelBase
     {
@@ -13,11 +11,9 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             }
             set
             {
-                _hostStatus = value ?? throw new ArgumentNullException(nameof(value));
+                _hostStatus = value ?? new HostStatus[0];
                 OnPropertyChanged(nameof(HostStatus));
             }
         }
-
-
     }
 }

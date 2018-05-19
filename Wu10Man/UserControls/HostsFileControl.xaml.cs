@@ -19,8 +19,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
         {
             _hostsEditor = new HostsEditor();
             _model = new HostsFileModel();
-            DataContext = _model;
             GetHostSettings();
+            DataContext = _model;
             InitializeComponent();
         }
 
@@ -60,6 +60,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private void GetHostSettings()
         {
             var hostUrls = GetWindowsUpdateUrls();
+            if (hostUrls == null) return;
             var currentHosts = _hostsEditor.GetHostsInFile();
             var hostSettings = hostUrls.ToDictionary(x => x, x => currentHosts.Contains(x));
             _model.HostStatus = hostSettings.Select(x => new HostStatus(x.Key, x.Value))
@@ -70,6 +71,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private string[] GetWindowsUpdateUrls()
         {
             var windowsUpdateUrls = ConfigurationManager.AppSettings["WindowsUpdateUrls"];
+            if (windowsUpdateUrls == null) return new string[0];
             var split = windowsUpdateUrls.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             var uniques = split.Distinct();
             return uniques?.ToArray();

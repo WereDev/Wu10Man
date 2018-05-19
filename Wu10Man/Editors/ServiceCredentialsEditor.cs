@@ -4,31 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace WereDev.Utils.Wu10Man.Editors
 {
-
-
-    [StructLayout(LayoutKind.Sequential)]
-    public class QUERY_SERVICE_CONFIG
-    {
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
-        public UInt32 dwServiceType;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
-        public UInt32 dwStartType;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
-        public UInt32 dwErrorControl;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPWStr)]
-        public String lpBinaryPathName;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPWStr)]
-        public String lpLoadOrderGroup;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
-        public UInt32 dwTagID;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPWStr)]
-        public String lpDependencies;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPWStr)]
-        public String lpServiceStartName;
-        [MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPWStr)]
-        public String lpDisplayName;
-    };
-
     static class ServiceCredentialsEditor
     {
 
@@ -36,7 +11,9 @@ namespace WereDev.Utils.Wu10Man.Editors
         private const uint SERVICE_QUERY_CONFIG = 0x00001;
         private const uint SERVICE_CHANGE_CONFIG = 0x00002;
         private const uint SERVICE_NO_CHANGE = 0xffffffff;
-        private const int ERROR_INSUFFICIENT_BUFFER = 122;
+        
+        public const string LOCAL_SERVICE_USER = @"NT AUTHORITY\LOCAL SERVICE";
+        public const string LOCAL_SYSTEM_USER = @".\LocalSystem";
 
         public static void SetWindowsServiceCreds(string serviceName, string username, string password)
         {
@@ -65,11 +42,6 @@ namespace WereDev.Utils.Wu10Man.Editors
                 if (hService != IntPtr.Zero) CloseServiceHandle(hService);
                 if (hManager != IntPtr.Zero) CloseServiceHandle(hManager);
             }
-        }
-
-        public static void SetWindowsServiceCreds_LocalService(string serviceName)
-        {
-            SetWindowsServiceCreds(serviceName, @"NT AUTHORITY\LocalService", null);
         }
 
         private static void ThrowWin32Exception()

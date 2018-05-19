@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -13,6 +14,13 @@ namespace WereDev.Utils.Wu10Man
                 InitializeComponent();
             else
                 Elevator.Elevate();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
         }
     }
 }
