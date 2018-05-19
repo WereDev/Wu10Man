@@ -108,13 +108,10 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         private static void SetWritePermission(RegistryKey registryRoot, string registryKey)
         {
-            //var keyParts = registryKey.Split(new char[] { '\\' });
-            //registryKey = String.Join(@"\", keyParts.Take(keyParts.Length - 1).ToArray());
             using (var regKey = registryRoot.OpenSubKey(registryKey, RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.ChangePermissions))
             {
                 var regSec = regKey.GetAccessControl();
 
-                var user = WindowsIdentity.GetCurrent();
                 RegistryAccessRule regRule = new RegistryAccessRule(WindowsIdentity.GetCurrent().User,
                                                                     RegistryRights.FullControl,
                                                                     InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,

@@ -48,7 +48,9 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 new KeyValuePair<string, string>( DISABLE, "Disable Automatic Updates" ),
                 new KeyValuePair<string, string>( NOTIFY_DOWNLOAD, "Notify of Download and Installation" ),
                 new KeyValuePair<string, string>( NOTIFY_INSTALL, "Automatic Download, Notify of Installation" ),
-                new KeyValuePair<string, string>( SCHEDULE_INSTALL, "Automatic Download, Schedule Install")
+                
+                //TODO: Implement scheduling config to get this working.
+                //new KeyValuePair<string, string>( SCHEDULE_INSTALL, "Automatic Download, Schedule Install")
             };
 
             PolicyOptions = options;

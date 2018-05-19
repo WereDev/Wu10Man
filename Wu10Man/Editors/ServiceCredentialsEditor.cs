@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace WereDev.Utils.Wu10Man.Editors
 {
+    // https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268
     static class ServiceCredentialsEditor
     {
 
@@ -11,7 +12,7 @@ namespace WereDev.Utils.Wu10Man.Editors
         private const uint SERVICE_QUERY_CONFIG = 0x00001;
         private const uint SERVICE_CHANGE_CONFIG = 0x00002;
         private const uint SERVICE_NO_CHANGE = 0xffffffff;
-        
+
         public const string LOCAL_SERVICE_USER = @"NT AUTHORITY\LOCAL SERVICE";
         public const string LOCAL_SYSTEM_USER = @".\LocalSystem";
 
