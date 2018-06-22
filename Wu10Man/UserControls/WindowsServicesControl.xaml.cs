@@ -45,6 +45,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             using (var service = new ServiceEditor(serviceName))
             {
                 service.EnableService();
+                Logger.LogInfo(string.Format("Service enabled: {0}", serviceName));
             }
         }
 
@@ -54,6 +55,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             using (var service = new ServiceEditor(serviceName))
             {
                 service.DisableService();
+                Logger.LogInfo(string.Format("Service disabled: {0}", serviceName));
             }
         }
 
