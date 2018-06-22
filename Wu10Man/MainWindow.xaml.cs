@@ -15,9 +15,8 @@ namespace WereDev.Utils.Wu10Man
 
         protected override void OnClosed(EventArgs e)
         {
-            base.OnClosed(e);
-
             Application.Current.Shutdown();
+            base.OnClosed(e);
         }
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
