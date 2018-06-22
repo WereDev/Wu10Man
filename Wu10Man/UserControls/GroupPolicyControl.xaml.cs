@@ -126,6 +126,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
                     break;
             }
 
+            Logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
             System.Windows.MessageBox.Show("Registry settings udpated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
