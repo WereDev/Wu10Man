@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 
 namespace WereDev.Utils.Wu10Man.Editors
 {
@@ -13,10 +14,22 @@ namespace WereDev.Utils.Wu10Man.Editors
         private const uint SERVICE_CHANGE_CONFIG = 0x00002;
         private const uint SERVICE_NO_CHANGE = 0xffffffff;
 
-        public const string LOCAL_SERVICE_USER = @"NT AUTHORITY\LOCAL SERVICE";
         public const string LOCAL_SYSTEM_USER = @".\LocalSystem";
 
-        public static void SetWindowsServiceCreds(string serviceName, string username, string password)
+        public static string GetUserName(WellKnownSidType sidType)
+        {
+            var sid = new SecurityIdentifier(sidType, null);
+            var account = sid.Translate(typeof(NTAccount));
+            return account.Value;
+        }
+
+        public static void SetWindowsServiceCredentials(string serviceName, WellKnownSidType sidType)
+        {
+            var username = GetUserName(sidType);
+            SetWindowsServiceCredentials(serviceName, username, null);
+        }
+
+        public static void SetWindowsServiceCredentials(string serviceName, string username, string password)
         {
             IntPtr hManager = IntPtr.Zero;
             IntPtr hService = IntPtr.Zero;

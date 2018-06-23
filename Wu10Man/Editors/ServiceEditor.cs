@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.ServiceProcess;
 
 namespace WereDev.Utils.Wu10Man.Editors
@@ -51,12 +52,13 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         public void SetAccountAsLocalService()
         {
-            ServiceCredentialsEditor.SetWindowsServiceCreds(_serviceController.ServiceName, ServiceCredentialsEditor.LOCAL_SERVICE_USER, null);
+
+            ServiceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, WellKnownSidType.LocalServiceSid);
         }
 
         public void SetAccountAsLocalSystem()
         {
-            ServiceCredentialsEditor.SetWindowsServiceCreds(_serviceController.ServiceName, ServiceCredentialsEditor.LOCAL_SYSTEM_USER, null);
+            ServiceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, ServiceCredentialsEditor.LOCAL_SYSTEM_USER, null);
         }
 
         public void Dispose()
