@@ -59,10 +59,18 @@ namespace WereDev.Utils.Wu10Man.Editors
             if (String.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
             if (String.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
 
-            using (var regKey = registryRoot.OpenSubKey(registryKey, true))
+            using (var regKey = OpenOrCreateRegistryKey(registryRoot, registryKey, true))
             {
                 regKey.SetValue(registryName, registryValue, registryValueKind);
             }
+        }
+
+        private static RegistryKey OpenOrCreateRegistryKey(RegistryKey registryRoot, string registryKey, bool writable)
+        {
+            var regKey = registryRoot.OpenSubKey(registryKey);
+            if (regKey == null)
+                regKey = registryRoot.CreateSubKey(registryKey, writable);
+            return regKey;
         }
 
         private static void DeleteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName)
