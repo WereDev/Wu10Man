@@ -25,9 +25,9 @@ namespace WereDev.Utils.Wu10Man.Editors
             {
                 WriteRegistryValue(Registry.LocalMachine, registryKey, registryName, registryValue, registryValueKind);
             }
-            catch (SecurityException sex)
+            catch (Exception ex)
             {
-                if (sex.Message == "Requested registry access is not allowed.")
+                if (ex is UnauthorizedAccessException || ex is SecurityException)
                 {
                     TakeOwnership(Registry.LocalMachine, registryKey);
                     SetWritePermission(Registry.LocalMachine, registryKey);
@@ -42,9 +42,9 @@ namespace WereDev.Utils.Wu10Man.Editors
             {
                 DeleteRegistryValue(Registry.LocalMachine, registryKey, registryName);
             }
-            catch (SecurityException sex)
+            catch (Exception ex)
             {
-                if (sex.Message == "Requested registry access is not allowed.")
+                if (ex is UnauthorizedAccessException || ex is SecurityException)
                 {
                     TakeOwnership(Registry.LocalMachine, registryKey);
                     SetWritePermission(Registry.LocalMachine, registryKey);
@@ -67,7 +67,7 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         private static RegistryKey OpenOrCreateRegistryKey(RegistryKey registryRoot, string registryKey, bool writable)
         {
-            var regKey = registryRoot.OpenSubKey(registryKey);
+            var regKey = registryRoot.OpenSubKey(registryKey, writable);
             if (regKey == null)
                 regKey = registryRoot.CreateSubKey(registryKey, writable);
             return regKey;
@@ -89,7 +89,6 @@ namespace WereDev.Utils.Wu10Man.Editors
             {
                 regKey.DeleteValue(registryName);
             }
-
         }
 
         private static void TakeOwnership(RegistryKey registryRoot, string registryKey)
