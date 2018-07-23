@@ -35,7 +35,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
             if (String.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
             using (var service = new ServiceEditor(serviceName))
             {
-                return service.IsServiceEnabled();
+                return service.IsServiceEnabled()
+                       && service.IsServiceRunAsLocalSystem();
             }
         }
 

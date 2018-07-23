@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Editors\Models\SplitHostsFile.cs" />
     <Compile Include="Editors\RegistryEditor.cs" />
+    <Compile Include="Editors\ServiceConfigInfo.cs" />
     <Compile Include="Editors\ServiceCredentialsEditor.cs" />
     <Compile Include="Editors\ServiceEditor.cs" />
     <Compile Include="Editors\TokenEditor.cs" />

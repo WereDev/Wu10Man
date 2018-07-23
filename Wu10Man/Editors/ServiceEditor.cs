@@ -41,6 +41,13 @@ namespace WereDev.Utils.Wu10Man.Editors
             return _serviceController.StartType != ServiceStartMode.Disabled;
         }
 
+        public bool IsServiceRunAsLocalSystem()
+        {
+            var serviceUserName = ".\\" + ServiceCredentialsEditor.GetWindowsServiceUserName(_serviceController.ServiceName);
+
+            return serviceUserName.Equals(ServiceCredentialsEditor.LOCAL_SYSTEM_USER, StringComparison.CurrentCultureIgnoreCase);
+        }
+
         public void StopService()
         {
             if (_serviceController.Status != ServiceControllerStatus.Stopped)
