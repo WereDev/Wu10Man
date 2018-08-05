@@ -10,6 +10,7 @@ namespace WereDev.Utils.Wu10Man.Editors
     {
 
         private const uint SC_MANAGER_ALL_ACCESS = 0x000F003F;
+        private const uint SC_MANAGER_QUERY_ACESS = 0x10000000;
         private const uint SERVICE_QUERY_CONFIG = 0x00001;
         private const uint SERVICE_CHANGE_CONFIG = 0x00002;
         private const uint SERVICE_NO_CHANGE = 0xffffffff;
@@ -21,6 +22,52 @@ namespace WereDev.Utils.Wu10Man.Editors
             var sid = new SecurityIdentifier(sidType, null);
             var account = sid.Translate(typeof(NTAccount));
             return account.Value;
+        }
+
+        public static string GetWindowsServiceUserName(string serviceName)
+        {
+            IntPtr hManager = IntPtr.Zero;
+            IntPtr hService = IntPtr.Zero;
+            uint bytesNeeded;
+
+            try
+            {
+                hManager = OpenSCManager(null, null, SC_MANAGER_QUERY_ACESS);
+
+                if (hManager == IntPtr.Zero)
+                {
+                    ThrowWin32Exception();
+                }
+                hService = OpenService(hManager, serviceName, SERVICE_QUERY_CONFIG | SERVICE_CHANGE_CONFIG);
+                if (hService == IntPtr.Zero)
+                {
+                    ThrowWin32Exception();
+                }
+
+                bool retCode = QueryServiceConfig(hService, IntPtr.Zero, 0, out bytesNeeded);
+                if (!retCode && bytesNeeded == 0)
+                    ThrowWin32Exception();
+
+                IntPtr qscPtr = Marshal.AllocCoTaskMem(Convert.ToInt32(bytesNeeded));
+                try
+                {
+                    retCode = QueryServiceConfig(hService, qscPtr, bytesNeeded, out bytesNeeded);
+                    if (!retCode)
+                        ThrowWin32Exception();
+
+                    var sci = (ServiceConfigInfo)Marshal.PtrToStructure(qscPtr, typeof(ServiceConfigInfo));
+                    return sci.ServiceStartName;
+                }
+                finally
+                {
+                    Marshal.FreeCoTaskMem(qscPtr);
+                }
+            }
+            finally
+            {
+                if (hService != IntPtr.Zero) CloseServiceHandle(hService);
+                if (hManager != IntPtr.Zero) CloseServiceHandle(hManager);
+            }
         }
 
         public static void SetWindowsServiceCredentials(string serviceName, WellKnownSidType sidType)
