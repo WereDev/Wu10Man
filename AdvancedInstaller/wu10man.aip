@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="15.0" version="15.0" Modules="simple" RootPath="." Language="en" Id="{F18B9A17-E631-498A-8CF8-210F80EA0231}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="15.0" version="15.0" PreviousModules="simple" Modules="enterprise" RootPath="." Language="en" Id="{F18B9A17-E631-498A-8CF8-210F80EA0231}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="HiddenItems" Value="AnalyticsComponent"/>
   </COMPONENT>
@@ -9,7 +9,6 @@
     <ROW Property="ARPCOMMENTS" Value="Installer package for Wu10Man" ValueLocId="*"/>
     <ROW Property="ARPHELPLINK" Value="https://github.com/WereDev/Wu10Man"/>
     <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
-    <ROW Property="ARPNOREPAIR" Value="1"/>
     <ROW Property="ARPPRODUCTICON" Value="wu10man.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/WereDev/Wu10Man/issues"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/WereDev/Wu10Man/releases"/>
@@ -18,7 +17,7 @@
     <ROW Property="ProductCode" Value="1033:{69D6A528-1FC3-4D4E-9BA4-89452F4C27CA} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Wu10Man"/>
-    <ROW Property="ProductVersion" Value="1.2.1" Type="32"/>
+    <ROW Property="ProductVersion" Value="1.2.2.0" Type="32" TargetFile="Wu10Man.exe"/>
     <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:ReallySuppress"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
@@ -63,7 +62,7 @@
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Publish" PackageFileName="Wu10Man_v1.2.1" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Publish" PackageFileName="Wu10Man" Languages="en" InstallationType="4" UseLargeSchema="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -132,12 +131,12 @@
     <ROW Name="wu10man.exe" SourcePath="..\Wu10Man\wu10man.ico" Index="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
-    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
     <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
     <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
     <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
     <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="201"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>

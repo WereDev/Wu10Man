@@ -39,3 +39,5 @@ There was a fair amount of research that went into this, but a couple sites stoo
 - [Windows Service Authorization](https://stackoverflow.com/questions/17031552/how-do-you-take-file-ownership-with-powershell/17047190#17047190)
 - [Change Windows Service Password](https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268)
 
+### Downloads
+https://github.com/WereDev/Wu10Man/releases
