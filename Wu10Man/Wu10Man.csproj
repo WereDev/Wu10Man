@@ -95,6 +95,9 @@
     <Compile Include="Editors\ServiceEditor.cs" />
     <Compile Include="Editors\TokenEditor.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="UserControls\AdvancedOptions.xaml.cs">
+      <DependentUpon>AdvancedOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\GroupPolicyControl.xaml.cs">
       <DependentUpon>GroupPolicyControl.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\AdvancedOptions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\GroupPolicyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Windows.Controls;
@@ -14,11 +15,19 @@ namespace WereDev.Utils.Wu10Man.UserControls
     {
         private readonly HostsEditor _hostsEditor;
         private readonly HostsFileModel _model;
+        private readonly Logger _logger;
 
         public HostsFileControl()
         {
             _hostsEditor = new HostsEditor();
             _model = new HostsFileModel();
+            _logger = new Logger();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                SetRuntimeOptions();            
+        }
+
+        private void SetRuntimeOptions()
+        {
             GetHostSettings();
             DataContext = _model;
             InitializeComponent();
@@ -38,7 +47,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             var button = (Button)e.Source;
             var kvp = (HostStatus)button.DataContext;
             SetHostValue(kvp.Host, true);
-            Logger.LogInfo(string.Format("Host blocked: {0}", kvp.Host));
+            _logger.LogInfo(string.Format("Host blocked: {0}", kvp.Host));
             ShowUpdateNotice();
         }
 
@@ -47,7 +56,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             var button = (Button)e.Source;
             var kvp = (HostStatus)button.DataContext;
             SetHostValue(kvp.Host, false);
-            Logger.LogInfo(string.Format("Host unblocked: {0}", kvp.Host));
+            _logger.LogInfo(string.Format("Host unblocked: {0}", kvp.Host));
             ShowUpdateNotice();
         }
 
@@ -84,7 +93,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             foreach (var hostStatus in _model.HostStatus)
                 hostStatus.IsBlocked = false;
             SaveHostSettings();
-            Logger.LogInfo("All Hosts blocked.");
+            _logger.LogInfo("All Hosts blocked.");
             ShowUpdateNotice();
         }
 
@@ -93,7 +102,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             foreach (var hostStatus in _model.HostStatus)
                 hostStatus.IsBlocked = true;
             SaveHostSettings();
-            Logger.LogInfo("All Hosts unblocked.");
+            _logger.LogInfo("All Hosts unblocked.");
             ShowUpdateNotice();
         }
 

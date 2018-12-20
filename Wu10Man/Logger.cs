@@ -1,12 +1,33 @@
-﻿using System;
+﻿using NLog;
+using NLog.Targets;
+using System;
+using System.IO;
 
 namespace WereDev.Utils.Wu10Man
 {
-    static class Logger
+    class Logger
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public static void LogError(Exception ex)
+        public string LogFolder { get
+            {
+                var targets = LogManager.Configuration.AllTargets;
+                foreach (var target in targets)
+                {
+                    var fileTarget = target as FileTarget;
+                    if (fileTarget != null)
+                    {
+                        var logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now };
+                        var fileName = fileTarget.FileName.Render(logEventInfo);
+                        var folder = Path.GetDirectoryName(fileName);
+                        return folder;
+                    }
+                }
+                throw new InvalidOperationException("No file logging has been configured in nlog.config");
+            }
+        }
+
+        public void LogError(Exception ex)
         {
             var exception = ex;
             while (exception != null)
@@ -16,14 +37,14 @@ namespace WereDev.Utils.Wu10Man
             }
         }
 
-        public static void LogError(string message)
+        public void LogError(string message)
         {
-            logger.Error(message);
+            _logger.Error(message);
         }
 
-        public static void LogInfo(string message)
+        public void LogInfo(string message)
         {
-            logger.Info(message ?? string.Empty);
+            _logger.Info(message ?? string.Empty);
         }
     }
 }

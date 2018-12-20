@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Editors;
 using WereDev.Utils.Wu10Man.UserControls.Models;
@@ -14,12 +15,20 @@ namespace WereDev.Utils.Wu10Man.UserControls
         public const string MODULES_INSTALLER_SERVICE = "TrustedInstaller";
 
         readonly WindowsServicesModel _model;
+        readonly Logger _logger;
 
         public WindowsServicesControl()
         {
             _model = new WindowsServicesModel();
             DataContext = _model;
+            _logger = new Logger();            
 
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                SetRuntimeOptions();
+        }
+
+        private void SetRuntimeOptions()
+        {
             SetServiceStatus();
             InitializeComponent();
         }
@@ -46,7 +55,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             using (var service = new ServiceEditor(serviceName))
             {
                 service.EnableService();
-                Logger.LogInfo(string.Format("Service enabled: {0}", serviceName));
+                _logger.LogInfo(string.Format("Service enabled: {0}", serviceName));
             }
         }
 
@@ -56,7 +65,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             using (var service = new ServiceEditor(serviceName))
             {
                 service.DisableService();
-                Logger.LogInfo(string.Format("Service disabled: {0}", serviceName));
+                _logger.LogInfo(string.Format("Service disabled: {0}", serviceName));
             }
         }
 

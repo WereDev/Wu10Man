@@ -32,8 +32,11 @@ namespace WereDev.Utils.Wu10Man.UserControls
         public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; set; }
         public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
 
+        private readonly Logger _logger;
+
         public GroupPolicyControl()
         {
+            _logger = new Logger();
 
             CreatePolicyOptions();
             GetCurrentStatus();
@@ -126,7 +129,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
                     break;
             }
 
-            Logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
+            _logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
             System.Windows.MessageBox.Show("Registry settings udpated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }

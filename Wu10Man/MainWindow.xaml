@@ -20,15 +20,11 @@
             </MenuItem>
             <MenuItem Header="_Help" HorizontalAlignment="Right">
                 <MenuItem Header="_About" Click="AboutItem_Click"></MenuItem>
+                <MenuItem Header="_Log Files" Click="LogFilesItem_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid Margin="0,20,0,0">
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="165" Margin="10,10,0,0" VerticalAlignment="Top" Width="300"/>
-            <usercontrols:GroupPolicyControl Width="300" Height="165" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-            <Border BorderBrush="Black" BorderThickness="1" Height="165" Margin="10,195,0,0" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left"/>
-            <usercontrols:WindowsServicesControl Width="300" Height="165"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,195,0,0" />
-            <Border BorderBrush="Black" BorderThickness="1" Height="350" Margin="0,10,10,0" VerticalAlignment="Top" Width="325" HorizontalAlignment="Right"/>
-            <usercontrols:HostsFileControl Width="325" Height="350" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
+            <usercontrols:AdvancedOptions />
         </Grid>
     </Grid>
 </Window>
