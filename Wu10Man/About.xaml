@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WereDev.Utils.Wu10Man"
         mc:Ignorable="d"
-        Title="About" Height="170" Width="300"
+        Title="About" Height="189.832" Width="300"
         ResizeMode="NoResize">
     <Grid >
         <TextBlock HorizontalAlignment="Left" Margin="79,10,0,0" TextWrapping="Wrap" Text="Wu10Man is an application built to give you better control over the Windows 10 Automatic Update Service." VerticalAlignment="Top" Height="64" Width="203"/>
         <Image HorizontalAlignment="Left" Width="64" Height="64" Margin="10,10,0,0" VerticalAlignment="Top" Source="wu10man.ico"/>
         <TextBlock HorizontalAlignment="Left" Margin="204,74,0,0" TextWrapping="Wrap" Text="WereDev 2018" VerticalAlignment="Top" Width="78"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,97,0,0" TextWrapping="Wrap" Text="Code available at GitHub:" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Right" Margin="0,113,10,0" TextWrapping="Wrap" VerticalAlignment="Top">
+        <TextBlock HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" Text="Code available at GitHub:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Right" Margin="0,127,10,0" TextWrapping="Wrap" VerticalAlignment="Top">
             <Hyperlink NavigateUri="https://github.com/WereDev/Wu10Man/" RequestNavigate="GitHub_RequestNavigate">https://github.com/WereDev/Wu10Man/</Hyperlink>
         </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="204,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="78" Name="lblAppVersion" Text="v0.0.0.0"/>
 
     </Grid>
 </Window>
