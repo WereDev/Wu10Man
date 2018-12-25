@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
-
-    <Grid ClipToBounds="True" Width="300" Height="165">
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="450" d:DesignWidth="350">
+    <Grid>
+        <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Width="240"
                   ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="cmbGroupPolicies_SelectionChanged" />
         <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="btnSetGroupPolicy_Click"/>
-        <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" ClipToBounds="True"/>
+        
     </Grid>
 </UserControl>

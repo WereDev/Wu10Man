@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Configuration;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
-using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.UserControls.Models;
+using WPFSpark;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -13,17 +12,17 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// </summary>
     public partial class HostsFileControl : UserControl
     {
-        private readonly HostsEditor _hostsEditor;
+        private readonly HostsFileHelper _hostsFileHelper;
         private readonly HostsFileModel _model;
-        private readonly Logger _logger;
+        private readonly Wu10Logger _logger;
 
         public HostsFileControl()
         {
-            _hostsEditor = new HostsEditor();
+            _hostsFileHelper = new HostsFileHelper();
             _model = new HostsFileModel();
-            _logger = new Logger();
+            _logger = new Wu10Logger();
             if (!DesignerProperties.GetIsInDesignMode(this))
-                SetRuntimeOptions();            
+                SetRuntimeOptions();
         }
 
         private void SetRuntimeOptions()
@@ -33,76 +32,39 @@ namespace WereDev.Utils.Wu10Man.UserControls
             InitializeComponent();
         }
 
-        public void SaveHostSettings()
-        {
-            var selectedHosts = _model.HostStatus.Where(x => x.IsBlocked).Select(x => x.Host).ToArray();
-            if (selectedHosts.Any())
-                _hostsEditor.SetHostsEntries(selectedHosts);
-            else
-                _hostsEditor.ClearHostsEntries();
-        }
-
-        private void BlockHost_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var button = (Button)e.Source;
-            var kvp = (HostStatus)button.DataContext;
-            SetHostValue(kvp.Host, true);
-            _logger.LogInfo(string.Format("Host blocked: {0}", kvp.Host));
-            ShowUpdateNotice();
-        }
-
-        private void UnblockHost_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var button = (Button)e.Source;
-            var kvp = (HostStatus)button.DataContext;
-            SetHostValue(kvp.Host, false);
-            _logger.LogInfo(string.Format("Host unblocked: {0}", kvp.Host));
-            ShowUpdateNotice();
-        }
-
-        private void SetHostValue(string hostUrl, bool block)
-        {
-            var hostStatus = _model.HostStatus.FirstOrDefault(x => x.Host == hostUrl);
-            if (hostStatus == null) throw new ArgumentOutOfRangeException(nameof(hostUrl));
-            hostStatus.IsBlocked = block;
-            SaveHostSettings();
-        }
-
         private void GetHostSettings()
         {
-            var hostUrls = GetWindowsUpdateUrls();
+            var hostUrls = _hostsFileHelper.GetManagedHostUrls();
             if (hostUrls == null) return;
-            var currentHosts = _hostsEditor.GetHostsInFile();
-            var hostSettings = hostUrls.ToDictionary(x => x, x => currentHosts.Contains(x));
+            var currentHosts = _hostsFileHelper.GetBlockedHostUrls();
+            var hostSettings = hostUrls.ToDictionary(x => x, x => !currentHosts.Contains(x));
             _model.HostStatus = hostSettings.Select(x => new HostStatus(x.Key, x.Value))
                                             .OrderBy(x => x.Host)
                                             .ToArray();
         }
 
-        private string[] GetWindowsUpdateUrls()
+        private void tglHostItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var windowsUpdateUrls = ConfigurationManager.AppSettings["WindowsUpdateUrls"];
-            if (windowsUpdateUrls == null) return new string[0];
-            var split = windowsUpdateUrls.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var uniques = split.Distinct();
-            return uniques?.ToArray();
+            var toggle = (ToggleSwitch)sender;
+            var kvp = (HostStatus)toggle.DataContext;
+            if (toggle.IsChecked.Value)
+                _hostsFileHelper.UnblockHostUrl(kvp.Host);
+            else
+                _hostsFileHelper.BlockHostUrl(kvp.Host);
+            ShowUpdateNotice();
         }
 
         private void UnblockAllHosts_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (var hostStatus in _model.HostStatus)
-                hostStatus.IsBlocked = false;
-            SaveHostSettings();
-            _logger.LogInfo("All Hosts blocked.");
+            _hostsFileHelper.UnblockAllHostUrls();
+            GetHostSettings();
             ShowUpdateNotice();
         }
 
         private void BlockAllHosts_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (var hostStatus in _model.HostStatus)
-                hostStatus.IsBlocked = true;
-            SaveHostSettings();
-            _logger.LogInfo("All Hosts unblocked.");
+            _hostsFileHelper.BlockAllHostUrls();
+            GetHostSettings();
             ShowUpdateNotice();
         }
 

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows;
+using WereDev.Utils.Wu10Man.Helpers;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -9,11 +9,13 @@ namespace WereDev.Utils.Wu10Man
     /// </summary>
     public partial class MainWindow : Window
     {
-        Logger _logger = new Logger();
-        
+        private Wu10Logger _logger = new Wu10Logger();
+
         public MainWindow()
         {
             InitializeComponent();
+            ShowAdvancedItem.IsChecked = Properties.Settings.Default.ShowAdvanced;
+            SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
         }
 
         protected override void OnClosed(EventArgs e)
@@ -43,6 +45,20 @@ namespace WereDev.Utils.Wu10Man
             var folder = _logger.LogFolder;
             System.Diagnostics.Process.Start(folder);
         }
+
+        private void ShowAdvancedItem_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ShowAdvanced = !Properties.Settings.Default.ShowAdvanced;
+            Properties.Settings.Default.Save();
+            SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
+        }
+
+        private void SetMainScreenView(bool showAdvanced)
+        {
+            this.AdvancedControl.Visibility = showAdvanced ? Visibility.Visible : Visibility.Hidden;
+            this.BasicOptions.Visibility = showAdvanced ? Visibility.Hidden : Visibility.Visible;
+        }
+
     }
 }
 

@@ -3,13 +3,15 @@ using NLog.Targets;
 using System;
 using System.IO;
 
-namespace WereDev.Utils.Wu10Man
+namespace WereDev.Utils.Wu10Man.Helpers
 {
-    class Logger
+    internal class Wu10Logger
     {
-        private NLog.Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public string LogFolder { get
+        public string LogFolder
+        {
+            get
             {
                 var targets = LogManager.Configuration.AllTargets;
                 foreach (var target in targets)

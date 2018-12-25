@@ -4,26 +4,26 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
     public class HostStatus : ModelBase
     {
-        public HostStatus(string host, bool isBlocked)
+        public HostStatus(string host, bool isActive)
         {
             if (String.IsNullOrWhiteSpace(host)) throw new ArgumentNullException(nameof(host));
             Host = host;
-            _isBlocked = isBlocked;
+            _isActive = isActive;
         }
 
         public string Host { get; }
 
-        private bool _isBlocked;
-        public bool IsBlocked
+        private bool _isActive;
+        public bool IsActive
         {
             get
             {
-                return _isBlocked;
+                return _isActive;
             }
             set
             {
-                _isBlocked = value;
-                OnPropertyChanged(nameof(IsBlocked));
+                _isActive = value;
+                OnPropertyChanged(nameof(IsActive));
             }
         }
     }

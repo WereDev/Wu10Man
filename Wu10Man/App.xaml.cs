@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WereDev.Utils.Wu10Man.Helpers;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -7,11 +8,11 @@ namespace WereDev.Utils.Wu10Man
     /// </summary>
     public partial class App : Application
     {
-        readonly Logger _logger;
+        readonly Wu10Logger _logger;
 
         public App() : base()
         {
-            _logger = new Logger();
+            _logger = new Wu10Logger();
             _logger.LogInfo("Application started");
             this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
         }

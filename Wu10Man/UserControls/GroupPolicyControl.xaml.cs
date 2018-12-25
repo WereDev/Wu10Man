@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Helpers;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -32,11 +33,11 @@ namespace WereDev.Utils.Wu10Man.UserControls
         public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; set; }
         public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
 
-        private readonly Logger _logger;
+        private readonly Wu10Logger _logger;
 
         public GroupPolicyControl()
         {
-            _logger = new Logger();
+            _logger = new Wu10Logger();
 
             CreatePolicyOptions();
             GetCurrentStatus();
