@@ -111,7 +111,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             var dllPath = GetServiceDllPath(serviceName);
             if (string.IsNullOrEmpty(dllPath)) return;
 
-            _filesHelper.GiveOnwershipToCurrentUser(dllPath);
+            _filesHelper.GiveOwnershipToAdministrators(dllPath);
             var wu10Path = GetPathWithWu10Prefix(dllPath);
             _filesHelper.RenameFile(dllPath, wu10Path);
         }
@@ -122,6 +122,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             if (string.IsNullOrEmpty(dllPath)) return;
 
             var wu10Path = GetPathWithWu10Prefix(dllPath);
+            _filesHelper.GiveOwnershipToAdministrators(wu10Path);
             _filesHelper.RenameFile(wu10Path, dllPath);
             _filesHelper.GiveOwnershipToTrustedInstaller(dllPath);
         }

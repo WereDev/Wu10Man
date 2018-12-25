@@ -24,10 +24,11 @@ namespace WereDev.Utils.Wu10Man.Helpers
             SetOwnership(fileName, userName);
         }
 
-        public void GiveOnwershipToCurrentUser(string fileName)
+        public void GiveOwnershipToAdministrators(string fileName)
         {
-            string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            SetOwnership(fileName, userName);
+            var username = ServiceCredentialsEditor.GetUserName(WellKnownSidType.AccountAdministratorSid);
+            SetOwnership(fileName, username);
+            GrantFullAccessToFile(fileName, username);
         }
 
         public void GiveOwnershipToTrustedInstaller(string fileName)
@@ -37,9 +38,28 @@ namespace WereDev.Utils.Wu10Man.Helpers
 
         public void SetOwnership(string fileName, string userName)
         {
+            if (string.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName));
+
+            var fileSecurity = GetFileSecurity(fileName);
+            var account = new NTAccount(userName);
+            fileSecurity.SetOwner(account);
+            File.SetAccessControl(fileName, fileSecurity);
+        }
+
+        public void GrantFullAccessToFile(string fileName, string userName)
+        {
+            if (string.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName));
+
+            var fileSecurity = GetFileSecurity(fileName);
+            var account = new NTAccount(userName);
+            fileSecurity.SetAccessRule(new FileSystemAccessRule(account, FileSystemRights.FullControl, AccessControlType.Allow));
+            File.SetAccessControl(fileName, fileSecurity);
+        }
+
+        private FileSecurity GetFileSecurity(string fileName)
+        {
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
             if (!File.Exists(fileName)) throw new FileNotFoundException("Could not find file to set ownership.", fileName);
-            if (string.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName));
 
             // Allow this process to circumvent ACL restrictions
             WinAPI.ModifyPrivilege(PrivilegeName.SeRestorePrivilege, true);
@@ -47,11 +67,9 @@ namespace WereDev.Utils.Wu10Man.Helpers
             // Sometimes this is required and other times it works without it. Not sure when.
             WinAPI.ModifyPrivilege(PrivilegeName.SeTakeOwnershipPrivilege, true);
 
-            var accessControl = File.GetAccessControl(fileName, AccessControlSections.Owner);
-            var account = new NTAccount(userName);
-            accessControl.SetOwner(account);
-            //accessControl.SetAccessRule(new FileSystemAccessRule(account, FileSystemRights.FullControl, AccessControlType.Allow));
-            File.SetAccessControl(fileName, accessControl);
+            var accessControl = File.GetAccessControl(fileName);
+
+            return accessControl;
         }
     }
 }

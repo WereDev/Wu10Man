@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="15.0" version="15.5.1" Modules="simple" RootPath="." Language="en" Id="{F18B9A17-E631-498A-8CF8-210F80EA0231}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="15.0" version="15.0" Modules="simple" RootPath="." Language="en" Id="{F18B9A17-E631-498A-8CF8-210F80EA0231}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
-    <ROW Name="HiddenItems" Value="AnalyticsComponent;AppXAppDetailsComponent;FixupComponent;AppXCapabilitiesComponent;AppXDependenciesComponent;AppXProductDetailsComponent;AppXVisualAssetsComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent"/>
+    <ROW Name="HiddenItems" Value="AnalyticsComponent"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
@@ -15,10 +15,10 @@
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/WereDev/Wu10Man/releases"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Weredev"/>
-    <ROW Property="ProductCode" Value="1033:{BF8674A6-4567-45E9-BC7A-6E9D53BCFC86} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{69D6A528-1FC3-4D4E-9BA4-89452F4C27CA} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Wu10Man"/>
-    <ROW Property="ProductVersion" Value="2.0.0.0" Type="32" TargetFile="Wu10Man.exe"/>
+    <ROW Property="ProductVersion" Value="1.2.1" Type="32"/>
     <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:ReallySuppress"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
@@ -43,33 +43,27 @@
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
-    <ROW Component="Microsoft.Expression.Interactions.dll" ComponentId="{B729DCDC-DAD7-41F2-82F7-E4846AA76042}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Expression.Interactions.dll"/>
-    <ROW Component="NLog.dll" ComponentId="{FF65DAAD-D873-40A0-B483-5E1CD921797E}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
+    <ROW Component="NLog.dll" ComponentId="{EECA3CAA-1F7E-42C7-898B-85D254548D13}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
     <ROW Component="ProductInformation" ComponentId="{71412340-B01D-4815-A1B9-38799C2662D3}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{67BBCAC2-83AE-4110-98F9-2B38EDFFDAF6}" Directory_="SHORTCUTDIR" Attributes="0"/>
-    <ROW Component="System.Windows.Interactivity.dll" ComponentId="{C6339B30-661C-41C7-ACEC-84A83650CAEE}" Directory_="APPDIR" Attributes="0" KeyPath="System.Windows.Interactivity.dll"/>
-    <ROW Component="WPFSpark.dll" ComponentId="{D9F0BEE1-3647-44A5-A52E-866DD2345227}" Directory_="APPDIR" Attributes="0" KeyPath="WPFSpark.dll"/>
     <ROW Component="Wu10Man.exe" ComponentId="{302C40F2-9077-4975-B738-3C84CA5A3776}" Directory_="APPDIR" Attributes="0" KeyPath="Wu10Man.exe"/>
     <ROW Component="Wu10Man.exe.config" ComponentId="{19B09C98-B716-4399-9737-22D681DAF951}" Directory_="APPDIR" Attributes="0" KeyPath="Wu10Man.exe.config" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="Microsoft.Expression.Interactions.dll NLog.dll ProductInformation SHORTCUTDIR System.Windows.Interactivity.dll WPFSpark.dll Wu10Man.exe Wu10Man.exe.config"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="NLog.dll ProductInformation SHORTCUTDIR Wu10Man.exe Wu10Man.exe.config"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="Microsoft.Expression.Interactions.dll" Component_="Microsoft.Expression.Interactions.dll" FileName="MICROS~1.DLL|Microsoft.Expression.Interactions.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Expression.Interactions.dll" SelfReg="false" NextFile="NLog.dll"/>
-    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\NLog.dll" SelfReg="false" NextFile="System.Windows.Interactivity.dll"/>
-    <ROW File="System.Windows.Interactivity.dll" Component_="System.Windows.Interactivity.dll" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Windows.Interactivity.dll" SelfReg="false" NextFile="WPFSpark.dll"/>
-    <ROW File="WPFSpark.dll" Component_="WPFSpark.dll" FileName="WPFSpark.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\WPFSpark.dll" SelfReg="false"/>
+    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\packages\NLog.4.5.6\lib\net45\NLog.dll" SelfReg="false"/>
     <ROW File="Wu10Man.exe" Component_="Wu10Man.exe" FileName="Wu10Man.exe" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Wu10Man.exe" SelfReg="false" NextFile="Wu10Man.exe.config" DigSign="true"/>
     <ROW File="Wu10Man.exe.config" Component_="Wu10Man.exe.config" FileName="WU10MA~1.CON|Wu10Man.exe.config" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Wu10Man.exe.config" SelfReg="false" NextFile="nlog.config"/>
-    <ROW File="nlog.config" Component_="Wu10Man.exe.config" FileName="NLOG~1.CON|nlog.config" Attributes="0" SourcePath="..\Wu10Man\bin\Release\nlog.config" SelfReg="false" NextFile="Microsoft.Expression.Interactions.dll"/>
+    <ROW File="nlog.config" Component_="Wu10Man.exe.config" FileName="NLOG~1.CON|nlog.config" Attributes="0" SourcePath="..\Wu10Man\bin\Release\nlog.config" SelfReg="false" NextFile="NLog.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Publish" PackageFileName="Wu10Man" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\Publish" PackageFileName="Wu10Man_v1.2.1" Languages="en" InstallationType="4" UseLargeSchema="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
