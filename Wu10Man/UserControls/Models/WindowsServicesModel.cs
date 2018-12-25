@@ -3,31 +3,17 @@
     public class WindowsServicesModel : ModelBase
     {
 
-        private bool _isUpdateServiceEnabled = false;
-        public bool IsUpdateServiceEnabled
+        private WindowsServiceStatusModel[] _services = new WindowsServiceStatusModel[0];
+        public WindowsServiceStatusModel[] Services
         {
-            get { return _isUpdateServiceEnabled; }
-            set
+            get
             {
-                if (_isUpdateServiceEnabled != value)
-                {
-                    _isUpdateServiceEnabled = value;
-                    OnPropertyChanged(nameof(IsUpdateServiceEnabled));
-                }
+                return _services;
             }
-        }
-
-        private bool _isModulesInstallerServiceEnabled = false;
-        public bool IsModulesInstallerServiceEnabled
-        {
-            get { return _isModulesInstallerServiceEnabled; }
             set
             {
-                if (_isModulesInstallerServiceEnabled != value)
-                {
-                    _isModulesInstallerServiceEnabled = value;
-                    OnPropertyChanged(nameof(IsModulesInstallerServiceEnabled));
-                }
+                _services = value ?? new WindowsServiceStatusModel[0];
+                OnPropertyChanged(nameof(WindowsServiceStatusModel));
             }
         }
     }

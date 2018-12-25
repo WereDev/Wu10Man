@@ -3,23 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:WereDev.Utils.Wu10Man.Converters"
              xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="300"
              >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
+    </UserControl.Resources>
 
     <Grid>
-        <Grid.Resources>
-            <local:BooleanToEnabledDisabledConverter x:Key="BoolToEnabledConverter"/>
-        </Grid.Resources>
         <Label Content="Windows Services" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True"/>
-        <Label Content="Windows Update Service:" HorizontalAlignment="Left" Margin="0,45,0,0" VerticalAlignment="Top" />
-        <!--<Label Content="{Binding Path=IsUpdateServiceEnabled, Converter={StaticResource BoolToEnabledConverter}}" HorizontalAlignment="Right" Margin="0,30,0,0" VerticalAlignment="Top" />-->
-        <wpfspark:ToggleSwitch IsChecked="{Binding IsUpdateServiceEnabled}" CheckedToolTip="Service Enabled" UncheckedToolTip="Service Disabled" Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,0,0" Click="tglWindowsUpdate_Click"  />
-        <Label Content="Windows Modules Installer:" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" />
-        <!--<Label Content="{Binding Path=IsModulesInstallerServiceEnabled, Converter={StaticResource BoolToEnabledConverter}}" HorizontalAlignment="Right" Margin="0,75,0,0" VerticalAlignment="Top" />-->
-        <wpfspark:ToggleSwitch IsChecked="{Binding IsModulesInstallerServiceEnabled}" CheckedToolTip="Service Enabled" UncheckedToolTip="Service Disabled" Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,95,0,0" Click="tglModulesInstaller_Click" />
+        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="ServicesListBox" ItemsSource="{Binding Path=Services}" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Height="30" Visibility="{Binding Path=ServiceExists, Converter={StaticResource ResourceKey=BoolToVisibilityConverter}}">
+                        <Label Content="{Binding DisplayName}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <wpfspark:ToggleSwitch IsChecked="{Binding IsServiceEnabled}" CheckedToolTip="Service enabled." UncheckedToolTip="Service disabled."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="tglService_Click" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+
+        </ListBox>
     </Grid>
 </UserControl>

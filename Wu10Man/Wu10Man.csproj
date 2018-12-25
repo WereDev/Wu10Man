@@ -41,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -117,13 +118,14 @@
     <Compile Include="About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BooleanToEnabledDisabledConverter.cs" />
     <Compile Include="Editors\Models\SplitHostsFile.cs" />
     <Compile Include="Editors\RegistryEditor.cs" />
     <Compile Include="Editors\ServiceConfigInfo.cs" />
     <Compile Include="Editors\ServiceCredentialsEditor.cs" />
     <Compile Include="Editors\ServiceEditor.cs" />
     <Compile Include="Editors\TokenEditor.cs" />
+    <Compile Include="Editors\WinAPI.cs" />
+    <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Helpers\GroupPolicyHelper.cs" />
     <Compile Include="Helpers\HostsFileHelper.cs" />
     <Compile Include="Helpers\WindowsServiceHelper.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="UserControls\Models\HostStatus.cs" />
     <Compile Include="UserControls\Models\ModelBase.cs" />
     <Compile Include="UserControls\Models\WindowsServicesModel.cs" />
+    <Compile Include="UserControls\Models\WindowsServiceStatusModel.cs" />
     <Compile Include="UserControls\WindowsServicesControl.xaml.cs">
       <DependentUpon>WindowsServicesControl.xaml</DependentUpon>
     </Compile>
@@ -230,10 +233,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\green_button.svg" />
-    <Resource Include="Assets\Images\red_button.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -4,10 +4,10 @@ using System.ServiceProcess;
 
 namespace WereDev.Utils.Wu10Man.Editors
 {
-    class ServiceEditor : IDisposable
+    internal class ServiceEditor : IDisposable
     {
         private readonly ServiceController _serviceController;
-
+        private readonly string _servicesRegistryPath = @"SYSTEM\CurrentControlSet\Services\";
 
         public ServiceEditor(string serviceName)
         {
@@ -17,22 +17,40 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         public void SetStartupType(ServiceStartMode startMode)
         {
-            RegistryEditor.WriteLocalMachineRegistryValue(@"SYSTEM\CurrentControlSet\Services\" + _serviceController.ServiceName,
+            RegistryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
                                                           "Start",
                                                           ((int)startMode).ToString(),
                                                           Microsoft.Win32.RegistryValueKind.DWord);
+        }
+
+        public bool ServiceExists()
+        {
+            try
+            {
+                return !string.IsNullOrWhiteSpace(_serviceController.DisplayName);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public string DisplayName => _serviceController.DisplayName;
+
+        public string GetServiceDLL()
+        {
+            return RegistryEditor.ReadLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName + @"\Parameters", "ServiceDll");
         }
 
         public void DisableService()
         {
             StopService();
             SetStartupType(ServiceStartMode.Disabled);
-            SetAccountAsLocalService();
+
         }
 
         public void EnableService()
         {
-            SetAccountAsLocalSystem();
             SetStartupType(ServiceStartMode.Manual);
         }
 

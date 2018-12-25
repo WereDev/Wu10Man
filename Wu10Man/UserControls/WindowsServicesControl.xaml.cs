@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.UserControls.Models;
@@ -26,38 +28,54 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void SetRuntimeOptions()
         {
-            SetServiceStatus();
+            BuildServiceStatus();
             InitializeComponent();
         }
 
-        private void SetServiceStatus()
+        private void BuildServiceStatus()
         {
-            _model.IsUpdateServiceEnabled = _windowsServiceHelper.IsServiceEnabled(WindowsServiceHelper.UPDATE_SERVICE);
-            _model.IsModulesInstallerServiceEnabled = _windowsServiceHelper.IsServiceEnabled(WindowsServiceHelper.MODULES_INSTALLER_SERVICE);
+            _model.Services = _windowsServiceHelper.ListAllServices()
+                                                   .Select(x => new WindowsServiceStatusModel(x))
+                                                   .ToArray();
+            foreach (var service in _model.Services)
+                SetServiceStatus(service.ServiceName);
         }
 
-        private void tglWindowsUpdate_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SetServiceStatus(string serviceName)
         {
-            var isChecked = ((ToggleSwitch)sender).IsChecked.Value;
-            if (isChecked)
-                _windowsServiceHelper.EnableService(WindowsServiceHelper.UPDATE_SERVICE);
+            var serviceModel = _model.Services.Single(x => x.ServiceName == serviceName);
+            serviceModel.ServiceExists = _windowsServiceHelper.ServiceExists(serviceName);
+            if (serviceModel.ServiceExists)
+            {
+                serviceModel.DisplayName = _windowsServiceHelper.GetServiceDisplayName(serviceName);
+                serviceModel.IsServiceEnabled = _windowsServiceHelper.IsServiceEnabled(serviceName);
+            }
+        }
+
+        private void tglService_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var toggle = ((ToggleSwitch)sender);
+            var data = (WindowsServiceStatusModel)toggle.DataContext;
+            if (toggle.IsChecked.Value)
+                EnableService(data.ServiceName, data.DisplayName);
             else
-                _windowsServiceHelper.DisableService(WindowsServiceHelper.UPDATE_SERVICE);
-
-            SetServiceStatus();
-            System.Windows.MessageBox.Show(string.Format("Windows Update service has been {0}.", isChecked ? "ENABLED" : "DISABLED"), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                DisableService(data.ServiceName, data.DisplayName);
         }
 
-        private void tglModulesInstaller_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void EnableService(string serviceName, string displayName)
         {
-            var isChecked = ((ToggleSwitch)sender).IsChecked.Value;
-            if (isChecked)
-                _windowsServiceHelper.EnableService(WindowsServiceHelper.MODULES_INSTALLER_SERVICE);
-            else
-                _windowsServiceHelper.DisableService(WindowsServiceHelper.MODULES_INSTALLER_SERVICE);
-
-            SetServiceStatus();
-            System.Windows.MessageBox.Show(string.Format("Windows Modules Installer service has been {0}.", isChecked ? "ENABLED" : "DISABLED"), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            _windowsServiceHelper.EnableService(serviceName);
+            SetServiceStatus(serviceName);
+            System.Windows.MessageBox.Show(string.Format("{0} has been ENABLED", displayName), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
+
+        private void DisableService(string serviceName, string displayName)
+        {
+            _windowsServiceHelper.DisableService(serviceName);
+            SetServiceStatus(serviceName);
+            System.Windows.MessageBox.Show(string.Format("{0} has been DISABLED", displayName), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+        }
+
+
     }
 }
