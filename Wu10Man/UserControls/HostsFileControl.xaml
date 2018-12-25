@@ -3,44 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" >
-    <Grid ClipToBounds="True" Width="325" Height="350">
-        <Label Content="Hosts File Routes" HorizontalAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" />
-        <ListBox Height="260" Margin="10,44,10,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0">
+             xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="350" >
+    <Grid>
+        <Label Content="Hosts File Routes" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding Host}" Width="190"/>
-                        <Button Content=" Block " Margin="0,0,10,0" Click="BlockHost_Click">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsBlocked}" Value="True">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button Content=" Unblock " Click="UnblockHost_Click">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsBlocked}" Value="False">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <Label Content="{Binding Host}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="tglHostItem_Click"  />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
 
         </ListBox>
-        <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="125" Click="UnblockAllHosts_Click"/>
-        <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="125" Click="BlockAllHosts_Click"/>
-
+        <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="125" Click="UnblockAllHosts_Click"/>
+        <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="125" Click="BlockAllHosts_Click"/>
     </Grid>
 </UserControl>

@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
-         
+        <!--<XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>-->
     </Application.Resources>
     <Application.MainWindow>
         <local:MainWindow/>

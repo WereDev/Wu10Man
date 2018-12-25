@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WereDev.Utils.Wu10Man.Helpers;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -7,21 +8,24 @@ namespace WereDev.Utils.Wu10Man
     /// </summary>
     public partial class App : Application
     {
+        readonly Wu10Logger _logger;
+
         public App() : base()
         {
-            Logger.LogInfo("Application started");
+            _logger = new Wu10Logger();
+            _logger.LogInfo("Application started");
             this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Logger.LogInfo("Application ended");
+            _logger.LogInfo("Application ended");
             base.OnExit(e);
         }
 
         void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            Logger.LogError(e.Exception);
+            _logger.LogError(e.Exception);
             string errorMessage = string.Format("{0}\r\n\r\nCheck the logs for more details.", e.Exception.Message);
             MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;

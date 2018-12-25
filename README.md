@@ -13,12 +13,16 @@ If you have Windows 10 Home, you don't have access to the Group Policy Editor, b
  - **Disable Automatic Updates:** Disables automatic updates.
  - **Notify of Download and Installation:** Provides notifications for download and install.  Should function similar to older version of Windows that had this option.
  - **Automatic Download, Notify of Installation:** Will automatically download updates, but provide notification before installation.
+
+ As a note, I'm not entirely sure that the Windows OS is listening to this anymore.  I plan on looking into this an making updates to this at some point.
  
 ## Disabling Services:
 
-When in doubt, you can disable the Windows 10 services that run the updates.  There are two that seem to control everything: Windows Update Service and Windows Module Installer.  On your own, you can disable them and things will be ok, but Windows has a couple tasks that will turn those back on.  Some are set at an interval, some are set at startup.
+When in doubt, you can disable the Windows 10 services that run the updates.  There are two that seem to control everything: Windows Update Service and Windows Module Installer.  On your own, you can disable them and things will be ok, but Windows has a couple tasks that will turn those back on.  Some are set at an interval, some are set at startup.  There is also a third: Windows Update Medic Service.  This is a new service that Microsoft uses to turn on all the Windows Update stuff.  It looks like this came out with an Oct 2018 update, and as over version 2.0.0, support for disabling the Medic service is also supported.
 
-You could try to disable those tasks, but I went another router.  When disabling a service through this app, it also sets the service credential to an invalid set changing it from Local System to Local Service.  This stops the services from being restarted.  Re-enabling the service will also change the credentials back to Local System.
+You could try to disable those tasks, but I went another route.  When disabling a service through this app, it also renames the underlying service file so that it's not possible to run the service.  Previous versions of this changed the running credentials, but I could get whatever security access to the new Medic servie to change that, so I went the file route instead.
+
+If you were running an older version of Wu10Man, don't worry, the new versions will still restore user settings as needed.
 
 ## Blocking URLs
 

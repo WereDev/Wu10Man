@@ -1,7 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Controls;
-using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.UserControls.Models;
+using WPFSpark;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -10,77 +13,69 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// </summary>
     public partial class WindowsServicesControl : UserControl
     {
-        public const string UPDATE_SERVICE = "wuauserv";
-        public const string MODULES_INSTALLER_SERVICE = "TrustedInstaller";
-
-        readonly WindowsServicesModel _model;
+        private readonly WindowsServicesModel _model;
+        private readonly WindowsServiceHelper _windowsServiceHelper;
 
         public WindowsServicesControl()
         {
             _model = new WindowsServicesModel();
+            _windowsServiceHelper = new WindowsServiceHelper();
             DataContext = _model;
 
-            SetServiceStatus();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                SetRuntimeOptions();
+        }
+
+        private void SetRuntimeOptions()
+        {
+            BuildServiceStatus();
             InitializeComponent();
         }
 
-        private void SetServiceStatus()
+        private void BuildServiceStatus()
         {
-            _model.IsUpdateServiceEnabled = IsServiceEnabled(UPDATE_SERVICE);
-            _model.IsModulesInstallerServiceEnabled = IsServiceEnabled(MODULES_INSTALLER_SERVICE);
+            _model.Services = _windowsServiceHelper.ListAllServices()
+                                                   .Select(x => new WindowsServiceStatusModel(x))
+                                                   .ToArray();
+            foreach (var service in _model.Services)
+                SetServiceStatus(service.ServiceName);
         }
 
-        private bool IsServiceEnabled(string serviceName)
+        private void SetServiceStatus(string serviceName)
         {
-            if (String.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
+            var serviceModel = _model.Services.Single(x => x.ServiceName == serviceName);
+            serviceModel.ServiceExists = _windowsServiceHelper.ServiceExists(serviceName);
+            if (serviceModel.ServiceExists)
             {
-                return service.IsServiceEnabled()
-                       && service.IsServiceRunAsLocalSystem();
+                serviceModel.DisplayName = _windowsServiceHelper.GetServiceDisplayName(serviceName);
+                serviceModel.IsServiceEnabled = _windowsServiceHelper.IsServiceEnabled(serviceName);
             }
         }
 
-        private void EnableService(string serviceName)
+        private void tglService_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
-            {
-                service.EnableService();
-                Logger.LogInfo(string.Format("Service enabled: {0}", serviceName));
-            }
+            var toggle = ((ToggleSwitch)sender);
+            var data = (WindowsServiceStatusModel)toggle.DataContext;
+            if (toggle.IsChecked.Value)
+                EnableService(data.ServiceName, data.DisplayName);
+            else
+                DisableService(data.ServiceName, data.DisplayName);
         }
 
-        private void DisableService(string serviceName)
+        private void EnableService(string serviceName, string displayName)
         {
-            if (String.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
-            {
-                service.DisableService();
-                Logger.LogInfo(string.Format("Service disabled: {0}", serviceName));
-            }
+            _windowsServiceHelper.EnableService(serviceName);
+            SetServiceStatus(serviceName);
+            System.Windows.MessageBox.Show(string.Format("{0} has been ENABLED", displayName), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
-        private void BtnEnableDisable_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DisableService(string serviceName, string displayName)
         {
-            switch (((Button)sender).Name)
-            {
-                case "btnWusEnable":
-                    EnableService(UPDATE_SERVICE);
-                    break;
-                case "btnWusDisable":
-                    DisableService(UPDATE_SERVICE);
-                    break;
-                case "btnWimsEnable":
-                    EnableService(MODULES_INSTALLER_SERVICE);
-                    break;
-                case "btnWimsDisable":
-                    DisableService(MODULES_INSTALLER_SERVICE);
-                    break;
-            }
-
-            SetServiceStatus();
-
-            System.Windows.MessageBox.Show("Windows service udpated.", "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            _windowsServiceHelper.DisableService(serviceName);
+            SetServiceStatus(serviceName);
+            System.Windows.MessageBox.Show(string.Format("{0} has been DISABLED", displayName), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
+
+
     }
 }
