@@ -14,8 +14,9 @@ namespace WereDev.Utils.Wu10Man
         public MainWindow()
         {
             InitializeComponent();
-            ShowAdvancedItem.IsChecked = Properties.Settings.Default.ShowAdvanced;
-            SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
+            //ShowAdvancedItem.IsChecked = Properties.Settings.Default.ShowAdvanced;
+            //SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
+            SetMainScreenView(true);
         }
 
         protected override void OnClosed(EventArgs e)

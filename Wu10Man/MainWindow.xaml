@@ -22,7 +22,7 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="_File" >
-                <MenuItem Header="Show _Advanced" Click="ShowAdvancedItem_Click" Name="ShowAdvancedItem" IsCheckable="True" />
+                <!--<MenuItem Header="Show _Advanced" Click="ShowAdvancedItem_Click" Name="ShowAdvancedItem" IsCheckable="True" />-->
                 <MenuItem Header="_Exit" Click="ExitItem_Click" />
             </MenuItem>
             <MenuItem Header="_Help" HorizontalAlignment="Right">
