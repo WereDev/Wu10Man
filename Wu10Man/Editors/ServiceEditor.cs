@@ -18,6 +18,8 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         public bool SetStartupType(ServiceStartMode startMode)
         {
+            if (startMode == _serviceController.StartType) return true;
+
             //Doing this via Management Object allows for real-time service change
             //The new Windows Update Medic Service is pretty harsh on the access control
             bool doneRealtime = SetStartModeViaManagementObject(startMode);
@@ -28,23 +30,6 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
             _serviceController.Refresh();
             return doneRealtime;
-        }
-
-        public bool SetStartModeViaManagementObject(ServiceStartMode startMode)
-        {
-            using (var mo = new ManagementObject(string.Format("Win32_Service.Name=\"{0}\"", _serviceController.ServiceName)))
-            {
-                var result = mo.InvokeMethod("ChangeStartMode", new object[] { startMode.ToString() });
-                return result.ToString() != "2"; //Access Denied
-            }
-        }
-
-        public void SetStartModeViaRegistry(ServiceStartMode startMode)
-        {
-            RegistryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
-                                                          "Start",
-                                                          ((int)startMode).ToString(),
-                                                          Microsoft.Win32.RegistryValueKind.DWord);
         }
 
         public bool ServiceExists()
@@ -113,6 +98,23 @@ namespace WereDev.Utils.Wu10Man.Editors
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        private bool SetStartModeViaManagementObject(ServiceStartMode startMode)
+        {
+            using (var mo = new ManagementObject(string.Format("Win32_Service.Name=\"{0}\"", _serviceController.ServiceName)))
+            {
+                var result = mo.InvokeMethod("ChangeStartMode", new object[] { startMode.ToString() });
+                return result.ToString() != "2"; //Access Denied
+            }
+        }
+
+        private void SetStartModeViaRegistry(ServiceStartMode startMode)
+        {
+            RegistryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
+                                                          "Start",
+                                                          ((int)startMode).ToString(),
+                                                          Microsoft.Win32.RegistryValueKind.DWord);
         }
 
         protected virtual void Dispose(bool disposing)
