@@ -13,6 +13,8 @@ namespace WereDev.Utils.Wu10Man
         public About()
         {
             InitializeComponent();
+            var version = this.GetType().Assembly.GetName().Version;
+            lblAppVersion.Text = "v" + version.ToString();
         }
 
         private void GitHub_RequestNavigate(object sender, RequestNavigateEventArgs e)

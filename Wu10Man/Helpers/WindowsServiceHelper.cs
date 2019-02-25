@@ -28,7 +28,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             {
                 UPDATE_SERVICE,
                 MODULES_INSTALLER_SERVICE,
-                //SHOULD_NOT_EXIST,
+                SHOULD_NOT_EXIST,
                 UPDATE_MEDIC_SERVICE
             };
         }
@@ -74,24 +74,28 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public bool IsServiceEnabled(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            var serviceDllPath = GetServiceDllPath(serviceName);
+
             using (var service = new ServiceEditor(serviceName))
             {
-                return service.IsServiceEnabled();
-                //&& service.IsServiceRunAsLocalSystem();
+                return service.IsServiceEnabled()
+                       && (String.IsNullOrEmpty(serviceDllPath) || File.Exists(serviceDllPath));
             }
         }
 
-        public void EnableService(string serviceName)
+        public bool EnableService(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
             RemoveWu10FromFileName(serviceName);
+            var enabledRealtime = false;
             using (var service = new ServiceEditor(serviceName))
             {
-                service.EnableService();
                 if (!service.IsServiceRunAsLocalSystem())
                     service.SetAccountAsLocalSystem();
+                enabledRealtime = service.EnableService();
             }
-            _logger.LogInfo(string.Format("Service enabled: {0}", serviceName));
+            _logger.LogInfo($"Service enabled: {serviceName}");
+            return enabledRealtime;
         }
 
         public void DisableService(string serviceName)
@@ -100,10 +104,9 @@ namespace WereDev.Utils.Wu10Man.Helpers
             using (var service = new ServiceEditor(serviceName))
             {
                 service.DisableService();
-                //service.SetAccountAsLocalService();
             }
             AddWu10ToFileName(serviceName);
-            _logger.LogInfo(string.Format("Service disabled: {0}", serviceName));
+            _logger.LogInfo($"Service disabled: {serviceName}");
         }
 
         public void AddWu10ToFileName(string serviceName)
@@ -122,9 +125,19 @@ namespace WereDev.Utils.Wu10Man.Helpers
             if (string.IsNullOrEmpty(dllPath)) return;
 
             var wu10Path = GetPathWithWu10Prefix(dllPath);
-            _filesHelper.GiveOwnershipToAdministrators(wu10Path);
-            _filesHelper.RenameFile(wu10Path, dllPath);
-            _filesHelper.GiveOwnershipToTrustedInstaller(dllPath);
+
+            // If the file has returned, then we need to assume that some other process has recreated
+            // it.  It's safer to assume the new file is correct and delete the "old" file.
+            if (File.Exists(dllPath))
+            {
+                File.Delete(wu10Path);
+            }
+            else
+            {
+                _filesHelper.GiveOwnershipToAdministrators(wu10Path);
+                _filesHelper.RenameFile(wu10Path, dllPath);
+                _filesHelper.GiveOwnershipToTrustedInstaller(dllPath);
+            }
         }
 
         private string GetPathWithWu10Prefix(string path)

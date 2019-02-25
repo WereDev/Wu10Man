@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Helpers;
@@ -64,16 +63,20 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void EnableService(string serviceName, string displayName)
         {
-            _windowsServiceHelper.EnableService(serviceName);
+            var enabledRealtime = _windowsServiceHelper.EnableService(serviceName);
             SetServiceStatus(serviceName);
-            System.Windows.MessageBox.Show(string.Format("{0} has been ENABLED", displayName), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            var message = $"{displayName} has been ENABLED";
+            if (!enabledRealtime)
+                message += "\r\rYou will need to reboot for the setting to take effect.";
+
+            System.Windows.MessageBox.Show(message, "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
         private void DisableService(string serviceName, string displayName)
         {
             _windowsServiceHelper.DisableService(serviceName);
             SetServiceStatus(serviceName);
-            System.Windows.MessageBox.Show(string.Format("{0} has been DISABLED", displayName), "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show($"{displayName} has been DISABLED", "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
 

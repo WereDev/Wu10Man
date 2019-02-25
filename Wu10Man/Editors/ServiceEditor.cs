@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Management;
 using System.Security.Principal;
 using System.ServiceProcess;
 
@@ -6,7 +7,7 @@ namespace WereDev.Utils.Wu10Man.Editors
 {
     internal class ServiceEditor : IDisposable
     {
-        private readonly ServiceController _serviceController;
+        private ServiceController _serviceController;
         private readonly string _servicesRegistryPath = @"SYSTEM\CurrentControlSet\Services\";
 
         public ServiceEditor(string serviceName)
@@ -15,12 +16,20 @@ namespace WereDev.Utils.Wu10Man.Editors
             _serviceController = new ServiceController(serviceName);
         }
 
-        public void SetStartupType(ServiceStartMode startMode)
+        public bool SetStartupType(ServiceStartMode startMode)
         {
-            RegistryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
-                                                          "Start",
-                                                          ((int)startMode).ToString(),
-                                                          Microsoft.Win32.RegistryValueKind.DWord);
+            if (startMode == _serviceController.StartType) return true;
+
+            //Doing this via Management Object allows for real-time service change
+            //The new Windows Update Medic Service is pretty harsh on the access control
+            bool doneRealtime = SetStartModeViaManagementObject(startMode);
+            if (!doneRealtime)
+            {
+                //If this is done via registry, then a reboot is required
+                SetStartModeViaRegistry(startMode);
+            }
+            _serviceController.Refresh();
+            return doneRealtime;
         }
 
         public bool ServiceExists()
@@ -46,12 +55,11 @@ namespace WereDev.Utils.Wu10Man.Editors
         {
             StopService();
             SetStartupType(ServiceStartMode.Disabled);
-
         }
 
-        public void EnableService()
+        public bool EnableService()
         {
-            SetStartupType(ServiceStartMode.Manual);
+            return SetStartupType(ServiceStartMode.Manual);
         }
 
         public bool IsServiceEnabled()
@@ -92,13 +100,30 @@ namespace WereDev.Utils.Wu10Man.Editors
             GC.SuppressFinalize(this);
         }
 
+        private bool SetStartModeViaManagementObject(ServiceStartMode startMode)
+        {
+            using (var mo = new ManagementObject(string.Format("Win32_Service.Name=\"{0}\"", _serviceController.ServiceName)))
+            {
+                var result = mo.InvokeMethod("ChangeStartMode", new object[] { startMode.ToString() });
+                return result.ToString() != "2"; //Access Denied
+            }
+        }
+
+        private void SetStartModeViaRegistry(ServiceStartMode startMode)
+        {
+            RegistryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
+                                                          "Start",
+                                                          ((int)startMode).ToString(),
+                                                          Microsoft.Win32.RegistryValueKind.DWord);
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing && _serviceController != null)
             {
                 _serviceController.Dispose();
+                _serviceController = null;
             }
         }
     }
-
 }
