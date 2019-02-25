@@ -46,7 +46,6 @@ namespace WereDev.Utils.Wu10Man.Editors
         {
             StopService();
             SetStartupType(ServiceStartMode.Disabled);
-
         }
 
         public void EnableService()
@@ -100,5 +99,4 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
     }
-
 }
