@@ -83,17 +83,19 @@ namespace WereDev.Utils.Wu10Man.Helpers
             }
         }
 
-        public void EnableService(string serviceName)
+        public bool EnableService(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
             RemoveWu10FromFileName(serviceName);
+            var enabledRealtime = false;
             using (var service = new ServiceEditor(serviceName))
             {
-                service.EnableService();
                 if (!service.IsServiceRunAsLocalSystem())
                     service.SetAccountAsLocalSystem();
+                enabledRealtime = service.EnableService();
             }
-            _logger.LogInfo(string.Format("Service enabled: {0}", serviceName));
+            _logger.LogInfo($"Service enabled: {serviceName}");
+            return enabledRealtime;
         }
 
         public void DisableService(string serviceName)
@@ -104,7 +106,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
                 service.DisableService();
             }
             AddWu10ToFileName(serviceName);
-            _logger.LogInfo(string.Format("Service disabled: {0}", serviceName));
+            _logger.LogInfo($"Service disabled: {serviceName}");
         }
 
         public void AddWu10ToFileName(string serviceName)
@@ -122,15 +124,16 @@ namespace WereDev.Utils.Wu10Man.Helpers
             var dllPath = GetServiceDllPath(serviceName);
             if (string.IsNullOrEmpty(dllPath)) return;
 
+            var wu10Path = GetPathWithWu10Prefix(dllPath);
+
             // If the file has returned, then we need to assume that some other process has recreated
             // it.  It's safer to assume the new file is correct and delete the "old" file.
             if (File.Exists(dllPath))
             {
-                File.Delete(dllPath);
+                File.Delete(wu10Path);
             }
             else
             {
-                var wu10Path = GetPathWithWu10Prefix(dllPath);
                 _filesHelper.GiveOwnershipToAdministrators(wu10Path);
                 _filesHelper.RenameFile(wu10Path, dllPath);
                 _filesHelper.GiveOwnershipToTrustedInstaller(dllPath);

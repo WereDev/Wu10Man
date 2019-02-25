@@ -6,7 +6,7 @@ using System.Security.Principal;
 
 namespace WereDev.Utils.Wu10Man.Editors
 {
-    static class RegistryEditor
+    internal static class RegistryEditor
     {
         public static string ReadLocalMachineRegistryValue(string registryKey, string registryName)
         {
@@ -62,6 +62,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             using (var regKey = OpenOrCreateRegistryKey(registryRoot, registryKey, true))
             {
                 regKey.SetValue(registryName, registryValue, registryValueKind);
+                regKey.Flush();
             }
         }
 
@@ -70,6 +71,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             var regKey = registryRoot.OpenSubKey(registryKey, writable);
             if (regKey == null)
                 regKey = registryRoot.CreateSubKey(registryKey, writable);
+            regKey.Flush();
             return regKey;
         }
 
