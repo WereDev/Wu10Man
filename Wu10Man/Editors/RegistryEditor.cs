@@ -10,8 +10,8 @@ namespace WereDev.Utils.Wu10Man.Editors
     {
         public static string ReadLocalMachineRegistryValue(string registryKey, string registryName)
         {
-            if (String.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
-            if (String.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
+            if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
+            if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
             using (var regKey = Registry.LocalMachine.OpenSubKey(registryKey))
             {
                 var regValue = regKey?.GetValue(registryName);
@@ -56,8 +56,8 @@ namespace WereDev.Utils.Wu10Man.Editors
         private static void WriteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName, string registryValue, RegistryValueKind registryValueKind)
         {
             if (registryRoot == null) throw new ArgumentNullException(nameof(registryRoot));
-            if (String.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
-            if (String.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
+            if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
+            if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
 
             using (var regKey = OpenOrCreateRegistryKey(registryRoot, registryKey, true))
             {
@@ -78,8 +78,8 @@ namespace WereDev.Utils.Wu10Man.Editors
         private static void DeleteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName)
         {
             if (registryRoot == null) throw new ArgumentNullException(nameof(registryRoot));
-            if (String.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
-            if (String.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
+            if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
+            if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
 
             using (var regKey = registryRoot.OpenSubKey(registryKey, false))
             {

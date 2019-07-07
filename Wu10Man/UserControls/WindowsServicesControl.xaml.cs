@@ -51,14 +51,20 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
         }
 
-        private void tglService_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ToggleService(object sender, System.Windows.RoutedEventArgs e)
         {
             var toggle = ((ToggleSwitch)sender);
             var data = (WindowsServiceStatusModel)toggle.DataContext;
             if (toggle.IsChecked.Value)
+            {
                 EnableService(data.ServiceName, data.DisplayName);
+                Wu10Logger.LogInfo($"Service ENABLED: {data.ServiceName} - {data.DisplayName}");
+            }
             else
+            {
                 DisableService(data.ServiceName, data.DisplayName);
+                Wu10Logger.LogInfo($"Service DISNABLED: {data.ServiceName} - {data.DisplayName}");
+            }
         }
 
         private void EnableService(string serviceName, string displayName)

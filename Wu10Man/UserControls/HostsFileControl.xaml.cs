@@ -14,13 +14,11 @@ namespace WereDev.Utils.Wu10Man.UserControls
     {
         private readonly HostsFileHelper _hostsFileHelper;
         private readonly HostsFileModel _model;
-        private readonly Wu10Logger _logger;
 
         public HostsFileControl()
         {
             _hostsFileHelper = new HostsFileHelper();
             _model = new HostsFileModel();
-            _logger = new Wu10Logger();
             if (!DesignerProperties.GetIsInDesignMode(this))
                 SetRuntimeOptions();
         }
@@ -43,20 +41,28 @@ namespace WereDev.Utils.Wu10Man.UserControls
                                             .ToArray();
         }
 
-        private void tglHostItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ToggleHostItem(object sender, System.Windows.RoutedEventArgs e)
         {
             var toggle = (ToggleSwitch)sender;
             var kvp = (HostStatus)toggle.DataContext;
             if (toggle.IsChecked.Value)
+            {
                 _hostsFileHelper.UnblockHostUrl(kvp.Host);
+                Wu10Logger.LogInfo($"Host UNBLOCKED: {kvp.Host}");
+            }
             else
+            {
                 _hostsFileHelper.BlockHostUrl(kvp.Host);
+                Wu10Logger.LogInfo($"Host BLOCKED: {kvp.Host}");
+            }
+            
             ShowUpdateNotice();
         }
 
         private void UnblockAllHosts_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             _hostsFileHelper.UnblockAllHostUrls();
+            Wu10Logger.LogInfo($"All hosts UNBLOCKED");
             GetHostSettings();
             ShowUpdateNotice();
         }
@@ -64,6 +70,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private void BlockAllHosts_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             _hostsFileHelper.BlockAllHostUrls();
+            Wu10Logger.LogInfo($"All hosts BLOCKED");
             GetHostSettings();
             ShowUpdateNotice();
         }

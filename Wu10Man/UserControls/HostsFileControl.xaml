@@ -13,7 +13,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <Label Content="{Binding Host}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="tglHostItem_Click"  />
+                        <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleHostItem"  />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

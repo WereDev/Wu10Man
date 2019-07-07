@@ -134,7 +134,6 @@
     <Compile Include="Editors\TokenEditor.cs" />
     <Compile Include="Editors\WinAPI.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
-    <Compile Include="Helpers\GroupPolicyHelper.cs" />
     <Compile Include="Helpers\HostsFileHelper.cs" />
     <Compile Include="Helpers\WindowsServiceHelper.cs" />
     <Compile Include="Helpers\Wu10Logger.cs" />

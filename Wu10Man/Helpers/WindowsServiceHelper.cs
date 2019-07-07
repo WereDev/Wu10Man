@@ -12,14 +12,11 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public const string UPDATE_MEDIC_SERVICE = "WaaSMedicSvc";
         public const string SHOULD_NOT_EXIST = "ShouldNotExist";
 
-        private readonly Wu10Logger _logger;
-        private readonly FilesHelper _filesHelper;
+        private readonly FilesHelper _filesHelper = new FilesHelper();
         private readonly string _wu10FilePrefix = "Wu10Man_";
 
         public WindowsServiceHelper()
         {
-            _logger = new Wu10Logger();
-            _filesHelper = new FilesHelper();
         }
 
         public string[] ListAllServices()
@@ -94,7 +91,6 @@ namespace WereDev.Utils.Wu10Man.Helpers
                     service.SetAccountAsLocalSystem();
                 enabledRealtime = service.EnableService();
             }
-            _logger.LogInfo($"Service enabled: {serviceName}");
             return enabledRealtime;
         }
 
@@ -106,7 +102,6 @@ namespace WereDev.Utils.Wu10Man.Helpers
                 service.DisableService();
             }
             AddWu10ToFileName(serviceName);
-            _logger.LogInfo($"Service disabled: {serviceName}");
         }
 
         public void AddWu10ToFileName(string serviceName)
