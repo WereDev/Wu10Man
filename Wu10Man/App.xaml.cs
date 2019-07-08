@@ -10,8 +10,11 @@ namespace WereDev.Utils.Wu10Man
     {
         public App() : base()
         {
-            Wu10Logger.LogInfo("Application started");
+            Wu10Logger.LogInfo("Application starting");
             this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+            this.MainWindow = new MainWindow();
+            this.MainWindow.Show();
+            Wu10Logger.LogInfo("Application started");
         }
 
         protected override void OnExit(ExitEventArgs e)

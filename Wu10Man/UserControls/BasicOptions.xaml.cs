@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using WereDev.Utils.Wu10Man.Helpers;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -22,7 +10,9 @@ namespace WereDev.Utils.Wu10Man.UserControls
     {
         public BasicOptions()
         {
+            Wu10Logger.LogInfo("Basic control initializing.");
             InitializeComponent();
+            Wu10Logger.LogInfo("Basic control initializing.");
         }
     }
 }

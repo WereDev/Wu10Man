@@ -17,12 +17,14 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public WindowsServicesControl()
         {
+            Wu10Logger.LogInfo("Windows Services initializing.");
             _model = new WindowsServicesModel();
             _windowsServiceHelper = new WindowsServiceHelper();
             DataContext = _model;
 
             if (!DesignerProperties.GetIsInDesignMode(this))
                 SetRuntimeOptions();
+            Wu10Logger.LogInfo("Windows Services initialized.");
         }
 
         private void SetRuntimeOptions()
@@ -84,7 +86,5 @@ namespace WereDev.Utils.Wu10Man.UserControls
             SetServiceStatus(serviceName);
             System.Windows.MessageBox.Show($"{displayName} has been DISABLED", "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
-
-
     }
 }

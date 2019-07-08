@@ -17,10 +17,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public HostsFileControl()
         {
+            Wu10Logger.LogInfo("Hosts File initializing.");
             _hostsFileHelper = new HostsFileHelper();
             _model = new HostsFileModel();
             if (!DesignerProperties.GetIsInDesignMode(this))
                 SetRuntimeOptions();
+            Wu10Logger.LogInfo("Hosts File initialized.");
         }
 
         private void SetRuntimeOptions()

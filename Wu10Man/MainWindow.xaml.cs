@@ -11,10 +11,12 @@ namespace WereDev.Utils.Wu10Man
     {
         public MainWindow()
         {
+            Wu10Logger.LogInfo("Main window initializing.");
             InitializeComponent();
             //ShowAdvancedItem.IsChecked = Properties.Settings.Default.ShowAdvanced;
             //SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
             SetMainScreenView(true);
+            Wu10Logger.LogInfo("Main window initialized.");
         }
 
         protected override void OnClosed(EventArgs e)

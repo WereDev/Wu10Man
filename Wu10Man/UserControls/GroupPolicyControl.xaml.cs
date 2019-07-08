@@ -35,9 +35,11 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public GroupPolicyControl()
         {
+            Wu10Logger.LogInfo("Group Policy Control initializing.");
             CreatePolicyOptions();
             GetCurrentStatus();
             InitializeComponent();
+            Wu10Logger.LogInfo("Group Policy Control initialized.");
         }
 
         private void CreatePolicyOptions()
