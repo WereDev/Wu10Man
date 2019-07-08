@@ -14,23 +14,23 @@ namespace WereDev.Utils.Wu10Man.Editors
         private const uint SERVICE_NO_CHANGE = 0xffffffff; //this value is found in winsvc.h
         private const uint SERVICE_QUERY_CONFIG = 0x00000001;
         private const uint SERVICE_CHANGE_CONFIG = 0x00000002;
-        private const uint SERVICE_QUERY_STATUS = 0x00000004;
-        private const uint SERVICE_ENUMERATE_DEPENDENTS = 0x00000008;
-        private const uint SERVICE_START = 0x00000010;
-        private const uint SERVICE_STOP = 0x00000020;
-        private const uint SERVICE_PAUSE_CONTINUE = 0x00000040;
-        private const uint SERVICE_INTERROGATE = 0x00000080;
-        private const uint SERVICE_USER_DEFINED_CONTROL = 0x00000100;
-        private const uint STANDARD_RIGHTS_REQUIRED = 0x000F0000;
-        private const uint SERVICE_ALL_ACCESS = (STANDARD_RIGHTS_REQUIRED |
-                            SERVICE_CHANGE_CONFIG |
-                            SERVICE_QUERY_STATUS |
-                            SERVICE_ENUMERATE_DEPENDENTS |
-                            SERVICE_START |
-                            SERVICE_STOP |
-                            SERVICE_PAUSE_CONTINUE |
-                            SERVICE_INTERROGATE |
-                            SERVICE_USER_DEFINED_CONTROL);
+        //private const uint SERVICE_QUERY_STATUS = 0x00000004;
+        //private const uint SERVICE_ENUMERATE_DEPENDENTS = 0x00000008;
+        //private const uint SERVICE_START = 0x00000010;
+        //private const uint SERVICE_STOP = 0x00000020;
+        //private const uint SERVICE_PAUSE_CONTINUE = 0x00000040;
+        //private const uint SERVICE_INTERROGATE = 0x00000080;
+        //private const uint SERVICE_USER_DEFINED_CONTROL = 0x00000100;
+        //private const uint STANDARD_RIGHTS_REQUIRED = 0x000F0000;
+        //private const uint SERVICE_ALL_ACCESS = (STANDARD_RIGHTS_REQUIRED |
+        //                    SERVICE_CHANGE_CONFIG |
+        //                    SERVICE_QUERY_STATUS |
+        //                    SERVICE_ENUMERATE_DEPENDENTS |
+        //                    SERVICE_START |
+        //                    SERVICE_STOP |
+        //                    SERVICE_PAUSE_CONTINUE |
+        //                    SERVICE_INTERROGATE |
+        //                    SERVICE_USER_DEFINED_CONTROL);
 
         public const string LOCAL_SYSTEM_USER = @".\LocalSystem";
 
@@ -45,7 +45,6 @@ namespace WereDev.Utils.Wu10Man.Editors
         {
             IntPtr hManager = IntPtr.Zero;
             IntPtr hService = IntPtr.Zero;
-            uint bytesNeeded;
 
             try
             {
@@ -61,7 +60,7 @@ namespace WereDev.Utils.Wu10Man.Editors
                     ThrowWin32Exception();
                 }
 
-                bool retCode = QueryServiceConfig(hService, IntPtr.Zero, 0, out bytesNeeded);
+                bool retCode = QueryServiceConfig(hService, IntPtr.Zero, 0, out uint bytesNeeded);
                 if (!retCode && bytesNeeded == 0)
                     ThrowWin32Exception();
 

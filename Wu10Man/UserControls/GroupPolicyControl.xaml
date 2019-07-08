@@ -9,8 +9,8 @@
     <Grid>
         <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Width="240"
-                  ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="cmbGroupPolicies_SelectionChanged" />
-        <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="btnSetGroupPolicy_Click"/>
+                  ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="GroupPoliciesSelectionChanged" />
+        <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="SetGroupPolicy"/>
         
     </Grid>
 </UserControl>

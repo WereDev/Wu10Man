@@ -17,12 +17,14 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public WindowsServicesControl()
         {
+            Wu10Logger.LogInfo("Windows Services initializing.");
             _model = new WindowsServicesModel();
             _windowsServiceHelper = new WindowsServiceHelper();
             DataContext = _model;
 
             if (!DesignerProperties.GetIsInDesignMode(this))
                 SetRuntimeOptions();
+            Wu10Logger.LogInfo("Windows Services initialized.");
         }
 
         private void SetRuntimeOptions()
@@ -51,14 +53,20 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
         }
 
-        private void tglService_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ToggleService(object sender, System.Windows.RoutedEventArgs e)
         {
             var toggle = ((ToggleSwitch)sender);
             var data = (WindowsServiceStatusModel)toggle.DataContext;
             if (toggle.IsChecked.Value)
+            {
                 EnableService(data.ServiceName, data.DisplayName);
+                Wu10Logger.LogInfo($"Service ENABLED: {data.ServiceName} - {data.DisplayName}");
+            }
             else
+            {
                 DisableService(data.ServiceName, data.DisplayName);
+                Wu10Logger.LogInfo($"Service DISNABLED: {data.ServiceName} - {data.DisplayName}");
+            }
         }
 
         private void EnableService(string serviceName, string displayName)
@@ -78,7 +86,5 @@ namespace WereDev.Utils.Wu10Man.UserControls
             SetServiceStatus(serviceName);
             System.Windows.MessageBox.Show($"{displayName} has been DISABLED", "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
-
-
     }
 }

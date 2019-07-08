@@ -9,13 +9,11 @@ namespace WereDev.Utils.Wu10Man.Helpers
     {
         private readonly HostsEditor _hostsEditor;
         private readonly HashSet<string> _hostUrls;
-        private readonly Wu10Logger _logger;
 
         public HostsFileHelper()
         {
             _hostsEditor = new HostsEditor();
             _hostUrls = GetWindowsUpdateUrls();
-            _logger = new Wu10Logger();
         }
 
         //TODO: I don't like this here because of the dependency on ConfigurationManager.
@@ -48,14 +46,12 @@ namespace WereDev.Utils.Wu10Man.Helpers
                 var hostsList = currentHosts.ToList();
                 hostsList.Add(hostUrl);
                 _hostsEditor.SetHostsEntries(hostsList);
-                _logger.LogInfo(string.Format("Host blocked: {0}", hostUrl));
             }
         }
 
         public void BlockAllHostUrls()
         {
             _hostsEditor.SetHostsEntries(_hostUrls);
-            _logger.LogInfo("All Hosts blocked.");
 
         }
 
@@ -72,14 +68,12 @@ namespace WereDev.Utils.Wu10Man.Helpers
                 var hostsList = currentHosts.ToList();
                 hostsList.Remove(hostUrl);
                 _hostsEditor.SetHostsEntries(hostsList);
-                _logger.LogInfo(string.Format("Host unblocked: {0}", hostUrl));
             }
         }
 
         public void UnblockAllHostUrls()
         {
             _hostsEditor.ClearHostsEntries();
-            _logger.LogInfo("All Hosts unblocked.");
         }
 
         public string[] GetBlockedHostUrls()

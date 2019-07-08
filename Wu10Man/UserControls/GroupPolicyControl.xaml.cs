@@ -33,15 +33,13 @@ namespace WereDev.Utils.Wu10Man.UserControls
         public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; set; }
         public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
 
-        private readonly Wu10Logger _logger;
-
         public GroupPolicyControl()
         {
-            _logger = new Wu10Logger();
-
+            Wu10Logger.LogInfo("Group Policy Control initializing.");
             CreatePolicyOptions();
             GetCurrentStatus();
             InitializeComponent();
+            Wu10Logger.LogInfo("Group Policy Control initialized.");
         }
 
         private void CreatePolicyOptions()
@@ -99,12 +97,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
         }
 
-        private void cmbGroupPolicies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void GroupPoliciesSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SelectedPolicyOption = (KeyValuePair<string, string>)e.AddedItems[0];
         }
 
-        private void btnSetGroupPolicy_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SetGroupPolicy(object sender, System.Windows.RoutedEventArgs e)
         {
             switch (SelectedPolicyOption.Key)
             {
@@ -130,7 +128,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
                     break;
             }
 
-            _logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
+            Wu10Logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
             System.Windows.MessageBox.Show("Registry settings udpated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }

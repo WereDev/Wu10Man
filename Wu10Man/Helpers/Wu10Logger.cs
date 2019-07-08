@@ -5,11 +5,11 @@ using System.IO;
 
 namespace WereDev.Utils.Wu10Man.Helpers
 {
-    internal class Wu10Logger
+    internal static class Wu10Logger
     {
-        private readonly NLog.Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public string LogFolder
+        public static string LogFolder
         {
             get
             {
@@ -29,22 +29,22 @@ namespace WereDev.Utils.Wu10Man.Helpers
             }
         }
 
-        public void LogError(Exception ex)
+        public static void LogError(Exception ex)
         {
             var exception = ex;
             while (exception != null)
             {
-                LogError(string.Format("{0} \r\n {1}", ex.Message, ex.StackTrace.Replace("\r\n", "\r\n\t")));
+                LogError($"{ex.GetType().ToString()}: {ex.Message}\r\n{ex.StackTrace}");
                 exception = exception.InnerException;
             }
         }
 
-        public void LogError(string message)
+        public static void LogError(string message)
         {
             _logger.Error(message);
         }
 
-        public void LogInfo(string message)
+        public static void LogInfo(string message)
         {
             _logger.Info(message ?? string.Empty);
         }

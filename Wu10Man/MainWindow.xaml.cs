@@ -9,14 +9,14 @@ namespace WereDev.Utils.Wu10Man
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Wu10Logger _logger = new Wu10Logger();
-
         public MainWindow()
         {
+            Wu10Logger.LogInfo("Main window initializing.");
             InitializeComponent();
             //ShowAdvancedItem.IsChecked = Properties.Settings.Default.ShowAdvanced;
             //SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
             SetMainScreenView(true);
+            Wu10Logger.LogInfo("Main window initialized.");
         }
 
         protected override void OnClosed(EventArgs e)
@@ -40,8 +40,7 @@ namespace WereDev.Utils.Wu10Man
 
         private void LogFilesItem_Click(object sender, RoutedEventArgs e)
         {
-            var folder = _logger.LogFolder;
-            System.Diagnostics.Process.Start(folder);
+            System.Diagnostics.Process.Start(Wu10Logger.LogFolder);
         }
 
         private void ShowAdvancedItem_Click(object sender, RoutedEventArgs e)
@@ -56,7 +55,6 @@ namespace WereDev.Utils.Wu10Man
             this.AdvancedControl.Visibility = showAdvanced ? Visibility.Visible : Visibility.Hidden;
             this.BasicOptions.Visibility = showAdvanced ? Visibility.Hidden : Visibility.Visible;
         }
-
     }
 }
 
