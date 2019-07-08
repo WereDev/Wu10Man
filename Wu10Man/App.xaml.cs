@@ -11,6 +11,8 @@ namespace WereDev.Utils.Wu10Man
         public App() : base()
         {
             Wu10Logger.LogInfo("Application starting");
+            var version = this.GetType().Assembly.GetName().Version;
+            Wu10Logger.LogInfo($"Application version: v{version.ToString()}");
             this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
             this.MainWindow = new MainWindow();
             this.MainWindow.Show();
