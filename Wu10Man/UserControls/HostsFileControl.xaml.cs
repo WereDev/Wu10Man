@@ -79,7 +79,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void ShowUpdateNotice()
         {
-            System.Windows.MessageBox.Show("Hosts file udpated.", "Hosts File", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("Hosts file updated.", "Hosts File", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
 }

@@ -92,6 +92,10 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.5.1\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
@@ -157,6 +161,9 @@
     <Compile Include="UserControls\Models\ModelBase.cs" />
     <Compile Include="UserControls\Models\WindowsServicesModel.cs" />
     <Compile Include="UserControls\Models\WindowsServiceStatusModel.cs" />
+    <Compile Include="UserControls\PauseUpdatesControl.xaml.cs">
+      <DependentUpon>PauseUpdatesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\WindowsServicesControl.xaml.cs">
       <DependentUpon>WindowsServicesControl.xaml</DependentUpon>
     </Compile>
@@ -186,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\HostsFileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PauseUpdatesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -231,6 +242,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="question.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

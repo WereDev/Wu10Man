@@ -14,7 +14,7 @@
 
     <Grid>
         <Label Content="Windows Services" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True"/>
-        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="ServicesListBox" ItemsSource="{Binding Path=Services}" BorderThickness="0">
+        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="ServicesListBox" ItemsSource="{Binding Path=Services}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="30" Visibility="{Binding Path=ServiceExists, Converter={StaticResource ResourceKey=BoolToVisibilityConverter}}">
@@ -23,8 +23,6 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
-
         </ListBox>
     </Grid>
 </UserControl>

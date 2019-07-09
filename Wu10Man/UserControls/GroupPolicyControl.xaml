@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             d:DesignHeight="450" d:DesignWidth="350">
+             d:DesignHeight="450" d:DesignWidth="290">
     <Grid>
         <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Width="240"
                   ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="GroupPoliciesSelectionChanged" />
         <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="SetGroupPolicy"/>
-        
+        <TextBlock HorizontalAlignment="Center" Margin="25,194,0,0" TextWrapping="Wrap" Text="NOTE: In my usage and testing, I'm not certain that Windows is actually adhereing to this registry setting even though it is well documented." VerticalAlignment="Top" Height="223" Width="200"/>
+        <Image x:Name="imgWarning" HorizontalAlignment="Center" Height="32" Margin="-225,194,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="0.698,-0.958"/>
     </Grid>
 </UserControl>

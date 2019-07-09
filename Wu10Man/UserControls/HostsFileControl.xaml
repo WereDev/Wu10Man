@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="350" >
     <Grid>
         <Label Content="Hosts File Routes" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0">
+        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="30">
@@ -17,10 +17,8 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
-
         </ListBox>
-        <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="125" Click="UnblockAllHosts_Click"/>
-        <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="125" Click="BlockAllHosts_Click"/>
+        <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="125" Click="UnblockAllHosts_Click"/>
+        <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>
     </Grid>
 </UserControl>

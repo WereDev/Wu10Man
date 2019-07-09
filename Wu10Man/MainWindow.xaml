@@ -7,7 +7,7 @@
         xmlns:usercontrols="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
         mc:Ignorable="d"
         Title="Wu10Man - Windows 10 Update Manager"
-        Height="450" 
+        Height="460" 
         Width="300" 
         HorizontalAlignment="Center" 
         VerticalAlignment="Center" 
