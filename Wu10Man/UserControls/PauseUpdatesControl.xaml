@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="450" d:DesignWidth="270">
     <Grid>
         <Label Content="Windows Update Pause Updates" HorizontalAlignment="Center" VerticalAlignment="Top" />
@@ -16,7 +15,9 @@
                         <LineBreak />
                         You can gain access to these settings via the normal
                         <LineBreak />
-                        Windows Update Advanced Settings, but it's a bit restricted.
+                        Windows Update Advanced Settings, but it's a bit restricted,
+                        <LineBreak />
+                        so I added it here as well.
                     </TextBlock>
                 </StackPanel>
             </Image.ToolTip>
@@ -40,12 +41,12 @@
             </Image.ToolTip>            
         </Image>
         <Label HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Top" Width="240" Content="Pause updates until:"/>
-        <DatePicker HorizontalAlignment="Center" Margin="0,85,0,0" VerticalAlignment="Top" Width="240"/>
+        <DatePicker HorizontalAlignment="Center" Margin="0,85,0,0" VerticalAlignment="Top" Width="240" Text="{Binding FeatureUpdatePauseDate}"/>
         <Label HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="240" Content="Number of days to delay updates:"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" Width="240"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" Width="240" PreviewTextInput="TextBox_PreviewTextInput" Text="{Binding FeatureUpdateDelayDays}"/>
 
-        <Label HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="240" Content="Quality Updates" FontWeight="Bold"/>
-        <Image HorizontalAlignment="Center" Margin="-25,184,0,0" VerticalAlignment="Top" Width="12" Height="12" Source="/Wu10Man;component/question.png">
+        <Label HorizontalAlignment="Center" Margin="0,175,0,0" VerticalAlignment="Top" Width="240" Content="Quality Updates" FontWeight="Bold"/>
+        <Image HorizontalAlignment="Center" Margin="-25,179,0,0" VerticalAlignment="Top" Width="12" Height="12" Source="/Wu10Man;component/question.png">
             <Image.ToolTip>
                 <StackPanel>
                     <TextBlock>
@@ -60,9 +61,12 @@
                 </StackPanel>
             </Image.ToolTip>
         </Image>
-        <Label HorizontalAlignment="Center" Margin="0,205,0,0" VerticalAlignment="Top" Width="240" Content="Pause updates until:"/>
-        <DatePicker HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Width="240" />
-        <Label HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" Width="240" Content="Number of days to delay updates:"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,285,0,0" VerticalAlignment="Top" Width="240"/>
+        <Label HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Width="240" Content="Pause updates until:"/>
+        <DatePicker HorizontalAlignment="Center" Margin="0,225,0,0" VerticalAlignment="Top" Width="240"  Text="{Binding QualityUpdatePauseDate}"/>
+        <Label HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" Width="240" Content="Number of days to delay updates:"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,280,0,0" VerticalAlignment="Top" Width="240" PreviewTextInput="TextBox_PreviewTextInput" Text="{Binding QualityUpdateDelayDays}"/>
+        <Button HorizontalAlignment="Center" Margin="-125,315,0,0" VerticalAlignment="Top" Width="50" Content="Save" Click="SaveChanges" />
+        <Button HorizontalAlignment="Center" Margin="0,315,0,0" VerticalAlignment="Top" Width="50" Content="Reset" Click="ResetChanges" />
+        <Button HorizontalAlignment="Center" Margin="125,315,0,0" VerticalAlignment="Top" Width="50" Content="Clear" Click="ClearValues" />
     </Grid>
 </UserControl>
