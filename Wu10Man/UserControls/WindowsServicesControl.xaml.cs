@@ -57,7 +57,6 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
             catch (Exception ex)
             {
-                serviceModel.ServiceExists = false;
                 Wu10Logger.LogError(ex);
             }
         }
@@ -74,7 +73,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             else
             {
                 DisableService(data.ServiceName, data.DisplayName);
-                Wu10Logger.LogInfo($"Service DISNABLED: {data.ServiceName} - {data.DisplayName}");
+                Wu10Logger.LogInfo($"Service DISABLED: {data.ServiceName} - {data.DisplayName}");
             }
         }
 

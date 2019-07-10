@@ -76,7 +76,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             using (var service = new ServiceEditor(serviceName))
             {
                 return service.IsServiceEnabled()
-                       && (String.IsNullOrEmpty(serviceDllPath) || File.Exists(serviceDllPath));
+                       && (string.IsNullOrEmpty(serviceDllPath) || File.Exists(serviceDllPath));
             }
         }
 
@@ -146,7 +146,5 @@ namespace WereDev.Utils.Wu10Man.Helpers
             var newPath = Path.Combine(folder, fileName);
             return newPath;
         }
-
-
     }
 }
