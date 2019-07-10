@@ -42,6 +42,8 @@ There was a fair amount of research that went into this, but a couple sites stoo
 - [Windows Update Server List](https://www.tenforums.com/windows-updates-activation/38771-windows-updates-white-list-proxy-server.html)
 - [Windows Service Authorization](https://stackoverflow.com/questions/17031552/how-do-you-take-file-ownership-with-powershell/17047190#17047190)
 - [Change Windows Service Password](https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268)
+- [Windows 10, version 1709 basic level Windows diagnostic events and fields](https://docs.microsoft.com/en-us/windows/privacy/basic-level-windows-diagnostic-events-and-fields-1709)
+- 
 
 ### Downloads
 https://github.com/WereDev/Wu10Man/releases
