@@ -34,7 +34,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             var exception = ex;
             while (exception != null)
             {
-                LogError($"{ex.GetType().ToString()}: {ex.Message}\r\n{ex.StackTrace}");
+                LogError($"{exception.GetType().ToString()}: {exception.Message}\r\n{exception.StackTrace}");
                 exception = exception.InnerException;
             }
         }
