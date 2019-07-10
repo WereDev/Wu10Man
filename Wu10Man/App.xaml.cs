@@ -47,11 +47,17 @@ namespace WereDev.Utils.Wu10Man
         {
             var appVersion = this.GetType().Assembly.GetName().Version;
             Wu10Logger.LogInfo($"Application version: v{appVersion.ToString()}");
-
-            var windowsProduct = Editors.RegistryEditor.ReadLocalMachineRegistryValue(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion", "ProductName");
-            var windowsVersion = Environment.OSVersion.Version.ToString();
-            Wu10Logger.LogInfo($"{windowsProduct} {windowsVersion}");
+            Wu10Logger.LogInfo(GetWindowsVersion());
             Wu10Logger.LogInfo($".Net Framework: {GetNetFrameworkBuild()}");
+        }
+
+        string GetWindowsVersion()
+        {
+            var windowsProduct = Editors.RegistryEditor.ReadLocalMachineRegistryValue(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion", "ProductName");
+            var windowsRelease = Editors.RegistryEditor.ReadLocalMachineRegistryValue(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion", "ReleaseId");
+            var windowsBuild = Editors.RegistryEditor.ReadLocalMachineRegistryValue(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion", "CurrentBuild");
+            var windowsBuildRevision = Editors.RegistryEditor.ReadLocalMachineRegistryValue(@"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion", "BaseBuildRevisionNumber");
+            return $"{windowsProduct} Version {windowsRelease} Build {windowsBuild}.{windowsBuildRevision}";
         }
 
         string GetNetFrameworkBuild()
