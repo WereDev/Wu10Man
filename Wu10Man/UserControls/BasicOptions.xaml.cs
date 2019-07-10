@@ -12,7 +12,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
         {
             Wu10Logger.LogInfo("Basic control initializing.");
             InitializeComponent();
-            Wu10Logger.LogInfo("Basic control initializing.");
+            Wu10Logger.LogInfo("Basic control initialized.");
         }
     }
 }
