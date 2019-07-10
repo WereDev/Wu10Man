@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Helpers;
@@ -45,11 +46,19 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private void SetServiceStatus(string serviceName)
         {
             var serviceModel = _model.Services.Single(x => x.ServiceName == serviceName);
-            serviceModel.ServiceExists = _windowsServiceHelper.ServiceExists(serviceName);
-            if (serviceModel.ServiceExists)
+            try
             {
-                serviceModel.DisplayName = _windowsServiceHelper.GetServiceDisplayName(serviceName);
-                serviceModel.IsServiceEnabled = _windowsServiceHelper.IsServiceEnabled(serviceName);
+                serviceModel.ServiceExists = _windowsServiceHelper.ServiceExists(serviceName);
+                if (serviceModel.ServiceExists)
+                {
+                    serviceModel.DisplayName = _windowsServiceHelper.GetServiceDisplayName(serviceName);
+                    serviceModel.IsServiceEnabled = _windowsServiceHelper.IsServiceEnabled(serviceName);
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceModel.ServiceExists = false;
+                Wu10Logger.LogError(ex);
             }
         }
 
