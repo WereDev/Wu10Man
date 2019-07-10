@@ -8,7 +8,7 @@
             _serviceName = serviceName;
         }
 
-        private string _serviceName;
+        private string _serviceName = null;
         public string ServiceName
         {
             get { return _serviceName; }
@@ -22,7 +22,7 @@
             }
         }
 
-        private string _displayName;
+        private string _displayName = null;
         public string DisplayName
         {
             get { return _displayName; }
