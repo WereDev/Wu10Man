@@ -5,6 +5,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_RUN_AS_ADMIN" Value="0"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="Installer package for Wu10Man" ValueLocId="*"/>
     <ROW Property="ARPHELPLINK" Value="https://github.com/WereDev/Wu10Man"/>
@@ -18,7 +19,7 @@
     <ROW Property="ProductCode" Value="1033:{BF8674A6-4567-45E9-BC7A-6E9D53BCFC86} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Wu10Man"/>
-    <ROW Property="ProductVersion" Value="2.1.2.0" Type="32" TargetFile="Wu10Man.exe"/>
+    <ROW Property="ProductVersion" Value="2.1.3.0" Type="32" TargetFile="Wu10Man.exe"/>
     <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:ReallySuppress"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
