@@ -116,12 +116,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
             if (_model.FeatureUpdateDelayDays > 0)
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, _model.FeatureUpdateDelayDays.ToString(), RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Setting Feature Deferal Days: {_model.FeatureUpdateDelayDays}");
+                Wu10Logger.LogInfo($"Saving Feature Deferal Days: {_model.FeatureUpdateDelayDays}");
             }
             else
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, "0", RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Setting Feature Deferal Days: 0");
+                Wu10Logger.LogInfo($"Saving Feature Deferal Days: 0");
             }
 
             if (_model.QualityUpdatePauseDate.HasValue)
@@ -141,12 +141,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
             if (_model.QualityUpdateDelayDays > 0)
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferQualityUpdatesPeriodInDays, _model.QualityUpdateDelayDays.ToString(), RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Setting Quality Deferal Days: {_model.QualityUpdateDelayDays}");
+                Wu10Logger.LogInfo($"Saving Quality Deferal Days: {_model.QualityUpdateDelayDays}");
             }
             else
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferQualityUpdatesPeriodInDays, "0", RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Setting Quality Deferal Days: {_model.FeatureUpdateDelayDays}");
+                Wu10Logger.LogInfo($"Saving Quality Deferal Days: {_model.FeatureUpdateDelayDays}");
             }
 
             var latestDate = Math.Max(_model.FeatureUpdatePauseDate?.Ticks ?? 0, _model.QualityUpdatePauseDate?.Ticks ?? 0);
