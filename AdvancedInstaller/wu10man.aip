@@ -16,10 +16,10 @@
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/WereDev/Wu10Man/releases"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Weredev"/>
-    <ROW Property="ProductCode" Value="1033:{BF8674A6-4567-45E9-BC7A-6E9D53BCFC86} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{ABB62A39-7068-4931-84D9-8BFC9FDD3CB7} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Wu10Man"/>
-    <ROW Property="ProductVersion" Value="2.1.3.0" Type="32" TargetFile="Wu10Man.exe"/>
+    <ROW Property="ProductVersion" Value="3.0.0.0" Type="32" TargetFile="Wu10Man.exe"/>
     <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:ReallySuppress"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
@@ -49,6 +49,11 @@
     <ROW Component="NLog.dll" ComponentId="{FF65DAAD-D873-40A0-B483-5E1CD921797E}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
     <ROW Component="ProductInformation" ComponentId="{71412340-B01D-4815-A1B9-38799C2662D3}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{67BBCAC2-83AE-4110-98F9-2B38EDFFDAF6}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="System.Diagnostics.EventLog.dll" ComponentId="{C1E23B02-B39D-4CFA-BAEC-7CB81D65DAB6}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.EventLog.dll"/>
+    <ROW Component="System.Security.AccessControl.dll" ComponentId="{81B6BBFF-E4C0-4C13-980D-6647E12F0C89}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.AccessControl.dll"/>
+    <ROW Component="System.Security.Permissions.dll" ComponentId="{333431F5-A3EA-411A-809B-03F429E24D39}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.Permissions.dll"/>
+    <ROW Component="System.Security.Principal.Windows.dll" ComponentId="{0AC391B8-C3B1-42D1-A240-C51F974BB773}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.Principal.Windows.dll"/>
+    <ROW Component="System.ServiceProcess.ServiceController.dll" ComponentId="{05BF8650-2735-4B0C-A10C-A2099E89B3A8}" Directory_="APPDIR" Attributes="0" KeyPath="System.ServiceProcess.ServiceController.dll"/>
     <ROW Component="System.Windows.Interactivity.dll" ComponentId="{C6339B30-661C-41C7-ACEC-84A83650CAEE}" Directory_="APPDIR" Attributes="0" KeyPath="System.Windows.Interactivity.dll"/>
     <ROW Component="WPFSpark.dll" ComponentId="{D9F0BEE1-3647-44A5-A52E-866DD2345227}" Directory_="APPDIR" Attributes="0" KeyPath="WPFSpark.dll"/>
     <ROW Component="Wu10Man.exe" ComponentId="{302C40F2-9077-4975-B738-3C84CA5A3776}" Directory_="APPDIR" Attributes="0" KeyPath="Wu10Man.exe"/>
@@ -66,6 +71,11 @@
     <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\NLog.dll" SelfReg="false"/>
     <ROW File="System.Windows.Interactivity.dll" Component_="System.Windows.Interactivity.dll" FileName="SYSTEM~1.DLL|System.Windows.Interactivity.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Windows.Interactivity.dll" SelfReg="false"/>
     <ROW File="WPFSpark.dll" Component_="WPFSpark.dll" FileName="WPFSpark.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\WPFSpark.dll" SelfReg="false"/>
+    <ROW File="System.Diagnostics.EventLog.dll" Component_="System.Diagnostics.EventLog.dll" FileName="SYSTEM~2.DLL|System.Diagnostics.EventLog.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Diagnostics.EventLog.dll" SelfReg="false"/>
+    <ROW File="System.Security.AccessControl.dll" Component_="System.Security.AccessControl.dll" FileName="SYSTEM~3.DLL|System.Security.AccessControl.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Security.AccessControl.dll" SelfReg="false"/>
+    <ROW File="System.Security.Permissions.dll" Component_="System.Security.Permissions.dll" FileName="SYSTEM~4.DLL|System.Security.Permissions.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Security.Permissions.dll" SelfReg="false"/>
+    <ROW File="System.Security.Principal.Windows.dll" Component_="System.Security.Principal.Windows.dll" FileName="SYSTEM~5.DLL|System.Security.Principal.Windows.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Security.Principal.Windows.dll" SelfReg="false"/>
+    <ROW File="System.ServiceProcess.ServiceController.dll" Component_="System.ServiceProcess.ServiceController.dll" FileName="SYSTEM~6.DLL|System.ServiceProcess.ServiceController.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.ServiceProcess.ServiceController.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -147,6 +157,11 @@
     <ROW Feature_="MainFeature" Component_="Wu10Man.exe"/>
     <ROW Feature_="MainFeature" Component_="Wu10Man.exe.config"/>
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="System.Diagnostics.EventLog.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.AccessControl.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Permissions.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Principal.Windows.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.ServiceProcess.ServiceController.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="wu10man.exe" SourcePath="..\Wu10Man\wu10man.ico" Index="0"/>
