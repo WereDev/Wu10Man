@@ -43,13 +43,16 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         private string[] GetHostsFromLines(IEnumerable<string> lines)
         {
-            var hosts = lines.Select(x => GetHostFromLine(x));
-            return hosts.ToArray();
+            var hosts = lines.Select(x => GetHostFromLine(x))
+                             .Where(x => !string.IsNullOrEmpty(x))
+                             .ToArray();
+            return hosts;
         }
 
         private string GetHostFromLine(string line)
         {
             line = line.Trim();
+            if (line == string.Empty) return line;
             var split = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             return split[1];
         }

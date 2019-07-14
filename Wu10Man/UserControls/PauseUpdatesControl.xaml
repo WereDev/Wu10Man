@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="WereDev.Utils.Wu10Man.UserControls.PauseUpdatesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="363"
+             d:DesignWidth="578">
+    <Grid>
+        <Label Content="Windows Update Pause and Defer" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        <Grid Width="289" HorizontalAlignment="Left" Margin="0, 30, 0, 0">
+            <Label>
+                <Label.Content>
+                    <StackPanel>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            This is new functionality introduced around early 2019.
+                            You can gain access to these settings via the normal
+                            Windows Update Advanced Settings.  Those screens put a limit
+                            on the amount of time you can pause updates, so I added
+                            this functionality to bypass those limits.
+                        </TextBlock>
+                        <TextBlock FontWeight="Bold" Width="270" TextWrapping="Wrap" Margin="0,15,0,0">
+                            Feature Updates:
+                        </TextBlock>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            Feature updates are technically new versions of Windows 10,
+                            which become available twice a year (roughly every six months)
+                            during spring and fall. These are also known as "semi-annual"
+                            releases.
+                        </TextBlock>
+                        <TextBlock FontWeight="Bold" Width="270" TextWrapping="Wrap" Margin="0,15,0,0">
+                            Quality Updates:
+                        </TextBlock>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            Quality updates (also called "cumulative updates") are the
+                            mandatory updates that your device downloads and installs
+                            automatically every month through Windows Update, usually
+                            every second Tuesday of every month.
+                        </TextBlock>
+                    </StackPanel>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Width="289" HorizontalAlignment="Right" Margin="0, 30, 0, 0">
+            <StackPanel>
+                <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Feature Updates" FontWeight="Bold" />
+                <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Pause updates until:"/>
+                <DatePicker HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Text="{Binding FeatureUpdatePauseDate, Mode=TwoWay}"/>
+                <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Number of days to defer updates:"/>
+                <TextBox HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" PreviewTextInput="TextBox_PreviewTextInput" Text="{Binding FeatureUpdateDelayDays, Mode=TwoWay}"/>
+
+                <Label HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="240" Content="Quality Updates" FontWeight="Bold"/>
+                <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Pause updates until:"/>
+                <DatePicker HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Text="{Binding QualityUpdatePauseDate, Mode=TwoWay}"/>
+                <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Number of days to defer updates:"/>
+                <TextBox HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" PreviewTextInput="TextBox_PreviewTextInput" Text="{Binding QualityUpdateDelayDays, Mode=TwoWay}"/>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" Margin="25,10" VerticalAlignment="Bottom" Width="110" Content="Save" Click="SaveChanges" />
+            <Button HorizontalAlignment="Left" Margin="25,10" VerticalAlignment="Bottom" Width="110" Content="Clear" Click="ClearValues" />
+        </Grid>
+    </Grid>
+</UserControl>
