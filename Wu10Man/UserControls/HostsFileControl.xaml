@@ -5,20 +5,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="350" >
+             d:DesignHeight="363"
+             d:DesignWidth="578">
     <Grid>
-        <Label Content="Hosts File Routes" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="30">
-                        <Label Content="{Binding Host}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleHostItem"  />
+        <Label Content="Windows Hosts File" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        <Grid Width="289" HorizontalAlignment="Left" Margin="0, 30, 0, 0">
+            <Label>
+                <Label.Content>
+                    <StackPanel>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            Using the Windows Hosts file, you can specify to
+                            which IP Address a Domain Name is routed to. The
+                            default list of Domain Names are those associated
+                            with Windows Udpate.  By enabling the setting(s),
+                            you will stop any application on this computer from
+                            from being able to get the true IP Address of those
+                            Domains.
+                        </TextBlock>
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="125" Click="UnblockAllHosts_Click"/>
-        <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Width="289" HorizontalAlignment="Right" Margin="0, 30, 0, 0">
+            <ListBox Height="290" Margin="0,0,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <Label Content="{Binding Host}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleHostItem"  />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="125" Click="UnblockAllHosts_Click"/>
+            <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>
+        </Grid>
     </Grid>
 </UserControl>

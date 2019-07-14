@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 
-namespace WereDev.Utils.Wu10Man
+namespace WereDev.Utils.Wu10Man.UserWindows
 {
     /// <summary>
     /// Interaction logic for About.xaml

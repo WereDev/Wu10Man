@@ -5,13 +5,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             d:DesignHeight="450" d:DesignWidth="290">
+             d:DesignHeight="363"
+             d:DesignWidth="578">
     <Grid>
-        <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" Width="240"
+        <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        <Grid Width="289" HorizontalAlignment="Left" Margin="0, 30, 0, 0">
+            <Label>
+                <Label.Content>
+                    <StackPanel>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            You can use Group Policy to define how computers
+                            and users can interact with Windows Updates to
+                            obtain automatic updates from Windows Server
+                            Update Services.
+                        </TextBlock>
+                        <TextBlock Margin="0, 20, 0, 0">
+                            <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />    
+                        </TextBlock>
+                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
+                            NOTE: In my usage and testing, I'm not certain
+                            that Windows is actually adhereing to this
+                            policy.  I have not been able to get a
+                            notification about either availability or
+                            download of an update.
+                        </TextBlock>
+                    </StackPanel>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Width="289" HorizontalAlignment="Right" Margin="0, 30, 0, 0">
+            <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="240"
                   ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="GroupPoliciesSelectionChanged" />
-        <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="SetGroupPolicy"/>
-        <TextBlock HorizontalAlignment="Center" Margin="25,194,0,0" TextWrapping="Wrap" Text="NOTE: In my usage and testing, I'm not certain that Windows is actually adhereing to this registry setting even though it is well documented." VerticalAlignment="Top" Height="223" Width="200"/>
-        <Image x:Name="imgWarning" HorizontalAlignment="Center" Height="32" Margin="-225,194,0,0" VerticalAlignment="Top" Width="32" RenderTransformOrigin="0.698,-0.958"/>
+            <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="SetGroupPolicy"/>
+            <TextBlock HorizontalAlignment="Center" Margin="25,194,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="223" Width="200"/>
+        </Grid>
     </Grid>
 </UserControl>

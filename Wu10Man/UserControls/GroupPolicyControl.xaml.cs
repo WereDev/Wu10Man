@@ -41,14 +41,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             CreatePolicyOptions();
             GetCurrentStatus();
             InitializeComponent();
-            SetWarningIcon();
             Wu10Logger.LogInfo("Group Policy Control initialized.");
-        }
-
-        private void SetWarningIcon()
-        {
-            var image = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(System.Drawing.SystemIcons.Warning.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            imgWarning.Source = image;
         }
 
         private void CreatePolicyOptions()

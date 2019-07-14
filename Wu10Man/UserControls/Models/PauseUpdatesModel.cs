@@ -4,8 +4,8 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
     class PauseUpdatesModel : ModelBase
     {
-        private DateTimeOffset? _featureUpdatePauseDate = null;
-        public DateTimeOffset? FeatureUpdatePauseDate
+        private DateTime? _featureUpdatePauseDate = null;
+        public DateTime? FeatureUpdatePauseDate
         {
             get
             {
@@ -32,8 +32,8 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             }
         }
 
-        private DateTimeOffset? _qualityUpdatePauseDate = null;
-        public DateTimeOffset? QualityUpdatePauseDate
+        private DateTime? _qualityUpdatePauseDate = null;
+        public DateTime? QualityUpdatePauseDate
         {
             get
             {

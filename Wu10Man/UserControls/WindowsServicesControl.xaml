@@ -5,24 +5,60 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="300"
+             d:DesignHeight="363"
+             d:DesignWidth="578"
              >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
-
     <Grid>
-        <Label Content="Windows Services" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True"/>
-        <ListBox Height="275" Margin="0,30,0,0" VerticalAlignment="Top" Name="ServicesListBox" ItemsSource="{Binding Path=Services}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="30" Visibility="{Binding Path=ServiceExists, Converter={StaticResource ResourceKey=BoolToVisibilityConverter}}">
-                        <Label Content="{Binding DisplayName}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <wpfspark:ToggleSwitch IsChecked="{Binding IsServiceEnabled}" CheckedToolTip="Service enabled." UncheckedToolTip="Service disabled."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleService" />
+        <Label Content="Windows Services" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        <Grid Width="289" HorizontalAlignment="Left" Margin="0, 30, 0, 0">
+            <Label>
+                <Label.Content>
+                    <StackPanel>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            Windows Services are at the heart of how Windows
+                            Update Works.  There are 3 items that work in
+                            conjunction to update Windows.
+                        </TextBlock>
+                        <TextBlock Width="270" Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                            Windows Update:
+                        </TextBlock>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            Enables the detection, download, and installation of
+                            updates for Windows and other programs.
+                        </TextBlock>
+                        <TextBlock Width="270" Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                            Windows Modules Installer:
+                        </TextBlock>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            AKA Trusted Installer. Enables installation,
+                            modification, and removal of Windows updates
+                            and optional components.
+                        </TextBlock>
+                        <TextBlock Width="270" Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                            Windows Update Medic Service:
+                        </TextBlock>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            AKA WaaSMedicSvc. Enables remediation and
+                            protection of Windows Update components.
+                        </TextBlock>
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Width="289" HorizontalAlignment="Right" Margin="0, 30, 0, 0">
+            <ListBox Height="275" Margin="0,0,0,0" VerticalAlignment="Top" Name="ServicesListBox" ItemsSource="{Binding Path=Services}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="30" Visibility="{Binding Path=ServiceExists, Converter={StaticResource ResourceKey=BoolToVisibilityConverter}}">
+                            <Label Content="{Binding DisplayName}" Width="190" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <wpfspark:ToggleSwitch IsChecked="{Binding IsServiceEnabled}" CheckedToolTip="Service enabled." UncheckedToolTip="Service disabled."  Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleService" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
 </UserControl>
