@@ -2,7 +2,7 @@
 using System.Windows;
 using WereDev.Utils.Wu10Man.Helpers;
 
-namespace WereDev.Utils.Wu10Man
+namespace WereDev.Utils.Wu10Man.UserWindows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -13,9 +13,6 @@ namespace WereDev.Utils.Wu10Man
         {
             Wu10Logger.LogInfo("Main window initializing.");
             InitializeComponent();
-            //ShowAdvancedItem.IsChecked = Properties.Settings.Default.ShowAdvanced;
-            //SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
-            SetMainScreenView(true);
             Wu10Logger.LogInfo("Main window initialized.");
         }
 
@@ -43,17 +40,9 @@ namespace WereDev.Utils.Wu10Man
             System.Diagnostics.Process.Start(Wu10Logger.LogFolder);
         }
 
-        private void ShowAdvancedItem_Click(object sender, RoutedEventArgs e)
+        private void ReadmeItem_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.ShowAdvanced = !Properties.Settings.Default.ShowAdvanced;
-            Properties.Settings.Default.Save();
-            SetMainScreenView(Properties.Settings.Default.ShowAdvanced);
-        }
-
-        private void SetMainScreenView(bool showAdvanced)
-        {
-            this.AdvancedControl.Visibility = showAdvanced ? Visibility.Visible : Visibility.Hidden;
-            this.BasicOptions.Visibility = showAdvanced ? Visibility.Hidden : Visibility.Visible;
+            System.Diagnostics.Process.Start("https://github.com/WereDev/Wu10Man/blob/master/README.md");
         }
     }
 }

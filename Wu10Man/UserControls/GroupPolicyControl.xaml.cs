@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using WereDev.Utils.Wu10Man.Editors;
 using WereDev.Utils.Wu10Man.Helpers;
 
@@ -129,7 +131,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
 
             Wu10Logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
-            System.Windows.MessageBox.Show("Registry settings udpated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("Registry settings updated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
 }

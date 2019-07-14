@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.UserWindows;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -14,11 +15,11 @@ namespace WereDev.Utils.Wu10Man
             Wu10Logger.LogInfo("Application starting");
             try
             {
-                var version = this.GetType().Assembly.GetName().Version;
-                Wu10Logger.LogInfo($"Application version: v{version.ToString()}");
+                WriteStartupLogs();
                 this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
                 this.MainWindow = new MainWindow();
                 this.MainWindow.Show();
+
                 Wu10Logger.LogInfo("Application started");
             }
             catch (Exception ex)
@@ -41,6 +42,14 @@ namespace WereDev.Utils.Wu10Man
             string errorMessage = string.Format("{0}\r\n\r\nCheck the logs for more details.", e.Exception.Message);
             MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
+        }
+
+        void WriteStartupLogs()
+        {
+            var appVersion = this.GetType().Assembly.GetName().Version;
+            Wu10Logger.LogInfo($"Application version: v{appVersion.ToString()}");
+            Wu10Logger.LogInfo(EnvironmentVersionHelper.GetWindowsVersion());
+            Wu10Logger.LogInfo($".Net Framework: {EnvironmentVersionHelper.GetDotNetFrameworkBuild()}");
         }
     }
 }
