@@ -2,7 +2,7 @@
 
 Anyone else annoyed by the forced automatic updates on Windows 10?  Me too!  Sadly, some of the basic things like setting a group policy or disabling a service aren't quite enough to get it to stop.  So, I wrote this application to try to get a better way to interrupt what Windows 10 Update is trying to do.
 
-This is broken down into 3 parts: group policy, disabling services, and blocking urls.
+This is broken down into 4 parts: group policy, disabling services, blocking urls, and pausing updates.
 
 ## Group Policy
 
@@ -28,6 +28,10 @@ If you were running an older version of Wu10Man, don't worry, the new versions w
 
 There are also a number of URLs that have been identified as being use by Windows Update.  That list is included in the app config file so you can alter it if need be. You can set which URLs to block individually or as a group.  This updates the hosts file at C:\Windows\System32\drivers\etc.
 
+## Pausing Updates
+
+A few months ago, Windows added a pause feature to some of the business license of Windows 10.  Recently they added the ability to pause updates as well, but the UI only allows you to go out a few weeks.  I added a screen that allows for a longer pause scenario.  This isn't adding new functionality to Windows, only using the functionality that is built in.  This feature will only work correctly on those versions of Windows that already support Pause/Defer.
+
 ## Additional Info
 
 ### Admin Access
@@ -43,7 +47,6 @@ There was a fair amount of research that went into this, but a couple sites stoo
 - [Windows Service Authorization](https://stackoverflow.com/questions/17031552/how-do-you-take-file-ownership-with-powershell/17047190#17047190)
 - [Change Windows Service Password](https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268)
 - [Windows 10, version 1709 basic level Windows diagnostic events and fields](https://docs.microsoft.com/en-us/windows/privacy/basic-level-windows-diagnostic-events-and-fields-1709)
-- 
 
 ### Downloads
 https://github.com/WereDev/Wu10Man/releases
