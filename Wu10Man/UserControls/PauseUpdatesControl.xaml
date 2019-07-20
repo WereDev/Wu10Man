@@ -4,12 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             
-             d:DesignHeight="363"
-             d:DesignWidth="578">
-    <Grid>
+             d:DesignHeight="353"
+             d:DesignWidth="558">
+    <Grid Background="LightGray">
         <Label Content="Windows Update Pause and Defer" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
-        <Grid Width="289" HorizontalAlignment="Left" Margin="0, 30, 0, 0">
+        <Grid Width="276" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
@@ -42,7 +41,7 @@
                 </Label.Content>
             </Label>
         </Grid>
-        <Grid Width="289" HorizontalAlignment="Right" Margin="0, 30, 0, 0">
+        <Grid Width="276" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <StackPanel>
                 <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Feature Updates" FontWeight="Bold" />
                 <Label HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="240" Content="Pause updates until:"/>

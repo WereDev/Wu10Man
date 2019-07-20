@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             d:DesignHeight="363"
-             d:DesignWidth="578">
-    <Grid>
+             d:DesignHeight="353"
+             d:DesignWidth="558">
+    <Grid Background="LightGray">
         <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
-        <Grid Width="289" HorizontalAlignment="Left" Margin="0, 30, 0, 0">
+        <Grid Width="276" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
@@ -33,7 +33,7 @@
                 </Label.Content>
             </Label>
         </Grid>
-        <Grid Width="289" HorizontalAlignment="Right" Margin="0, 30, 0, 0">
+        <Grid Width="276" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="240"
                   ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="GroupPoliciesSelectionChanged" />
             <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="SetGroupPolicy"/>

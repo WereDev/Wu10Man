@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Management;
 using System.Security.Principal;
 using System.ServiceProcess;
@@ -64,7 +65,16 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         public bool IsServiceEnabled()
         {
-            return _serviceController.StartType != ServiceStartMode.Disabled;
+            try
+            {
+                return _serviceController.StartType != ServiceStartMode.Disabled;
+            }
+            catch (Win32Exception)
+            {
+                // Some .Net version seem to throw an exception at this point, but it is
+                // sort of a .Net thing because of file renames, so I can assume false.
+                return false;
+            }
         }
 
         public bool IsServiceRunAsLocalSystem()
