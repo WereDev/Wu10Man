@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Windows;
+using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.UserWindows;
+using WereDev.Utils.Wu10Man.Utilites;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -15,6 +19,7 @@ namespace WereDev.Utils.Wu10Man
             Wu10Logger.LogInfo("Application starting");
             try
             {
+                RegisterDependencies();
                 WriteStartupLogs();
                 this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
                 this.MainWindow = new MainWindow();
@@ -26,8 +31,21 @@ namespace WereDev.Utils.Wu10Man
             {
                 Wu10Logger.LogError(ex);
                 MessageBox.Show("An error occured attempting to initialize the application.  Check the log file for more details.", "Error!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                this.Shutdown();
             }
+        }
+
+        private void RegisterDependencies()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<FilesHelper>().As<IFilesHelper>();
+            builder.RegisterType<HostsFileEditor>().As<IHostsFileEditor>();
+            builder.RegisterType<RegistryEditor>().As<IRegistryEditor>();
+            builder.RegisterType<ServiceCredentialsEditor>().As<IServiceCredentialsEditor>();
+            builder.RegisterType<TokenEditor>().As<ITokenEditor>();
+            builder.RegisterType<WindowsServiceManager>().As<IWindowsServiceManager>();
+            builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
+
+            DependencyManager.Container = builder.Build();
         }
 
         protected override void OnExit(ExitEventArgs e)

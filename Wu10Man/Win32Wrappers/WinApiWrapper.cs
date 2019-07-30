@@ -3,11 +3,9 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Win32Wrappers
 {
-    // https://stackoverflow.com/questions/37992462/how-to-set-the-owner-of-a-file-to-system
-
-    internal static class WinAPI
+    internal static class WinApiWrapper
     {
         private const uint SE_PRIVILEGE_ENABLED = 2;
 
@@ -21,24 +19,30 @@ namespace WereDev.Utils.Wu10Man.Editors
         ///     True if the privilege was enabled prior to the change, false if it was disabled.</returns>
         public static bool ModifyPrivilege(PrivilegeName privilege, bool enable)
         {
-            Luid luid;
-            if (!LookupPrivilegeValue(null, privilege.ToString(), out luid))
+            if (!LookupPrivilegeValue(null, privilege.ToString(), out Luid luid))
                 throw new Win32Exception();
 
             using (var identity = WindowsIdentity.GetCurrent(TokenAccessLevels.AdjustPrivileges | TokenAccessLevels.Query))
             {
-                var newPriv = new TokenPrivileges();
-                newPriv.Privileges = new LuidAndAttributes[1];
-                newPriv.PrivilegeCount = 1;
-                newPriv.Privileges[0].Luid = luid;
-                newPriv.Privileges[0].Attributes = enable ? SE_PRIVILEGE_ENABLED : 0;
+                var newPriv = new TokenPrivileges
+                {
+                    Privileges = new LuidAndAttributes[]
+                    {
+                        new LuidAndAttributes {
+                            Luid = luid,
+                            Attributes = enable ? SE_PRIVILEGE_ENABLED : 0
+                        }
+                    },
+                    PrivilegeCount = 1
+                };
 
-                var prevPriv = new TokenPrivileges();
-                prevPriv.Privileges = new LuidAndAttributes[1];
-                prevPriv.PrivilegeCount = 1;
-                uint returnedBytes;
+                var prevPriv = new TokenPrivileges
+                {
+                    Privileges = new LuidAndAttributes[1],
+                    PrivilegeCount = 1
+                };
 
-                if (!AdjustTokenPrivileges(identity.Token, false, ref newPriv, (uint)Marshal.SizeOf(prevPriv), ref prevPriv, out returnedBytes))
+                if (!AdjustTokenPrivileges(identity.Token, false, ref newPriv, (uint)Marshal.SizeOf(prevPriv), ref prevPriv, out uint returnedBytes))
                     throw new Win32Exception();
 
                 return prevPriv.PrivilegeCount == 0 ? enable /* didn't make a change */ : ((prevPriv.Privileges[0].Attributes & SE_PRIVILEGE_ENABLED) != 0);

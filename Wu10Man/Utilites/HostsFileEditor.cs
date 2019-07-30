@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.Editors.Models;
 
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Utilites
 {
-    class HostsEditor
+    class HostsFileEditor : IHostsFileEditor
     {
         private const string HOSTS_FILE = @"drivers\etc\hosts";
         private const string WU10MAN_START = "# Start of entried added by Wu10Man";

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Interfaces;
 
 namespace WereDev.Utils.Wu10Man.Helpers
 {
     internal class HostsFileHelper
     {
-        private readonly HostsEditor _hostsEditor;
+        private IHostsFileEditor HostsEditor => DependencyManager.Resolve<IHostsFileEditor>();
+
         private readonly HashSet<string> _hostUrls;
 
         public HostsFileHelper()
         {
-            _hostsEditor = new HostsEditor();
             _hostUrls = GetWindowsUpdateUrls();
         }
 
@@ -45,13 +45,13 @@ namespace WereDev.Utils.Wu10Man.Helpers
             {
                 var hostsList = currentHosts.ToList();
                 hostsList.Add(hostUrl);
-                _hostsEditor.SetHostsEntries(hostsList);
+                HostsEditor.SetHostsEntries(hostsList);
             }
         }
 
         public void BlockAllHostUrls()
         {
-            _hostsEditor.SetHostsEntries(_hostUrls);
+            HostsEditor.SetHostsEntries(_hostUrls);
 
         }
 
@@ -67,18 +67,18 @@ namespace WereDev.Utils.Wu10Man.Helpers
             {
                 var hostsList = currentHosts.ToList();
                 hostsList.Remove(hostUrl);
-                _hostsEditor.SetHostsEntries(hostsList);
+                HostsEditor.SetHostsEntries(hostsList);
             }
         }
 
         public void UnblockAllHostUrls()
         {
-            _hostsEditor.ClearHostsEntries();
+            HostsEditor.ClearHostsEntries();
         }
 
         public string[] GetBlockedHostUrls()
         {
-            var currentHosts = _hostsEditor.GetHostsInFile();
+            var currentHosts = HostsEditor.GetHostsInFile();
             if (currentHosts == null) return new string[0];
             return currentHosts.Select(x => StandardizeHostUrl(x)).Distinct().ToArray();
         }

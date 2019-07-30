@@ -2,14 +2,21 @@
 using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Interfaces;
+using WereDev.Utils.Wu10Man.Win32Wrappers;
 
 namespace WereDev.Utils.Wu10Man.Helpers
 {
-    internal class FilesHelper
+    public class FilesHelper : IFilesHelper
     {
-
         private readonly string _trustedInstallerUser = @"NT SERVICE\TrustedInstaller";
+        private readonly IServiceCredentialsEditor _serviceCredentialsEditor;
+
+        public FilesHelper(IServiceCredentialsEditor serviceCredentialsEditor)
+        {
+            _serviceCredentialsEditor = serviceCredentialsEditor ?? throw new ArgumentNullException(nameof(serviceCredentialsEditor));
+        }
+
 
         public void RenameFile(string origPath, string newPath)
         {
@@ -26,7 +33,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
 
         public void GiveOwnershipToAdministrators(string fileName)
         {
-            var username = ServiceCredentialsEditor.GetUserName(WellKnownSidType.AccountAdministratorSid);
+            var username = _serviceCredentialsEditor.GetUserName(WellKnownSidType.AccountAdministratorSid);
             SetOwnership(fileName, username);
             GrantFullAccessToFile(fileName, username);
         }
@@ -62,14 +69,39 @@ namespace WereDev.Utils.Wu10Man.Helpers
             if (!File.Exists(fileName)) throw new FileNotFoundException("Could not find file to set ownership.", fileName);
 
             // Allow this process to circumvent ACL restrictions
-            WinAPI.ModifyPrivilege(PrivilegeName.SeRestorePrivilege, true);
+            WinApiWrapper.ModifyPrivilege(PrivilegeName.SeRestorePrivilege, true);
 
             // Sometimes this is required and other times it works without it. Not sure when.
-            WinAPI.ModifyPrivilege(PrivilegeName.SeTakeOwnershipPrivilege, true);
+            WinApiWrapper.ModifyPrivilege(PrivilegeName.SeTakeOwnershipPrivilege, true);
 
             var accessControl = File.GetAccessControl(fileName);
 
             return accessControl;
+        }
+
+        public string GetDirectoryName(string path)
+        {
+            return Path.GetDirectoryName(path);
+        }
+
+        public string GetFileName(string path)
+        {
+            return Path.GetFileName(path);
+        }
+
+        public string Combine(string path1, string path2)
+        {
+            return Path.Combine(path1, path2);
+        }
+
+        public bool Exists(string path)
+        {
+            return File.Exists(path);
+        }
+
+        public void Delete(string path)
+        {
+            File.Delete(path);
         }
     }
 }

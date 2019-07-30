@@ -1,21 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WereDev.Utils.Wu10Man.Editors;
 using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.UserControls.Models;
 
 namespace WereDev.Utils.Wu10Man.UserControls
@@ -35,7 +25,9 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private const string PauseQualityUpdatesStartTime = "PauseQualityUpdatesStartTime";
         private const string PauseQualityUpdatesEndTime = "PauseQualityUpdatesEndTime";
         private const string PauseUpdatesExpiryTime = "PauseUpdatesExpiryTime";
-        private const string PendingRebootStartTime = "PendingRebootStartTime";
+        // private const string PendingRebootStartTime = "PendingRebootStartTime";
+
+        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
 
         public PauseUpdatesControl()
         {

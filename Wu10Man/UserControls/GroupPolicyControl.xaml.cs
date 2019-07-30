@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using WereDev.Utils.Wu10Man.Editors;
 using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.Interfaces;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -31,6 +32,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
         const string REGISTRY_ROOT = @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU";
         const string REGISTRY_AUOPTION = "AuOptions";
         const string REGISTRY_NOUPDATE = "NoAutoUpdate";
+
+        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
 
         public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; set; }
         public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
