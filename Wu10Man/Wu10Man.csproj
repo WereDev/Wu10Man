@@ -27,7 +27,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>3.0.1.0</ApplicationVersion>
+    <ApplicationVersion>3.1.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -192,6 +192,7 @@
       <DependentUpon>WindowsServicesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilites\WindowsServiceProviderFactory.cs" />
+    <Compile Include="Win32Wrappers\FileWrapper.cs" />
     <Compile Include="Win32Wrappers\ServiceWrapper.cs" />
     <Compile Include="Win32Wrappers\TokenWrapper.cs" />
     <Compile Include="Win32Wrappers\WinApiWrapper.cs" />

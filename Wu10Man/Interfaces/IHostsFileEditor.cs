@@ -9,5 +9,7 @@ namespace WereDev.Utils.Wu10Man.Interfaces
         void ClearHostsEntries();
 
         string[] GetHostsInFile();
+
+        string[] GetLockingProcessNames();
     }
 }

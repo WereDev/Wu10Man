@@ -45,41 +45,65 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void ToggleHostItem(object sender, System.Windows.RoutedEventArgs e)
         {
-            var toggle = (ToggleSwitch)sender;
-            var kvp = (HostStatus)toggle.DataContext;
-            if (toggle.IsChecked.Value)
+            if (!IsHostsFileLocked())
             {
-                _hostsFileHelper.UnblockHostUrl(kvp.Host);
-                Wu10Logger.LogInfo($"Host UNBLOCKED: {kvp.Host}");
+                var toggle = (ToggleSwitch)sender;
+                var kvp = (HostStatus)toggle.DataContext;
+                if (toggle.IsChecked.Value)
+                {
+                    _hostsFileHelper.UnblockHostUrl(kvp.Host);
+                    Wu10Logger.LogInfo($"Host UNBLOCKED: {kvp.Host}");
+                }
+                else
+                {
+                    _hostsFileHelper.BlockHostUrl(kvp.Host);
+                    Wu10Logger.LogInfo($"Host BLOCKED: {kvp.Host}");
+                }
+
+                ShowUpdateNotice();
             }
-            else
-            {
-                _hostsFileHelper.BlockHostUrl(kvp.Host);
-                Wu10Logger.LogInfo($"Host BLOCKED: {kvp.Host}");
-            }
-            
-            ShowUpdateNotice();
         }
 
         private void UnblockAllHosts_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _hostsFileHelper.UnblockAllHostUrls();
-            Wu10Logger.LogInfo($"All hosts UNBLOCKED");
-            GetHostSettings();
-            ShowUpdateNotice();
+            if (!IsHostsFileLocked())
+            {
+                _hostsFileHelper.UnblockAllHostUrls();
+                Wu10Logger.LogInfo($"All hosts UNBLOCKED");
+                GetHostSettings();
+                ShowUpdateNotice();
+            }
         }
 
         private void BlockAllHosts_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _hostsFileHelper.BlockAllHostUrls();
-            Wu10Logger.LogInfo($"All hosts BLOCKED");
-            GetHostSettings();
-            ShowUpdateNotice();
+            if (!IsHostsFileLocked())
+            {
+                _hostsFileHelper.BlockAllHostUrls();
+                Wu10Logger.LogInfo($"All hosts BLOCKED");
+                GetHostSettings();
+                ShowUpdateNotice();
+            }
         }
 
         private void ShowUpdateNotice()
         {
             System.Windows.MessageBox.Show("Hosts file updated.", "Hosts File", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+        }
+
+        private bool IsHostsFileLocked()
+        {
+            var lockingProcesses = _hostsFileHelper.GetLockingProcessNames();
+            if (lockingProcesses?.Any() == true)
+            {
+                var processNames = string.Join("\r\n", lockingProcesses);
+                var message = "The Hosts file is being locked by the following processes and cannot be updated:\r\n" + processNames;
+                Wu10Logger.LogInfo(message);
+                System.Windows.MessageBox.Show(message, "Hosts File Locked", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return true;
+            }
+
+            return false;
         }
     }
 }

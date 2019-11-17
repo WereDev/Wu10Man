@@ -87,5 +87,10 @@ namespace WereDev.Utils.Wu10Man.Helpers
         {
             return _hostUrls.ToArray();
         }
+
+        public string[] GetLockingProcessNames()
+        {
+            return HostsEditor.GetLockingProcessNames();
+        }
     }
 }

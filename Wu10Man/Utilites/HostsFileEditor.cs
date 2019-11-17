@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.Editors.Models;
+using WereDev.Utils.Wu10Man.Win32Wrappers;
 
 namespace WereDev.Utils.Wu10Man.Utilites
 {
@@ -109,6 +110,16 @@ namespace WereDev.Utils.Wu10Man.Utilites
             }
 
             File.WriteAllLines(HostsFile, lines);
+        }
+
+        public string[] GetLockingProcessNames()
+        {
+            var processes = FileWrapper.WhoIsLocking(HostsFile);
+
+            if (processes == null)
+                return new string[0];
+
+            return processes.Select(x => x.MainModule?.FileVersionInfo?.ProductName ?? x.ProcessName).ToArray();
         }
     }
 }
