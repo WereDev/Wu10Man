@@ -155,10 +155,12 @@
     <Compile Include="Interfaces\ITokenEditor.cs" />
     <Compile Include="Helpers\EnvironmentVersionHelper.cs" />
     <Compile Include="Interfaces\IWindowsServiceProviderFactory.cs" />
+    <Compile Include="Interfaces\IWindowsServices.cs" />
     <Compile Include="UserWindows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilites\Models\SplitHostsFile.cs" />
+    <Compile Include="Utilites\Models\WindowsServiceNames.cs" />
     <Compile Include="Utilites\RegistryEditor.cs" />
     <Compile Include="Utilites\Models\ServiceConfigInfo.cs" />
     <Compile Include="Utilites\ServiceCredentialsEditor.cs" />

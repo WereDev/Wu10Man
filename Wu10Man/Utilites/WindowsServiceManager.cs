@@ -10,22 +10,20 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         private readonly IWindowsServiceProviderFactory _providerFactory;
         private readonly IFilesHelper _filesHelper;
+        private readonly IWindowsServices _serviceNames;
 
-        public WindowsServiceManager(IWindowsServiceProviderFactory providerFactory, IFilesHelper filesHelper)
+        public WindowsServiceManager(IWindowsServiceProviderFactory providerFactory, IFilesHelper filesHelper, IWindowsServices serviceNames)
         {
             _providerFactory = providerFactory ?? throw new ArgumentNullException(nameof(providerFactory));
             _filesHelper = filesHelper ?? throw new ArgumentNullException(nameof(filesHelper));
+            _serviceNames = serviceNames ?? throw new ArgumentNullException(nameof(serviceNames));
+            if (!_serviceNames.Any())
+                throw new ArgumentNullException(nameof(serviceNames));
         }
 
         public string[] ListAllServices()
         {
-            return new string[]
-            {
-                Constants.SERVICE_WINDOWS_UPDATE,
-                Constants.SERVICE_UPDATE_MEDIC,
-                Constants.SERVICE_SHOULD_NOT_EXIST,
-                Constants.SERVICE_MODULES_INSTALLER
-            };
+            return _serviceNames.ToArray();
         }
 
         public bool ServiceExists(string serviceName)

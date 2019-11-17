@@ -18,8 +18,7 @@
                     <StackPanel>
                         <TextBlock Width="270" TextWrapping="Wrap">
                             Windows Services are at the heart of how Windows
-                            Update Works.  There are 3 items that work in
-                            conjunction to update Windows.
+                            Update Works.
                         </TextBlock>
                         <TextBlock Width="270" Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
                             Windows Update:
@@ -42,6 +41,13 @@
                         <TextBlock Width="270" TextWrapping="Wrap">
                             AKA WaaSMedicSvc. Enables remediation and
                             protection of Windows Update components.
+                        </TextBlock>
+                        <TextBlock Width="270" Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                            Windows Remediation Service:
+                        </TextBlock>
+                        <TextBlock Width="270" TextWrapping="Wrap">
+                            Still on some earlier builds of Windows, helps to
+                            protect Windows Update components.
                         </TextBlock>
                     </StackPanel>
                 </Label.Content>
