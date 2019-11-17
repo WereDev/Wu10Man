@@ -1,12 +1,17 @@
-﻿namespace WereDev.Utils.Wu10Man.Helpers
+﻿using WereDev.Utils.Wu10Man.Interfaces;
+
+namespace WereDev.Utils.Wu10Man.Helpers
 {
     public static class EnvironmentVersionHelper
     {
         private const string WindowsVersionRegistryKey = @"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion";
         private const string DotNetVersionRegistryKey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full";
+        private static IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
+
+
         public static string GetDotNetFrameworkBuild()
         {
-            var release = Editors.RegistryEditor.ReadLocalMachineRegistryValue(DotNetVersionRegistryKey, "Release");
+            var release = RegistryEditor.ReadLocalMachineRegistryValue(DotNetVersionRegistryKey, "Release");
             int.TryParse(release, out var releaseInt);
 
             if (releaseInt >= 528040)
@@ -37,10 +42,10 @@
 
         public static string GetWindowsVersion()
         {
-            var windowsProduct = Editors.RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "ProductName");
-            var windowsRelease = Editors.RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "ReleaseId");
-            var windowsBuild = Editors.RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "CurrentBuild");
-            var windowsBuildRevision = Editors.RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "BaseBuildRevisionNumber");
+            var windowsProduct = RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "ProductName");
+            var windowsRelease = RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "ReleaseId");
+            var windowsBuild = RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "CurrentBuild");
+            var windowsBuildRevision = RegistryEditor.ReadLocalMachineRegistryValue(WindowsVersionRegistryKey, "BaseBuildRevisionNumber");
             return $"{windowsProduct} Version {windowsRelease} Build {windowsBuild}.{windowsBuildRevision}";
         }
     }

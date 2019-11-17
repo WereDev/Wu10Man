@@ -3,18 +3,24 @@ using System.ComponentModel;
 using System.Management;
 using System.Security.Principal;
 using System.ServiceProcess;
+using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.Interfaces;
 
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Utilites
 {
-    internal class ServiceEditor : IDisposable
+    internal class WindowsServiceProvider : IDisposable, Interfaces.IWindowsServiceProvider
     {
         private ServiceController _serviceController;
         private readonly string _servicesRegistryPath = @"SYSTEM\CurrentControlSet\Services\";
+        private readonly IRegistryEditor _registryEditor;
+        private readonly IServiceCredentialsEditor _serviceCredentialsEditor;
 
-        public ServiceEditor(string serviceName)
+        public WindowsServiceProvider(string serviceName, IRegistryEditor registryEditor, IServiceCredentialsEditor serviceCredentialsEditor)
         {
             if (string.IsNullOrEmpty(serviceName)) throw new ArgumentNullException(nameof(serviceName));
             _serviceController = new ServiceController(serviceName);
+            _registryEditor = registryEditor ?? throw new ArgumentNullException(nameof(registryEditor));
+            _serviceCredentialsEditor = serviceCredentialsEditor ?? throw new ArgumentNullException(nameof(serviceCredentialsEditor));
         }
 
         public bool SetStartupType(ServiceStartMode startMode)
@@ -37,10 +43,11 @@ namespace WereDev.Utils.Wu10Man.Editors
         {
             try
             {
-                return !string.IsNullOrWhiteSpace(_serviceController.DisplayName);
+                return _serviceController.DisplayName != null;
             }
-            catch
+            catch(Exception ex)
             {
+                Wu10Logger.LogError(ex);
                 return false;
             }
         }
@@ -49,7 +56,7 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         public string GetServiceDLL()
         {
-            return RegistryEditor.ReadLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName + @"\Parameters", "ServiceDll");
+            return _registryEditor.ReadLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName + @"\Parameters", "ServiceDll");
         }
 
         public void DisableService()
@@ -79,9 +86,9 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         public bool IsServiceRunAsLocalSystem()
         {
-            var serviceUserName = ".\\" + ServiceCredentialsEditor.GetWindowsServiceUserName(_serviceController.ServiceName);
+            var serviceUserName = ".\\" + _serviceCredentialsEditor.GetWindowsServiceUserName(_serviceController.ServiceName);
 
-            return serviceUserName.Equals(ServiceCredentialsEditor.LOCAL_SYSTEM_USER, StringComparison.CurrentCultureIgnoreCase);
+            return serviceUserName.Equals(Constants.USERNAME_LOCAL_SYSTEM, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void StopService()
@@ -96,12 +103,12 @@ namespace WereDev.Utils.Wu10Man.Editors
         public void SetAccountAsLocalService()
         {
 
-            ServiceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, WellKnownSidType.LocalServiceSid);
+            _serviceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, WellKnownSidType.LocalServiceSid);
         }
 
         public void SetAccountAsLocalSystem()
         {
-            ServiceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, ServiceCredentialsEditor.LOCAL_SYSTEM_USER, null);
+            _serviceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, Constants.USERNAME_LOCAL_SYSTEM, null);
         }
 
         public void Dispose()
@@ -121,7 +128,7 @@ namespace WereDev.Utils.Wu10Man.Editors
 
         private void SetStartModeViaRegistry(ServiceStartMode startMode)
         {
-            RegistryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
+            _registryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
                                                           "Start",
                                                           ((int)startMode).ToString(),
                                                           Microsoft.Win32.RegistryValueKind.DWord);

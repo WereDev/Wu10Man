@@ -1,7 +1,13 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Windows;
+using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.UserWindows;
+using WereDev.Utils.Wu10Man.Utilites;
+using System.Linq;
+using WereDev.Utils.Wu10Man.Utilites.Models;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -15,6 +21,7 @@ namespace WereDev.Utils.Wu10Man
             Wu10Logger.LogInfo("Application starting");
             try
             {
+                RegisterDependencies();
                 WriteStartupLogs();
                 this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
                 this.MainWindow = new MainWindow();
@@ -26,8 +33,24 @@ namespace WereDev.Utils.Wu10Man
             {
                 Wu10Logger.LogError(ex);
                 MessageBox.Show("An error occured attempting to initialize the application.  Check the log file for more details.", "Error!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                this.Shutdown();
+                base.Shutdown();
             }
+        }
+
+        private void RegisterDependencies()
+        {
+            var builder = new ContainerBuilder();
+            builder.Register<IWindowsServices>((context, parameters) => { return GetWindowsServices(); });
+            builder.RegisterType<FilesHelper>().As<IFilesHelper>();
+            builder.RegisterType<HostsFileEditor>().As<IHostsFileEditor>();
+            builder.RegisterType<RegistryEditor>().As<IRegistryEditor>();
+            builder.RegisterType<ServiceCredentialsEditor>().As<IServiceCredentialsEditor>();
+            builder.RegisterType<TokenEditor>().As<ITokenEditor>();
+            builder.RegisterType<WindowsServiceManager>().As<IWindowsServiceManager>();
+            builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
+
+
+            DependencyManager.Container = builder.Build();
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -50,6 +73,15 @@ namespace WereDev.Utils.Wu10Man
             Wu10Logger.LogInfo($"Application version: v{appVersion.ToString()}");
             Wu10Logger.LogInfo(EnvironmentVersionHelper.GetWindowsVersion());
             Wu10Logger.LogInfo($".Net Framework: {EnvironmentVersionHelper.GetDotNetFrameworkBuild()}");
+        }
+
+        WindowsServiceNames GetWindowsServices()
+        {
+            var serviceNames = System.Configuration.ConfigurationManager.AppSettings["WindowsServiceNames"];
+            var split = serviceNames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var names = new WindowsServiceNames();
+            names.AddRange(split.Distinct());
+            return names;
         }
     }
 }

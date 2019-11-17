@@ -2,12 +2,10 @@
 using System.Runtime.InteropServices;
 
 // https://stackoverflow.com/questions/17031552/how-do-you-take-file-ownership-with-powershell/17047190#17047190
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Win32Wrappers
 {
-    public class TokenEditor
+    internal static class TokenWrapper
     {
-
-
         [DllImport("advapi32.dll", ExactSpelling = true, SetLastError = true)]
         internal static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall,
         ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);
@@ -75,50 +73,5 @@ namespace WereDev.Utils.Wu10Man.Editors
         public const string SE_TRUSTED_CREDMAN_ACCESS_NAME = "SeTrustedCredManAccessPrivilege";
         public const string SE_UNDOCK_NAME = "SeUndockPrivilege";
         public const string SE_UNSOLICITED_INPUT_NAME = "SeUnsolicitedInputPrivilege";
-
-        public static bool AddPrivilege(string privilege)
-        {
-            try
-            {
-                bool retVal;
-                TokPriv1Luid tp;
-                IntPtr hproc = GetCurrentProcess();
-                IntPtr htok = IntPtr.Zero;
-                retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);
-                tp.Count = 1;
-                tp.Luid = 0;
-                tp.Attr = SE_PRIVILEGE_ENABLED;
-                retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);
-                retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
-                return retVal;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-        public static bool RemovePrivilege(string privilege)
-        {
-            try
-            {
-                bool retVal;
-                TokPriv1Luid tp;
-                IntPtr hproc = GetCurrentProcess();
-                IntPtr htok = IntPtr.Zero;
-                retVal = OpenProcessToken(hproc, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, ref htok);
-                tp.Count = 1;
-                tp.Luid = 0;
-                tp.Attr = SE_PRIVILEGE_DISABLED;
-                retVal = LookupPrivilegeValue(null, privilege, ref tp.Luid);
-                retVal = AdjustTokenPrivileges(htok, false, ref tp, 0, IntPtr.Zero, IntPtr.Zero);
-                return retVal;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Utilites.Models
 {
 #pragma warning disable S1104 // Fields should not have public accessibility
     [StructLayout(LayoutKind.Sequential)]

@@ -3,12 +3,22 @@ using System;
 using System.Security;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using WereDev.Utils.Wu10Man.Interfaces;
+using WereDev.Utils.Wu10Man.Win32Wrappers;
 
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Utilites
 {
-    internal static class RegistryEditor
+    internal class RegistryEditor : IRegistryEditor
     {
-        public static string ReadLocalMachineRegistryValue(string registryKey, string registryName)
+        private readonly ITokenEditor _tokenEditor;
+
+        public RegistryEditor(ITokenEditor tokenEditor)
+        {
+            _tokenEditor = tokenEditor ?? throw new ArgumentNullException(nameof(tokenEditor));
+        }
+
+
+        public string ReadLocalMachineRegistryValue(string registryKey, string registryName)
         {
             if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
             if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
@@ -19,7 +29,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
 
-        public static void WriteLocalMachineRegistryValue(string registryKey, string registryName, string registryValue, RegistryValueKind registryValueKind)
+        public void WriteLocalMachineRegistryValue(string registryKey, string registryName, string registryValue, RegistryValueKind registryValueKind)
         {
             try
             {
@@ -36,7 +46,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
 
-        public static void DeleteLocalMachineRegistryValue(string registryKey, string registryName)
+        public void DeleteLocalMachineRegistryValue(string registryKey, string registryName)
         {
             try
             {
@@ -53,7 +63,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
 
-        private static void WriteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName, string registryValue, RegistryValueKind registryValueKind)
+        private void WriteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName, string registryValue, RegistryValueKind registryValueKind)
         {
             if (registryRoot == null) throw new ArgumentNullException(nameof(registryRoot));
             if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
@@ -66,7 +76,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
 
-        private static RegistryKey OpenOrCreateRegistryKey(RegistryKey registryRoot, string registryKey, bool writable)
+        private RegistryKey OpenOrCreateRegistryKey(RegistryKey registryRoot, string registryKey, bool writable)
         {
             var regKey = registryRoot.OpenSubKey(registryKey, writable);
             if (regKey == null)
@@ -75,7 +85,7 @@ namespace WereDev.Utils.Wu10Man.Editors
             return regKey;
         }
 
-        private static void DeleteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName)
+        private void DeleteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName)
         {
             if (registryRoot == null) throw new ArgumentNullException(nameof(registryRoot));
             if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
@@ -93,13 +103,13 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
         }
 
-        private static void TakeOwnership(RegistryKey registryRoot, string registryKey)
+        private void TakeOwnership(RegistryKey registryRoot, string registryKey)
         {
             try
             {
-                TokenEditor.AddPrivilege(TokenEditor.SE_RESTORE_NAME);
-                TokenEditor.AddPrivilege(TokenEditor.SE_BACKUP_NAME);
-                TokenEditor.AddPrivilege(TokenEditor.SE_TAKE_OWNERSHIP_NAME);
+                _tokenEditor.AddPrivilege(TokenWrapper.SE_RESTORE_NAME);
+                _tokenEditor.AddPrivilege(TokenWrapper.SE_BACKUP_NAME);
+                _tokenEditor.AddPrivilege(TokenWrapper.SE_TAKE_OWNERSHIP_NAME);
                 using (var regKey = registryRoot.OpenSubKey(registryKey, RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.TakeOwnership))
                 {
                     var regSec = regKey.GetAccessControl();
@@ -109,13 +119,13 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
             finally
             {
-                TokenEditor.RemovePrivilege(TokenEditor.SE_RESTORE_NAME);
-                TokenEditor.RemovePrivilege(TokenEditor.SE_BACKUP_NAME);
-                TokenEditor.RemovePrivilege(TokenEditor.SE_TAKE_OWNERSHIP_NAME);
+                _tokenEditor.RemovePrivilege(TokenWrapper.SE_RESTORE_NAME);
+                _tokenEditor.RemovePrivilege(TokenWrapper.SE_BACKUP_NAME);
+                _tokenEditor.RemovePrivilege(TokenWrapper.SE_TAKE_OWNERSHIP_NAME);
             }
         }
 
-        private static void SetWritePermission(RegistryKey registryRoot, string registryKey)
+        private void SetWritePermission(RegistryKey registryRoot, string registryKey)
         {
             using (var regKey = registryRoot.OpenSubKey(registryKey, RegistryKeyPermissionCheck.ReadWriteSubTree, RegistryRights.ChangePermissions))
             {

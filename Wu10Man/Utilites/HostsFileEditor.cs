@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.Editors.Models;
+using WereDev.Utils.Wu10Man.Win32Wrappers;
 
-namespace WereDev.Utils.Wu10Man.Editors
+namespace WereDev.Utils.Wu10Man.Utilites
 {
-    class HostsEditor
+    class HostsFileEditor : IHostsFileEditor
     {
         private const string HOSTS_FILE = @"drivers\etc\hosts";
         private const string WU10MAN_START = "# Start of entried added by Wu10Man";
@@ -108,6 +110,16 @@ namespace WereDev.Utils.Wu10Man.Editors
             }
 
             File.WriteAllLines(HostsFile, lines);
+        }
+
+        public string[] GetLockingProcessNames()
+        {
+            var processes = FileWrapper.WhoIsLocking(HostsFile);
+
+            if (processes == null)
+                return new string[0];
+
+            return processes.Select(x => x.MainModule?.FileVersionInfo?.ProductName ?? x.ProcessName).ToArray();
         }
     }
 }

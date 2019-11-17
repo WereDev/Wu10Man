@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.UserControls.Models;
 using WPFSpark;
 
@@ -12,14 +13,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// </summary>
     public partial class WindowsServicesControl : UserControl
     {
-        private readonly WindowsServicesModel _model;
-        private readonly WindowsServiceHelper _windowsServiceHelper;
+        private readonly WindowsServicesModel _model = new WindowsServicesModel();
+        private IWindowsServiceManager ServiceManager => DependencyManager.Resolve<IWindowsServiceManager>();
 
         public WindowsServicesControl()
         {
             Wu10Logger.LogInfo("Windows Services initializing.");
-            _model = new WindowsServicesModel();
-            _windowsServiceHelper = new WindowsServiceHelper();
             DataContext = _model;
 
             if (!DesignerProperties.GetIsInDesignMode(this))
@@ -35,7 +34,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void BuildServiceStatus()
         {
-            _model.Services = _windowsServiceHelper.ListAllServices()
+            _model.Services = ServiceManager.ListAllServices()
                                                    .Select(x => new WindowsServiceStatusModel(x))
                                                    .ToArray();
             foreach (var service in _model.Services)
@@ -45,11 +44,11 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private void SetServiceStatus(string serviceName)
         {
             var serviceModel = _model.Services.Single(x => x.ServiceName == serviceName);
-            serviceModel.ServiceExists = _windowsServiceHelper.ServiceExists(serviceName);
+            serviceModel.ServiceExists = ServiceManager.ServiceExists(serviceName);
             if (serviceModel.ServiceExists)
             {
-                serviceModel.DisplayName = _windowsServiceHelper.GetServiceDisplayName(serviceName);
-                serviceModel.IsServiceEnabled = _windowsServiceHelper.IsServiceEnabled(serviceName);
+                serviceModel.DisplayName = ServiceManager.GetServiceDisplayName(serviceName);
+                serviceModel.IsServiceEnabled = ServiceManager.IsServiceEnabled(serviceName);
             }
         }
 
@@ -71,7 +70,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void EnableService(string serviceName, string displayName)
         {
-            var enabledRealtime = _windowsServiceHelper.EnableService(serviceName);
+            var enabledRealtime = ServiceManager.EnableService(serviceName);
             SetServiceStatus(serviceName);
             var message = $"{displayName} has been ENABLED";
             if (!enabledRealtime)
@@ -82,7 +81,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void DisableService(string serviceName, string displayName)
         {
-            _windowsServiceHelper.DisableService(serviceName);
+            ServiceManager.DisableService(serviceName);
             SetServiceStatus(serviceName);
             System.Windows.MessageBox.Show($"{displayName} has been DISABLED", "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }

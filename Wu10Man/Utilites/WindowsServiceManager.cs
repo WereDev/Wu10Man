@@ -1,39 +1,35 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
-using WereDev.Utils.Wu10Man.Editors;
+using WereDev.Utils.Wu10Man.Interfaces;
 
-namespace WereDev.Utils.Wu10Man.Helpers
+namespace WereDev.Utils.Wu10Man.Utilites
 {
-    internal class WindowsServiceHelper
+    internal class WindowsServiceManager : IWindowsServiceManager
     {
-        public const string UPDATE_SERVICE = "wuauserv";
-        public const string MODULES_INSTALLER_SERVICE = "TrustedInstaller";
-        public const string UPDATE_MEDIC_SERVICE = "WaaSMedicSvc";
-        public const string SHOULD_NOT_EXIST = "ShouldNotExist";
-
-        private readonly FilesHelper _filesHelper = new FilesHelper();
         private readonly string _wu10FilePrefix = "Wu10Man_";
 
-        public WindowsServiceHelper()
+        private readonly IWindowsServiceProviderFactory _providerFactory;
+        private readonly IFilesHelper _filesHelper;
+        private readonly IWindowsServices _serviceNames;
+
+        public WindowsServiceManager(IWindowsServiceProviderFactory providerFactory, IFilesHelper filesHelper, IWindowsServices serviceNames)
         {
+            _providerFactory = providerFactory ?? throw new ArgumentNullException(nameof(providerFactory));
+            _filesHelper = filesHelper ?? throw new ArgumentNullException(nameof(filesHelper));
+            _serviceNames = serviceNames ?? throw new ArgumentNullException(nameof(serviceNames));
+            if (!_serviceNames.Any())
+                throw new ArgumentNullException(nameof(serviceNames));
         }
 
         public string[] ListAllServices()
         {
-            return new string[]
-            {
-                UPDATE_SERVICE,
-                MODULES_INSTALLER_SERVICE,
-                SHOULD_NOT_EXIST,
-                UPDATE_MEDIC_SERVICE
-            };
+            return _serviceNames.ToArray();
         }
 
         public bool ServiceExists(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
+            using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 return service.ServiceExists();
             }
@@ -42,7 +38,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public string GetServiceDisplayName(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
+            using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 return service.DisplayName;
             }
@@ -51,7 +47,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public string GetServiceDllPath(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
+            using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 var dll = service.GetServiceDLL();
                 return dll;
@@ -73,10 +69,10 @@ namespace WereDev.Utils.Wu10Man.Helpers
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
             var serviceDllPath = GetServiceDllPath(serviceName);
 
-            using (var service = new ServiceEditor(serviceName))
+            using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 return service.IsServiceEnabled()
-                       && (string.IsNullOrEmpty(serviceDllPath) || File.Exists(serviceDllPath));
+                       && (string.IsNullOrEmpty(serviceDllPath) || _filesHelper.Exists(serviceDllPath));
             }
         }
 
@@ -85,7 +81,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
             RemoveWu10FromFileName(serviceName);
             var enabledRealtime = false;
-            using (var service = new ServiceEditor(serviceName))
+            using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 if (!service.IsServiceRunAsLocalSystem())
                     service.SetAccountAsLocalSystem();
@@ -97,7 +93,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public void DisableService(string serviceName)
         {
             if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
-            using (var service = new ServiceEditor(serviceName))
+            using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 service.DisableService();
             }
@@ -123,9 +119,9 @@ namespace WereDev.Utils.Wu10Man.Helpers
 
             // If the file has returned, then we need to assume that some other process has recreated
             // it.  It's safer to assume the new file is correct and delete the "old" file.
-            if (File.Exists(dllPath))
+            if (_filesHelper.Exists(dllPath))
             {
-                File.Delete(wu10Path);
+                _filesHelper.Delete(wu10Path);
             }
             else
             {
@@ -137,13 +133,13 @@ namespace WereDev.Utils.Wu10Man.Helpers
 
         private string GetPathWithWu10Prefix(string path)
         {
-            var folder = Path.GetDirectoryName(path);
-            var fileName = Path.GetFileName(path);
+            var folder = _filesHelper.GetDirectoryName(path);
+            var fileName = _filesHelper.GetFileName(path);
             if (fileName.StartsWith(_wu10FilePrefix, StringComparison.CurrentCultureIgnoreCase))
                 return path;
 
             fileName = _wu10FilePrefix + fileName;
-            var newPath = Path.Combine(folder, fileName);
+            var newPath = _filesHelper.Combine(folder, fileName);
             return newPath;
         }
     }
