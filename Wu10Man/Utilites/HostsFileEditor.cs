@@ -11,8 +11,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
     class HostsFileEditor : IHostsFileEditor
     {
         private const string HOSTS_FILE = @"drivers\etc\hosts";
-        private const string WU10MAN_START = "# Start of entried added by Wu10Man";
-        private const string WU10MAN_END = "# End of entried added by Wu10Man";
+        private const string WU10MAN_START = "# Start of entries added by Wu10Man";
+        private const string WU10MAN_END = "# End of entries added by Wu10Man";
         private const string HOST_ENDPOINT = "0.0.0.0\t";
 
         private string HostsFile => Path.Combine(Environment.SystemDirectory, HOSTS_FILE);
