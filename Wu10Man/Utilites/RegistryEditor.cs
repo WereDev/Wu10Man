@@ -3,8 +3,8 @@ using System;
 using System.Security;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using WereDev.Utils.Win32Wrappers;
 using WereDev.Utils.Wu10Man.Interfaces;
-using WereDev.Utils.Wu10Man.Win32Wrappers;
 
 namespace WereDev.Utils.Wu10Man.Utilites
 {
@@ -17,11 +17,12 @@ namespace WereDev.Utils.Wu10Man.Utilites
             _tokenEditor = tokenEditor ?? throw new ArgumentNullException(nameof(tokenEditor));
         }
 
-
         public string ReadLocalMachineRegistryValue(string registryKey, string registryName)
         {
-            if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
-            if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
+            if (string.IsNullOrWhiteSpace(registryKey))
+                throw new ArgumentNullException(nameof(registryKey));
+            if (string.IsNullOrWhiteSpace(registryName))
+                throw new ArgumentNullException(nameof(registryName));
             using (var regKey = Registry.LocalMachine.OpenSubKey(registryKey))
             {
                 var regValue = regKey?.GetValue(registryName);
@@ -65,9 +66,12 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         private void WriteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName, string registryValue, RegistryValueKind registryValueKind)
         {
-            if (registryRoot == null) throw new ArgumentNullException(nameof(registryRoot));
-            if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
-            if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
+            if (registryRoot == null)
+                throw new ArgumentNullException(nameof(registryRoot));
+            if (string.IsNullOrWhiteSpace(registryKey))
+                throw new ArgumentNullException(nameof(registryKey));
+            if (string.IsNullOrWhiteSpace(registryName))
+                throw new ArgumentNullException(nameof(registryName));
 
             using (var regKey = OpenOrCreateRegistryKey(registryRoot, registryKey, true))
             {
@@ -87,14 +91,18 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         private void DeleteRegistryValue(RegistryKey registryRoot, string registryKey, string registryName)
         {
-            if (registryRoot == null) throw new ArgumentNullException(nameof(registryRoot));
-            if (string.IsNullOrWhiteSpace(registryKey)) throw new ArgumentNullException(nameof(registryKey));
-            if (string.IsNullOrWhiteSpace(registryName)) throw new ArgumentNullException(nameof(registryName));
+            if (registryRoot == null)
+                throw new ArgumentNullException(nameof(registryRoot));
+            if (string.IsNullOrWhiteSpace(registryKey))
+                throw new ArgumentNullException(nameof(registryKey));
+            if (string.IsNullOrWhiteSpace(registryName))
+                throw new ArgumentNullException(nameof(registryName));
 
             using (var regKey = registryRoot.OpenSubKey(registryKey, false))
             {
                 var value = regKey.GetValue(registryName);
-                if (value == null) return;
+                if (value == null)
+                    return;
             }
 
             using (var regKey = registryRoot.OpenSubKey(registryKey, true))
@@ -131,11 +139,12 @@ namespace WereDev.Utils.Wu10Man.Utilites
             {
                 var regSec = regKey.GetAccessControl();
 
-                RegistryAccessRule regRule = new RegistryAccessRule(WindowsIdentity.GetCurrent().User,
-                                                                    RegistryRights.FullControl,
-                                                                    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-                                                                    PropagationFlags.None,
-                                                                    AccessControlType.Allow);
+                RegistryAccessRule regRule = new RegistryAccessRule(
+                    WindowsIdentity.GetCurrent().User,
+                    RegistryRights.FullControl,
+                    InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
+                    PropagationFlags.None,
+                    AccessControlType.Allow);
 
                 regSec.AddAccessRule(regRule);
                 regKey.SetAccessControl(regSec);

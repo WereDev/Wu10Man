@@ -11,12 +11,10 @@ using WereDev.Utils.Wu10Man.UserControls.Models;
 namespace WereDev.Utils.Wu10Man.UserControls
 {
     /// <summary>
-    /// Interaction logic for PauseUpdates.xaml
+    /// Interaction logic for PauseUpdates.xaml.
     /// </summary>
     public partial class PauseUpdatesControl : UserControl
     {
-        private readonly Regex _numberOnlyRegex = new Regex("[^0-9]+");
-        private readonly PauseUpdatesModel _model = new PauseUpdatesModel();
         private const string UXRegistryKey = @"SOFTWARE\Microsoft\WindowsUpdate\UX\Settings";
         private const string DeferFeatureUpdatesPeriodInDays = "DeferFeatureUpdatesPeriodInDays";
         private const string PauseFeatureUpdatesStartTime = "PauseFeatureUpdatesStartTime";
@@ -27,7 +25,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private const string PauseUpdatesExpiryTime = "PauseUpdatesExpiryTime";
         // private const string PendingRebootStartTime = "PendingRebootStartTime";
 
-        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
+        private readonly Regex _numberOnlyRegex = new Regex("[^0-9]+");
+        private readonly PauseUpdatesModel _model = new PauseUpdatesModel();
 
         public PauseUpdatesControl()
         {
@@ -37,6 +36,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
             ReadCurrentSettings();
             Wu10Logger.LogInfo("Pause and Defer initialized.");
         }
+
+        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -74,11 +75,6 @@ namespace WereDev.Utils.Wu10Man.UserControls
             WriteChanges();
         }
 
-        private void ResetChanges(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ReadCurrentSettings();
-        }
-
         private void ClearValues(object sender, System.Windows.RoutedEventArgs e)
         {
             _model.FeatureUpdateDelayDays = 0;
@@ -108,12 +104,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
             if (_model.FeatureUpdateDelayDays > 0)
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, _model.FeatureUpdateDelayDays.ToString(), RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Saving Feature Deferal Days: {_model.FeatureUpdateDelayDays}");
+                Wu10Logger.LogInfo($"Saving Feature Deferral Days: {_model.FeatureUpdateDelayDays}");
             }
             else
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, "0", RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Saving Feature Deferal Days: 0");
+                Wu10Logger.LogInfo($"Saving Feature Deferral Days: 0");
             }
 
             if (_model.QualityUpdatePauseDate.HasValue)
@@ -133,12 +129,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
             if (_model.QualityUpdateDelayDays > 0)
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferQualityUpdatesPeriodInDays, _model.QualityUpdateDelayDays.ToString(), RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Saving Quality Deferal Days: {_model.QualityUpdateDelayDays}");
+                Wu10Logger.LogInfo($"Saving Quality Deferral Days: {_model.QualityUpdateDelayDays}");
             }
             else
             {
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, DeferQualityUpdatesPeriodInDays, "0", RegistryValueKind.DWord);
-                Wu10Logger.LogInfo($"Saving Quality Deferal Days: {_model.FeatureUpdateDelayDays}");
+                Wu10Logger.LogInfo($"Saving Quality Deferral Days: {_model.FeatureUpdateDelayDays}");
             }
 
             var latestDate = Math.Max(_model.FeatureUpdatePauseDate?.Ticks ?? 0, _model.QualityUpdatePauseDate?.Ticks ?? 0);
@@ -146,7 +142,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             {
                 var pauseDateString = GetDateString(new DateTime(latestDate));
                 RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, PauseUpdatesExpiryTime, GetDateString(new DateTime(latestDate)), RegistryValueKind.String);
-                //RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, PendingRebootStartTime, now.ToString(dateFormat), RegistryValueKind.String);
+                // RegistryEditor.WriteLocalMachineRegistryValue(UXRegistryKey, PendingRebootStartTime, now.ToString(dateFormat), RegistryValueKind.String);
                 Wu10Logger.LogInfo($"Saving Pause Date Expiry: {pauseDateString}");
             }
             else
@@ -163,7 +159,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             var utc = datetime.Date.ToUniversalTime();
             var currentTime = DateTime.Now - DateTime.Today;
             var utcPlusTime = utc.Add(currentTime);
-            return utcPlusTime.ToString("yyyy-MM-ddTHH:mm:ssZ");            
+            return utcPlusTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
         }
     }
 }

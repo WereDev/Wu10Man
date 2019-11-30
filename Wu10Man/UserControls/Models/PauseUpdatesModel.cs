@@ -2,15 +2,20 @@
 
 namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
-    class PauseUpdatesModel : ModelBase
+    internal class PauseUpdatesModel : ModelBase
     {
         private DateTime? _featureUpdatePauseDate = null;
+        private int _featureUpdateDelayDays = 0;
+        private DateTime? _qualityUpdatePauseDate = null;
+        private int _qualityUpdateDelayDays = 0;
+
         public DateTime? FeatureUpdatePauseDate
         {
             get
             {
                 return _featureUpdatePauseDate;
             }
+
             set
             {
                 _featureUpdatePauseDate = value;
@@ -18,13 +23,13 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             }
         }
 
-        private int _featureUpdateDelayDays = 0;
         public int FeatureUpdateDelayDays
         {
             get
             {
                 return _featureUpdateDelayDays;
             }
+
             set
             {
                 _featureUpdateDelayDays = value;
@@ -32,13 +37,13 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             }
         }
 
-        private DateTime? _qualityUpdatePauseDate = null;
         public DateTime? QualityUpdatePauseDate
         {
             get
             {
                 return _qualityUpdatePauseDate;
             }
+
             set
             {
                 _qualityUpdatePauseDate = value;
@@ -46,19 +51,18 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             }
         }
 
-        private int _qualityUpdateDelayDays = 0;
         public int QualityUpdateDelayDays
         {
             get
             {
                 return _qualityUpdateDelayDays;
             }
+
             set
             {
                 _qualityUpdateDelayDays = value;
                 OnPropertyChanged(nameof(QualityUpdateDelayDays));
             }
         }
-
     }
 }

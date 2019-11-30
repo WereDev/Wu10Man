@@ -35,7 +35,9 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private void GetHostSettings()
         {
             var hostUrls = _hostsFileHelper.GetManagedHostUrls();
-            if (hostUrls == null) return;
+            if (hostUrls == null)
+                return;
+
             var currentHosts = _hostsFileHelper.GetBlockedHostUrls();
             var hostSettings = hostUrls.ToDictionary(x => x, x => !currentHosts.Contains(x));
             _model.HostStatus = hostSettings.Select(x => new HostStatus(x.Key, x.Value))

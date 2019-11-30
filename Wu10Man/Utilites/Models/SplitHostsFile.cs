@@ -2,7 +2,7 @@
 
 namespace WereDev.Utils.Wu10Man.Editors.Models
 {
-    class SplitHostsFile
+    internal class SplitHostsFile
     {
         public SplitHostsFile()
         {
@@ -11,7 +11,7 @@ namespace WereDev.Utils.Wu10Man.Editors.Models
         }
 
         public List<string> Wu10ManLines { get; }
-        public List<string> OtherLines { get; }
 
+        public List<string> OtherLines { get; }
     }
 }

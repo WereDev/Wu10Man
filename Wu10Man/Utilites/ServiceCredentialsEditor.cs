@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using WereDev.Utils.Win32Wrappers;
+using WereDev.Utils.Win32Wrappers.Models;
 using WereDev.Utils.Wu10Man.Interfaces;
 using WereDev.Utils.Wu10Man.Utilites.Models;
-using WereDev.Utils.Wu10Man.Win32Wrappers;
 
 namespace WereDev.Utils.Wu10Man.Utilites
 {
@@ -20,31 +21,32 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public string GetWindowsServiceUserName(string serviceName)
         {
-            IntPtr hManager = IntPtr.Zero;
-            IntPtr hService = IntPtr.Zero;
+            IntPtr manager = IntPtr.Zero;
+            IntPtr service = IntPtr.Zero;
 
             try
             {
-                hManager = ServiceWrapper.OpenSCManager(null, null, ServiceWrapper.SC_MANAGER_QUERY_ACESS);
+                manager = ServiceWrapper.OpenSCManager(null, null, ServiceWrapper.SC_MANAGER_QUERY_ACESS);
 
-                if (hManager == IntPtr.Zero)
-                {
-                    ThrowWin32Exception();
-                }
-                hService = ServiceWrapper.OpenService(hManager, serviceName, ServiceWrapper.SERVICE_QUERY_CONFIG | ServiceWrapper.SERVICE_CHANGE_CONFIG);
-                if (hService == IntPtr.Zero)
+                if (manager == IntPtr.Zero)
                 {
                     ThrowWin32Exception();
                 }
 
-                bool retCode = ServiceWrapper.QueryServiceConfig(hService, IntPtr.Zero, 0, out uint bytesNeeded);
+                service = ServiceWrapper.OpenService(manager, serviceName, ServiceWrapper.SERVICE_QUERY_CONFIG | ServiceWrapper.SERVICE_CHANGE_CONFIG);
+                if (service == IntPtr.Zero)
+                {
+                    ThrowWin32Exception();
+                }
+
+                bool retCode = ServiceWrapper.QueryServiceConfig(service, IntPtr.Zero, 0, out uint bytesNeeded);
                 if (!retCode && bytesNeeded == 0)
                     ThrowWin32Exception();
 
                 IntPtr qscPtr = Marshal.AllocCoTaskMem(Convert.ToInt32(bytesNeeded));
                 try
                 {
-                    retCode = ServiceWrapper.QueryServiceConfig(hService, qscPtr, bytesNeeded, out bytesNeeded);
+                    retCode = ServiceWrapper.QueryServiceConfig(service, qscPtr, bytesNeeded, out bytesNeeded);
                     if (!retCode)
                         ThrowWin32Exception();
 
@@ -58,8 +60,10 @@ namespace WereDev.Utils.Wu10Man.Utilites
             }
             finally
             {
-                if (hService != IntPtr.Zero) ServiceWrapper.CloseServiceHandle(hService);
-                if (hManager != IntPtr.Zero) ServiceWrapper.CloseServiceHandle(hManager);
+                if (service != IntPtr.Zero)
+                    ServiceWrapper.CloseServiceHandle(service);
+                if (manager != IntPtr.Zero)
+                    ServiceWrapper.CloseServiceHandle(manager);
             }
         }
 
@@ -71,30 +75,33 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public void SetWindowsServiceCredentials(string serviceName, string username, string password)
         {
-            IntPtr hManager = IntPtr.Zero;
-            IntPtr hService = IntPtr.Zero;
+            IntPtr manager = IntPtr.Zero;
+            IntPtr service = IntPtr.Zero;
             try
             {
-                hManager = ServiceWrapper.OpenSCManager(null, null, ServiceWrapper.SC_MANAGER_ALL_ACCESS);
-                if (hManager == IntPtr.Zero)
-                {
-                    ThrowWin32Exception();
-                }
-                hService = ServiceWrapper.OpenService(hManager, serviceName, ServiceWrapper.SERVICE_QUERY_CONFIG | ServiceWrapper.SERVICE_CHANGE_CONFIG);
-                if (hService == IntPtr.Zero)
+                manager = ServiceWrapper.OpenSCManager(null, null, ServiceWrapper.SC_MANAGER_ALL_ACCESS);
+                if (manager == IntPtr.Zero)
                 {
                     ThrowWin32Exception();
                 }
 
-                if (!ServiceWrapper.ChangeServiceConfig(hService, ServiceWrapper.SERVICE_NO_CHANGE, ServiceWrapper.SERVICE_NO_CHANGE, ServiceWrapper.SERVICE_NO_CHANGE, null, null, IntPtr.Zero, null, username, password, null))
+                service = ServiceWrapper.OpenService(manager, serviceName, ServiceWrapper.SERVICE_QUERY_CONFIG | ServiceWrapper.SERVICE_CHANGE_CONFIG);
+                if (service == IntPtr.Zero)
+                {
+                    ThrowWin32Exception();
+                }
+
+                if (!ServiceWrapper.ChangeServiceConfig(service, ServiceWrapper.SERVICE_NO_CHANGE, ServiceWrapper.SERVICE_NO_CHANGE, ServiceWrapper.SERVICE_NO_CHANGE, null, null, IntPtr.Zero, null, username, password, null))
                 {
                     ThrowWin32Exception();
                 }
             }
             finally
             {
-                if (hService != IntPtr.Zero) ServiceWrapper.CloseServiceHandle(hService);
-                if (hManager != IntPtr.Zero) ServiceWrapper.CloseServiceHandle(hManager);
+                if (service != IntPtr.Zero)
+                    ServiceWrapper.CloseServiceHandle(service);
+                if (manager != IntPtr.Zero)
+                    ServiceWrapper.CloseServiceHandle(manager);
             }
         }
 

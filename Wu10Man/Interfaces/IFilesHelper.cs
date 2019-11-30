@@ -1,6 +1,6 @@
 ﻿namespace WereDev.Utils.Wu10Man.Interfaces
 {
-    interface IFilesHelper
+    internal interface IFilesHelper
     {
         void RenameFile(string origPath, string newPath);
 

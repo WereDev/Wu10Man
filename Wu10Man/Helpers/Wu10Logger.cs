@@ -1,6 +1,7 @@
 ﻿using NLog;
 using NLog.Targets;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace WereDev.Utils.Wu10Man.Helpers
@@ -9,6 +10,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "nlog", Justification="nlog.config is the expected file name.")]
         public static string LogFolder
         {
             get
@@ -16,8 +18,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
                 var targets = LogManager.Configuration.AllTargets;
                 foreach (var target in targets)
                 {
-                    var fileTarget = target as FileTarget;
-                    if (fileTarget != null)
+                    if (target is FileTarget fileTarget)
                     {
                         var logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now };
                         var fileName = fileTarget.FileName.Render(logEventInfo);
@@ -25,6 +26,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
                         return folder;
                     }
                 }
+
                 throw new InvalidOperationException("No file logging has been configured in nlog.config");
             }
         }

@@ -2,71 +2,66 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using WereDev.Utils.Wu10Man.Editors;
 using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.Interfaces;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
     /// <summary>
-    /// Interaction logic for GroupPolicyControl.xaml
+    /// Interaction logic for GroupPolicyControl.xaml.
     /// </summary>
     public partial class GroupPolicyControl : UserControl
     {
-        const string ENABLE = "ENABLE";
-        const string DISABLE = "DISABLE";
-        const string NOTIFY_DOWNLOAD = "NOTIFY_DOWNLOAD";
-        const string NOTIFY_INSTALL = "NOTIFY_INSTALL";
-        const string SCHEDULE_INSTALL = "SCHEDULE_INSTALL";
+        private const string PolicyEnableUpdate = "ENABLE";
+        private const string PolicyDisableUpdate = "DISABLE";
+        private const string PolicyNotifyForDownload = "NOTIFY_DOWNLOAD";
+        private const string PolicyNotifyForInstall = "NOTIFY_INSTALL";
+        private const string PolicyScheduleInstall = "SCHEDULE_INSTALL";
 
-        const string AUOPTION_NOTIFY_DOWNLOAD = "2";
-        const string AUOPTION_NOTIFY_INSTALL = "3";
-        const string AUOPTION_SCHEDULE_INSTALL = "4";
+        private const string AuOptionNotifyDownload = "2";
+        private const string AuOptionNotifyInstall = "3";
+        private const string AuOptionScheduleInstall = "4";
 
-        const string NOUPDATE_ENABLE = "0";
-        const string NOUPDATE_DISABLE = "1";
+        private const string NoUpdateEnable = "0";
+        private const string NoUpdateDisable = "1";
 
-        const string REGISTRY_ROOT = @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU";
-        const string REGISTRY_AUOPTION = "AuOptions";
-        const string REGISTRY_NOUPDATE = "NoAutoUpdate";
-
-        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
-
-        public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; set; }
-        public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
+        private const string RegistryRoot = @"SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU";
+        private const string RegistryAuOptions = "AuOptions";
+        private const string RegistryNoUpdate = "NoAutoUpdate";
 
         public GroupPolicyControl()
         {
             Wu10Logger.LogInfo("Group Policy Control initializing.");
-            CreatePolicyOptions();
+            PolicyOptions = CreatePolicyOptions();
             GetCurrentStatus();
             InitializeComponent();
             Wu10Logger.LogInfo("Group Policy Control initialized.");
         }
 
-        private void CreatePolicyOptions()
+        public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; }
+
+        public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
+
+        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
+
+        private ObservableCollection<KeyValuePair<string, string>> CreatePolicyOptions()
         {
             var options = new ObservableCollection<KeyValuePair<string, string>>()
             {
-                new KeyValuePair<string, string>( ENABLE, "Enable Automatic Updates" ),
-                new KeyValuePair<string, string>( DISABLE, "Disable Automatic Updates" ),
-                new KeyValuePair<string, string>( NOTIFY_DOWNLOAD, "Notify of Download and Installation" ),
-                new KeyValuePair<string, string>( NOTIFY_INSTALL, "Automatic Download, Notify of Installation" ),
-                
-                //TODO: Implement scheduling config to get this working.
-                //new KeyValuePair<string, string>( SCHEDULE_INSTALL, "Automatic Download, Schedule Install")
+                new KeyValuePair<string, string>(PolicyEnableUpdate, "Enable Automatic Updates"),
+                new KeyValuePair<string, string>(PolicyDisableUpdate, "Disable Automatic Updates"),
+                new KeyValuePair<string, string>(PolicyNotifyForDownload, "Notify of Download and Installation"),
+                new KeyValuePair<string, string>(PolicyNotifyForInstall, "Automatic Download, Notify of Installation"),
             };
 
-            PolicyOptions = options;
+            return options;
         }
 
         private void GetCurrentStatus()
         {
             var status = GetNoUpdateStatus();
-            if (status == ENABLE)
+            if (status == PolicyEnableUpdate)
                 status = GetAuOptionStatus();
 
             SelectedPolicyOption = PolicyOptions.FirstOrDefault(x => x.Key == status);
@@ -74,31 +69,31 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private string GetNoUpdateStatus()
         {
-            var nauValue = RegistryEditor.ReadLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_NOUPDATE);
+            var nauValue = RegistryEditor.ReadLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
             switch (nauValue)
             {
-                case NOUPDATE_ENABLE:
-                    return DISABLE;
-                case NOUPDATE_DISABLE:
+                case NoUpdateEnable:
+                    return PolicyDisableUpdate;
+                case NoUpdateDisable:
                 default:
-                    return ENABLE;
+                    return PolicyEnableUpdate;
             }
         }
 
         private string GetAuOptionStatus()
         {
-            var auValue = RegistryEditor.ReadLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_AUOPTION);
+            var registryValue = RegistryEditor.ReadLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
 
-            switch (auValue)
+            switch (registryValue)
             {
-                case AUOPTION_NOTIFY_DOWNLOAD:
-                    return NOTIFY_DOWNLOAD;
-                case AUOPTION_NOTIFY_INSTALL:
-                    return NOTIFY_INSTALL;
-                case AUOPTION_SCHEDULE_INSTALL:
-                    return SCHEDULE_INSTALL;
+                case AuOptionNotifyDownload:
+                    return PolicyNotifyForDownload;
+                case AuOptionNotifyInstall:
+                    return PolicyNotifyForInstall;
+                case AuOptionScheduleInstall:
+                    return PolicyScheduleInstall;
                 default:
-                    return ENABLE;
+                    return PolicyEnableUpdate;
             }
         }
 
@@ -111,25 +106,25 @@ namespace WereDev.Utils.Wu10Man.UserControls
         {
             switch (SelectedPolicyOption.Key)
             {
-                case ENABLE:
-                    RegistryEditor.DeleteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_AUOPTION);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_NOUPDATE);
+                case PolicyEnableUpdate:
+                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
+                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
-                case DISABLE:
-                    RegistryEditor.WriteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_NOUPDATE, NOUPDATE_ENABLE, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_AUOPTION);
+                case PolicyDisableUpdate:
+                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate, NoUpdateEnable, RegistryValueKind.DWord);
+                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
                     break;
-                case NOTIFY_DOWNLOAD:
-                    RegistryEditor.WriteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_AUOPTION, AUOPTION_NOTIFY_DOWNLOAD, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_NOUPDATE);
+                case PolicyNotifyForDownload:
+                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions, AuOptionNotifyDownload, RegistryValueKind.DWord);
+                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
-                case NOTIFY_INSTALL:
-                    RegistryEditor.WriteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_AUOPTION, AUOPTION_NOTIFY_INSTALL, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_NOUPDATE);
+                case PolicyNotifyForInstall:
+                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions, AuOptionNotifyInstall, RegistryValueKind.DWord);
+                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
-                case SCHEDULE_INSTALL:
-                    RegistryEditor.WriteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_AUOPTION, AUOPTION_SCHEDULE_INSTALL, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(REGISTRY_ROOT, REGISTRY_NOUPDATE);
+                case PolicyScheduleInstall:
+                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions, AuOptionScheduleInstall, RegistryValueKind.DWord);
+                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
             }
 

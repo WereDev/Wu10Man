@@ -5,7 +5,7 @@ using WereDev.Utils.Wu10Man.Helpers;
 namespace WereDev.Utils.Wu10Man.UserWindows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -24,14 +24,14 @@ namespace WereDev.Utils.Wu10Man.UserWindows
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void AboutItem_Click(object sender, RoutedEventArgs e)
         {
             var aboutWindow = new About();
-            aboutWindow.Left = this.Left + ((this.Width - aboutWindow.Width) / 2);
-            aboutWindow.Top = this.Top + ((this.Height - aboutWindow.Height) / 2);
+            aboutWindow.Left = Left + ((Width - aboutWindow.Width) / 2);
+            aboutWindow.Top = Top + ((Height - aboutWindow.Height) / 2);
             aboutWindow.ShowDialog();
         }
 
@@ -46,4 +46,3 @@ namespace WereDev.Utils.Wu10Man.UserWindows
         }
     }
 }
-

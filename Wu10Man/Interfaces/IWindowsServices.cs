@@ -2,7 +2,7 @@
 
 namespace WereDev.Utils.Wu10Man.Interfaces
 {
-    interface IWindowsServices : IList<string>
+    internal interface IWindowsServices : IList<string>
     {
     }
 }

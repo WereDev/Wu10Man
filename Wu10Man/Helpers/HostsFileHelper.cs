@@ -7,8 +7,6 @@ namespace WereDev.Utils.Wu10Man.Helpers
 {
     internal class HostsFileHelper
     {
-        private IHostsFileEditor HostsEditor => DependencyManager.Resolve<IHostsFileEditor>();
-
         private readonly HashSet<string> _hostUrls;
 
         public HostsFileHelper()
@@ -16,22 +14,7 @@ namespace WereDev.Utils.Wu10Man.Helpers
             _hostUrls = GetWindowsUpdateUrls();
         }
 
-        //TODO: I don't like this here because of the dependency on ConfigurationManager.
-        private HashSet<string> GetWindowsUpdateUrls()
-        {
-            var windowsUpdateUrls = System.Configuration.ConfigurationManager.AppSettings["WindowsUpdateUrls"];
-            if (string.IsNullOrWhiteSpace(windowsUpdateUrls)) return new HashSet<string>();
-            windowsUpdateUrls = StandardizeHostUrl(windowsUpdateUrls);
-            var split = windowsUpdateUrls.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var uniques = split.Select(x => StandardizeHostUrl(x)).Distinct();
-            return new HashSet<string>(uniques);
-        }
-
-        private string StandardizeHostUrl(string hostUrl)
-        {
-            if (String.IsNullOrWhiteSpace(hostUrl)) hostUrl = string.Empty;
-            return hostUrl.Trim().ToLower();
-        }
+        private static IHostsFileEditor HostsEditor => DependencyManager.Resolve<IHostsFileEditor>();
 
         public void BlockHostUrl(string hostUrl)
         {
@@ -52,7 +35,6 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public void BlockAllHostUrls()
         {
             HostsEditor.SetHostsEntries(_hostUrls);
-
         }
 
         public void UnblockHostUrl(string hostUrl)
@@ -79,8 +61,10 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public string[] GetBlockedHostUrls()
         {
             var currentHosts = HostsEditor.GetHostsInFile();
-            if (currentHosts == null) return new string[0];
-            return currentHosts.Select(x => StandardizeHostUrl(x)).Distinct().ToArray();
+            if (currentHosts == null)
+                return Array.Empty<string>();
+            else
+                return currentHosts.Select(x => StandardizeHostUrl(x)).Distinct().ToArray();
         }
 
         public string[] GetManagedHostUrls()
@@ -91,6 +75,26 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public string[] GetLockingProcessNames()
         {
             return HostsEditor.GetLockingProcessNames();
+        }
+
+        private string StandardizeHostUrl(string hostUrl)
+        {
+            if (string.IsNullOrWhiteSpace(hostUrl))
+                hostUrl = string.Empty;
+
+            return hostUrl.Trim().ToLower();
+        }
+
+        // TODO: I don't like this here because of the dependency on ConfigurationManager.
+        private HashSet<string> GetWindowsUpdateUrls()
+        {
+            var windowsUpdateUrls = System.Configuration.ConfigurationManager.AppSettings["WindowsUpdateUrls"];
+            if (string.IsNullOrWhiteSpace(windowsUpdateUrls))
+                return new HashSet<string>();
+            windowsUpdateUrls = StandardizeHostUrl(windowsUpdateUrls);
+            var split = windowsUpdateUrls.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var uniques = split.Select(x => StandardizeHostUrl(x)).Distinct();
+            return new HashSet<string>(uniques);
         }
     }
 }

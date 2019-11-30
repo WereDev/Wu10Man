@@ -2,7 +2,7 @@
 
 namespace WereDev.Utils.Wu10Man.Utilites
 {
-    class WindowsServiceProviderFactory : IWindowsServiceProviderFactory
+    internal class WindowsServiceProviderFactory : IWindowsServiceProviderFactory
     {
         public IWindowsServiceProvider GetWindowsServiceProvider(string service)
         {

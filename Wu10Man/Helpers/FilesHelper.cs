@@ -2,8 +2,8 @@
 using System.IO;
 using System.Security.AccessControl;
 using System.Security.Principal;
+using WereDev.Utils.Win32Wrappers;
 using WereDev.Utils.Wu10Man.Interfaces;
-using WereDev.Utils.Wu10Man.Win32Wrappers;
 
 namespace WereDev.Utils.Wu10Man.Helpers
 {
@@ -16,7 +16,6 @@ namespace WereDev.Utils.Wu10Man.Helpers
         {
             _serviceCredentialsEditor = serviceCredentialsEditor ?? throw new ArgumentNullException(nameof(serviceCredentialsEditor));
         }
-
 
         public void RenameFile(string origPath, string newPath)
         {
@@ -45,7 +44,8 @@ namespace WereDev.Utils.Wu10Man.Helpers
 
         public void SetOwnership(string fileName, string userName)
         {
-            if (string.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName));
+            if (string.IsNullOrWhiteSpace(userName))
+                throw new ArgumentNullException(nameof(userName));
 
             var fileSecurity = GetFileSecurity(fileName);
             var account = new NTAccount(userName);
@@ -55,33 +55,13 @@ namespace WereDev.Utils.Wu10Man.Helpers
 
         public void GrantFullAccessToFile(string fileName, string userName)
         {
-            if (string.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName));
+            if (string.IsNullOrWhiteSpace(userName))
+                throw new ArgumentNullException(nameof(userName));
 
             var fileSecurity = GetFileSecurity(fileName);
             var account = new NTAccount(userName);
             fileSecurity.SetAccessRule(new FileSystemAccessRule(account, FileSystemRights.FullControl, AccessControlType.Allow));
             File.SetAccessControl(fileName, fileSecurity);
-        }
-
-        private FileSecurity GetFileSecurity(string fileName)
-        {
-            if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
-            if (!File.Exists(fileName)) throw new FileNotFoundException("Could not find file to set ownership.", fileName);
-
-            // Allow this process to circumvent ACL restrictions
-            WinApiWrapper.ModifyPrivilege(PrivilegeName.SeRestorePrivilege, true);
-
-            // Sometimes this is required and other times it works without it. Not sure when.
-            WinApiWrapper.ModifyPrivilege(PrivilegeName.SeTakeOwnershipPrivilege, true);
-
-            var accessControl = File.GetAccessControl(fileName);
-
-            return accessControl;
-        }
-
-        public string GetDirectoryName(string path)
-        {
-            return Path.GetDirectoryName(path);
         }
 
         public string GetFileName(string path)
@@ -102,6 +82,29 @@ namespace WereDev.Utils.Wu10Man.Helpers
         public void Delete(string path)
         {
             File.Delete(path);
+        }
+
+        public string GetDirectoryName(string path)
+        {
+            return Path.GetDirectoryName(path);
+        }
+
+        private FileSecurity GetFileSecurity(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException("Could not find file to set ownership.", fileName);
+
+            // Allow this process to circumvent ACL restrictions
+            WinApiWrapper.ModifyPrivilege(PrivilegeName.SeRestorePrivilege, true);
+
+            // Sometimes this is required and other times it works without it. Not sure when.
+            WinApiWrapper.ModifyPrivilege(PrivilegeName.SeTakeOwnershipPrivilege, true);
+
+            var accessControl = File.GetAccessControl(fileName);
+
+            return accessControl;
         }
     }
 }

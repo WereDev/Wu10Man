@@ -8,33 +8,38 @@ using WereDev.Utils.Wu10Man.Interfaces;
 
 namespace WereDev.Utils.Wu10Man.Utilites
 {
-    internal class WindowsServiceProvider : IDisposable, Interfaces.IWindowsServiceProvider
+    internal class WindowsServiceProvider : IDisposable, IWindowsServiceProvider
     {
-        private ServiceController _serviceController;
         private readonly string _servicesRegistryPath = @"SYSTEM\CurrentControlSet\Services\";
         private readonly IRegistryEditor _registryEditor;
         private readonly IServiceCredentialsEditor _serviceCredentialsEditor;
+        private ServiceController _serviceController;
 
         public WindowsServiceProvider(string serviceName, IRegistryEditor registryEditor, IServiceCredentialsEditor serviceCredentialsEditor)
         {
-            if (string.IsNullOrEmpty(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrEmpty(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             _serviceController = new ServiceController(serviceName);
             _registryEditor = registryEditor ?? throw new ArgumentNullException(nameof(registryEditor));
             _serviceCredentialsEditor = serviceCredentialsEditor ?? throw new ArgumentNullException(nameof(serviceCredentialsEditor));
         }
 
+        public string DisplayName => _serviceController.DisplayName;
+
         public bool SetStartupType(ServiceStartMode startMode)
         {
-            if (startMode == _serviceController.StartType) return true;
+            if (startMode == _serviceController.StartType)
+                return true;
 
-            //Doing this via Management Object allows for real-time service change
-            //The new Windows Update Medic Service is pretty harsh on the access control
+            // Doing this via Management Object allows for real-time service change
+            // The new Windows Update Medic Service is pretty harsh on the access control
             bool doneRealtime = SetStartModeViaManagementObject(startMode);
             if (!doneRealtime)
             {
-                //If this is done via registry, then a reboot is required
+                // If this is done via registry, then a reboot is required
                 SetStartModeViaRegistry(startMode);
             }
+
             _serviceController.Refresh();
             return doneRealtime;
         }
@@ -45,14 +50,12 @@ namespace WereDev.Utils.Wu10Man.Utilites
             {
                 return _serviceController.DisplayName != null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Wu10Logger.LogError(ex);
                 return false;
             }
         }
-
-        public string DisplayName => _serviceController.DisplayName;
 
         public string GetServiceDLL()
         {
@@ -88,7 +91,7 @@ namespace WereDev.Utils.Wu10Man.Utilites
         {
             var serviceUserName = ".\\" + _serviceCredentialsEditor.GetWindowsServiceUserName(_serviceController.ServiceName);
 
-            return serviceUserName.Equals(Constants.USERNAME_LOCAL_SYSTEM, StringComparison.CurrentCultureIgnoreCase);
+            return serviceUserName.Equals(Constants.UserNameLocalSystem, StringComparison.OrdinalIgnoreCase);
         }
 
         public void StopService()
@@ -102,36 +105,18 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public void SetAccountAsLocalService()
         {
-
             _serviceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, WellKnownSidType.LocalServiceSid);
         }
 
         public void SetAccountAsLocalSystem()
         {
-            _serviceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, Constants.USERNAME_LOCAL_SYSTEM, null);
+            _serviceCredentialsEditor.SetWindowsServiceCredentials(_serviceController.ServiceName, Constants.UserNameLocalSystem, null);
         }
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        private bool SetStartModeViaManagementObject(ServiceStartMode startMode)
-        {
-            using (var mo = new ManagementObject(string.Format("Win32_Service.Name=\"{0}\"", _serviceController.ServiceName)))
-            {
-                var result = mo.InvokeMethod("ChangeStartMode", new object[] { startMode.ToString() });
-                return result.ToString() != "2"; //Access Denied
-            }
-        }
-
-        private void SetStartModeViaRegistry(ServiceStartMode startMode)
-        {
-            _registryEditor.WriteLocalMachineRegistryValue(_servicesRegistryPath + _serviceController.ServiceName,
-                                                          "Start",
-                                                          ((int)startMode).ToString(),
-                                                          Microsoft.Win32.RegistryValueKind.DWord);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -141,6 +126,24 @@ namespace WereDev.Utils.Wu10Man.Utilites
                 _serviceController.Dispose();
                 _serviceController = null;
             }
+        }
+
+        private bool SetStartModeViaManagementObject(ServiceStartMode startMode)
+        {
+            using (var mo = new ManagementObject(string.Format("Win32_Service.Name=\"{0}\"", _serviceController.ServiceName)))
+            {
+                var result = mo.InvokeMethod("ChangeStartMode", new object[] { startMode.ToString() });
+                return result.ToString() != "2"; // Access Denied
+            }
+        }
+
+        private void SetStartModeViaRegistry(ServiceStartMode startMode)
+        {
+            _registryEditor.WriteLocalMachineRegistryValue(
+                _servicesRegistryPath + _serviceController.ServiceName,
+                "Start",
+                ((int)startMode).ToString(),
+                Microsoft.Win32.RegistryValueKind.DWord);
         }
     }
 }

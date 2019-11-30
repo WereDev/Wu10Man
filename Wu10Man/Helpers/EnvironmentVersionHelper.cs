@@ -6,8 +6,8 @@ namespace WereDev.Utils.Wu10Man.Helpers
     {
         private const string WindowsVersionRegistryKey = @"SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion";
         private const string DotNetVersionRegistryKey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full";
-        private static IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
 
+        private static IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
 
         public static string GetDotNetFrameworkBuild()
         {
@@ -30,11 +30,11 @@ namespace WereDev.Utils.Wu10Man.Helpers
                 return $"{release} / 4.6";
             else if (releaseInt >= 393273)
                 return $"{release} / 4.6 RC";
-            else if ((releaseInt >= 379893))
+            else if (releaseInt >= 379893)
                 return $"{release} / 4.5.2";
-            else if ((releaseInt >= 378675))
+            else if (releaseInt >= 378675)
                 return $"{release} / 4.5.1";
-            else if ((releaseInt >= 378389))
+            else if (releaseInt >= 378389)
                 return $"{release} / 4.5";
             else
                 return $"{release} / No 4.5 or later version detected";

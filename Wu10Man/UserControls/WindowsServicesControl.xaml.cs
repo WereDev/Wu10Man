@@ -9,12 +9,11 @@ using WPFSpark;
 namespace WereDev.Utils.Wu10Man.UserControls
 {
     /// <summary>
-    /// Interaction logic for WindowsServicesControl.xaml
+    /// Interaction logic for WindowsServicesControl.xaml.
     /// </summary>
     public partial class WindowsServicesControl : UserControl
     {
         private readonly WindowsServicesModel _model = new WindowsServicesModel();
-        private IWindowsServiceManager ServiceManager => DependencyManager.Resolve<IWindowsServiceManager>();
 
         public WindowsServicesControl()
         {
@@ -25,6 +24,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 SetRuntimeOptions();
             Wu10Logger.LogInfo("Windows Services initialized.");
         }
+
+        private IWindowsServiceManager ServiceManager => DependencyManager.Resolve<IWindowsServiceManager>();
 
         private void SetRuntimeOptions()
         {
@@ -54,7 +55,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void ToggleService(object sender, System.Windows.RoutedEventArgs e)
         {
-            var toggle = ((ToggleSwitch)sender);
+            var toggle = (ToggleSwitch)sender;
             var data = (WindowsServiceStatusModel)toggle.DataContext;
             if (toggle.IsChecked.Value)
             {

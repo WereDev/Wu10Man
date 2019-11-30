@@ -10,6 +10,6 @@ namespace WereDev.Utils.Wu10Man.Interfaces
 
         void SetWindowsServiceCredentials(string serviceName, WellKnownSidType sidType);
 
-        void SetWindowsServiceCredentials(string serviceName, string username, string password);
+        void SetWindowsServiceCredentials(string serviceName, string userName, string password);
     }
 }

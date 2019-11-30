@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 // https://stackoverflow.com/questions/1304/how-to-check-for-file-lock#3202085
-namespace WereDev.Utils.Wu10Man.Win32Wrappers
+namespace WereDev.Utils.Win32Wrappers
 {
-    static public class FileWrapper
+    public static class FileWrapper
     {
         [StructLayout(LayoutKind.Sequential)]
         struct RM_UNIQUE_PROCESS

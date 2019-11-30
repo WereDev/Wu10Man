@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using WereDev.Utils.Wu10Man.Interfaces;
+using WereDev.Utils.Win32Wrappers;
 using WereDev.Utils.Wu10Man.Editors.Models;
-using WereDev.Utils.Wu10Man.Win32Wrappers;
+using WereDev.Utils.Wu10Man.Interfaces;
 
 namespace WereDev.Utils.Wu10Man.Utilites
 {
-    class HostsFileEditor : IHostsFileEditor
+    internal class HostsFileEditor : IHostsFileEditor
     {
-        private const string HOSTS_FILE = @"drivers\etc\hosts";
-        private const string WU10MAN_START = "# Start of entries added by Wu10Man";
-        private const string WU10MAN_END = "# End of entries added by Wu10Man";
-        private const string HOST_ENDPOINT = "0.0.0.0\t";
+        private const string HostsFilePath = @"drivers\etc\hosts";
+        private const string Wu10ManStart = "# Start of entries added by Wu10Man";
+        private const string Wu10ManEnd = "# End of entries added by Wu10Man";
+        private const string NullEndpoint = "0.0.0.0\t";
 
-        private string HostsFile => Path.Combine(Environment.SystemDirectory, HOSTS_FILE);
+        private string HostsFile => Path.Combine(Environment.SystemDirectory, HostsFilePath);
 
         public void SetHostsEntries(IEnumerable<string> hostUrls)
         {
@@ -43,6 +43,16 @@ namespace WereDev.Utils.Wu10Man.Utilites
             return hosts;
         }
 
+        public string[] GetLockingProcessNames()
+        {
+            var processes = FileWrapper.WhoIsLocking(HostsFile);
+
+            if (processes == null)
+                return new string[0];
+
+            return processes.Select(x => x.MainModule?.FileVersionInfo?.ProductName ?? x.ProcessName).ToArray();
+        }
+
         private string[] GetHostsFromLines(IEnumerable<string> lines)
         {
             var hosts = lines.Select(x => GetHostFromLine(x))
@@ -54,14 +64,15 @@ namespace WereDev.Utils.Wu10Man.Utilites
         private string GetHostFromLine(string line)
         {
             line = line.Trim();
-            if (line == string.Empty) return line;
+            if (string.IsNullOrEmpty(line))
+                return line;
             var split = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             return split[1];
         }
 
         private string[] CreateLinesFromHosts(IEnumerable<string> hosts)
         {
-            var lines = hosts.Select(x => HOST_ENDPOINT + x);
+            var lines = hosts.Select(x => NullEndpoint + x);
             return lines.ToArray();
         }
 
@@ -80,10 +91,10 @@ namespace WereDev.Utils.Wu10Man.Utilites
             {
                 switch (line)
                 {
-                    case WU10MAN_START:
+                    case Wu10ManStart:
                         wu10Line = true;
                         break;
-                    case WU10MAN_END:
+                    case Wu10ManEnd:
                         wu10Line = false;
                         break;
                     default:
@@ -104,22 +115,12 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
             if (splitHostsFile.Wu10ManLines.Any())
             {
-                lines.Add(WU10MAN_START);
+                lines.Add(Wu10ManStart);
                 lines.AddRange(splitHostsFile.Wu10ManLines);
-                lines.Add(WU10MAN_END);
+                lines.Add(Wu10ManEnd);
             }
 
             File.WriteAllLines(HostsFile, lines);
-        }
-
-        public string[] GetLockingProcessNames()
-        {
-            var processes = FileWrapper.WhoIsLocking(HostsFile);
-
-            if (processes == null)
-                return new string[0];
-
-            return processes.Select(x => x.MainModule?.FileVersionInfo?.ProductName ?? x.ProcessName).ToArray();
         }
     }
 }

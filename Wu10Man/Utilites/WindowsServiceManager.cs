@@ -28,7 +28,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public bool ServiceExists(string serviceName)
         {
-            if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrWhiteSpace(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 return service.ServiceExists();
@@ -37,7 +38,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public string GetServiceDisplayName(string serviceName)
         {
-            if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrWhiteSpace(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 return service.DisplayName;
@@ -46,7 +48,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public string GetServiceDllPath(string serviceName)
         {
-            if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrWhiteSpace(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 var dll = service.GetServiceDLL();
@@ -66,7 +69,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public bool IsServiceEnabled(string serviceName)
         {
-            if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrWhiteSpace(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             var serviceDllPath = GetServiceDllPath(serviceName);
 
             using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
@@ -78,7 +82,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
 
         public bool EnableService(string serviceName)
         {
-            if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrWhiteSpace(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             RemoveWu10FromFileName(serviceName);
             var enabledRealtime = false;
             using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
@@ -87,23 +92,27 @@ namespace WereDev.Utils.Wu10Man.Utilites
                     service.SetAccountAsLocalSystem();
                 enabledRealtime = service.EnableService();
             }
+
             return enabledRealtime;
         }
 
         public void DisableService(string serviceName)
         {
-            if (string.IsNullOrWhiteSpace(serviceName)) throw new ArgumentNullException(nameof(serviceName));
+            if (string.IsNullOrWhiteSpace(serviceName))
+                throw new ArgumentNullException(nameof(serviceName));
             using (var service = _providerFactory.GetWindowsServiceProvider(serviceName))
             {
                 service.DisableService();
             }
+
             AddWu10ToFileName(serviceName);
         }
 
         public void AddWu10ToFileName(string serviceName)
         {
             var dllPath = GetServiceDllPath(serviceName);
-            if (string.IsNullOrEmpty(dllPath)) return;
+            if (string.IsNullOrEmpty(dllPath))
+                return;
 
             _filesHelper.GiveOwnershipToAdministrators(dllPath);
             var wu10Path = GetPathWithWu10Prefix(dllPath);
@@ -113,7 +122,8 @@ namespace WereDev.Utils.Wu10Man.Utilites
         public void RemoveWu10FromFileName(string serviceName)
         {
             var dllPath = GetServiceDllPath(serviceName);
-            if (string.IsNullOrEmpty(dllPath)) return;
+            if (string.IsNullOrEmpty(dllPath))
+                return;
 
             var wu10Path = GetPathWithWu10Prefix(dllPath);
 
