@@ -187,7 +187,6 @@
     <Rule Id="CA2205" Action="Warning" />
     <Rule Id="CA2207" Action="Warning" />
     <Rule Id="CA2208" Action="Warning" />
-    <Rule Id="CA2210" Action="Warning" />
     <Rule Id="CA2211" Action="Warning" />
     <Rule Id="CA2212" Action="Warning" />
     <Rule Id="CA2213" Action="Warning" />
@@ -255,6 +254,7 @@
     <Rule Id="SA1512" Action="None" />
     <Rule Id="SA1515" Action="None" />
     <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1602" Action="None" />
     <Rule Id="SA1609" Action="Warning" />
     <Rule Id="SA1633" Action="None" />
     <Rule Id="SA1639" Action="Warning" />

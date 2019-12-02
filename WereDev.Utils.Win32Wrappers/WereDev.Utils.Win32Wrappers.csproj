@@ -46,15 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileWrapper.cs" />
+    <Compile Include="FileAccessBridge.cs" />
     <Compile Include="Models\ServiceConfigInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceWrapper.cs" />
-    <Compile Include="TokenWrapper.cs" />
-    <Compile Include="WinApiWrapper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Settings.Stylecop" />
+    <Compile Include="WindowsApiBridge.cs" />
+    <Compile Include="WindowsCredentialsBridge.cs" />
+    <Compile Include="WindowsServiceBridge.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

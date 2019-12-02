@@ -1,12 +1,14 @@
 ﻿using Autofac;
 using System;
-using System.Linq;
 using System.Windows;
+using WereDev.Utils.Wu10Man.Core;
+using WereDev.Utils.Wu10Man.Core.Interfaces;
+using WereDev.Utils.Wu10Man.Core.Interfaces.Providers;
+using WereDev.Utils.Wu10Man.Core.Services;
 using WereDev.Utils.Wu10Man.Helpers;
-using WereDev.Utils.Wu10Man.Interfaces;
+using WereDev.Utils.Wu10Man.Providers;
+using WereDev.Utils.Wu10Man.Services;
 using WereDev.Utils.Wu10Man.UserWindows;
-using WereDev.Utils.Wu10Man.Utilites;
-using WereDev.Utils.Wu10Man.Utilites.Models;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -15,10 +17,12 @@ namespace WereDev.Utils.Wu10Man
     /// </summary>
     public partial class App : Application
     {
+        private readonly ILogWriter _logWriter = new Wu10Logger();
+
         public App()
             : base()
         {
-            Wu10Logger.LogInfo("Application starting");
+            _logWriter.LogInfo("Application starting");
             try
             {
                 RegisterDependencies();
@@ -27,40 +31,48 @@ namespace WereDev.Utils.Wu10Man
                 MainWindow = new MainWindow();
                 MainWindow.Show();
 
-                Wu10Logger.LogInfo("Application started");
+                _logWriter.LogInfo("Application started");
             }
             catch (Exception ex)
             {
-                Wu10Logger.LogError(ex);
-                MessageBox.Show("An error occured attempting to initialize the application.  Check the log file for more details.", "Error!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                _logWriter.LogError(ex);
+                MessageBox.Show("An error occured attempting to initialize the application.  Check the log file for more details.", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown();
             }
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Wu10Logger.LogInfo("Application ended");
+            _logWriter.LogInfo("Application ended");
             base.OnExit(e);
         }
 
         private void RegisterDependencies()
         {
             var builder = new ContainerBuilder();
-            builder.Register<IWindowsServices>((context, parameters) => { return GetWindowsServices(); });
-            builder.RegisterType<FilesHelper>().As<IFilesHelper>();
+            builder.RegisterInstance(_logWriter);
+
+            // Providers
+            builder.RegisterType<ConfigurationReader>().As<IConfigurationReader>();
+            builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>();
+            builder.RegisterType<FileIoProvider>().As<IFileIoProvider>();
+            builder.RegisterType<RegistryProvider>().As<IRegistryProvider>();
+            builder.RegisterType<UserProvider>().As<IUserProvider>();
+            builder.RegisterType<WindowsApiAdapter>().As<IWindowsApiProvider>();
+            builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
+
+            // Services
+            builder.RegisterType<FileManager>().As<IFileManager>();
             builder.RegisterType<HostsFileEditor>().As<IHostsFileEditor>();
             builder.RegisterType<RegistryEditor>().As<IRegistryEditor>();
-            builder.RegisterType<ServiceCredentialsEditor>().As<IServiceCredentialsEditor>();
-            builder.RegisterType<TokenEditor>().As<ITokenEditor>();
             builder.RegisterType<WindowsServiceManager>().As<IWindowsServiceManager>();
-            builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
 
             DependencyManager.Container = builder.Build();
         }
 
         private void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            Wu10Logger.LogError(e.Exception);
+            _logWriter.LogError(e.Exception);
             string errorMessage = string.Format("{0}\r\n\r\nCheck the logs for more details.", e.Exception.Message);
             MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             e.Handled = true;
@@ -69,18 +81,11 @@ namespace WereDev.Utils.Wu10Man
         private void WriteStartupLogs()
         {
             var appVersion = GetType().Assembly.GetName().Version;
-            Wu10Logger.LogInfo($"Application version: v{appVersion.ToString()}");
-            Wu10Logger.LogInfo(EnvironmentVersionHelper.GetWindowsVersion());
-            Wu10Logger.LogInfo($".Net Framework: {EnvironmentVersionHelper.GetDotNetFrameworkBuild()}");
-        }
+            _logWriter.LogInfo($"Application version: v{appVersion.ToString()}");
 
-        private WindowsServiceNames GetWindowsServices()
-        {
-            var serviceNames = System.Configuration.ConfigurationManager.AppSettings["WindowsServiceNames"];
-            var split = serviceNames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var names = new WindowsServiceNames();
-            names.AddRange(split.Distinct());
-            return names;
+            var registryEditor = DependencyManager.Resolve<IRegistryEditor>();
+            _logWriter.LogInfo(EnvironmentVersionHelper.GetWindowsVersion(registryEditor));
+            _logWriter.LogInfo($".Net Framework: {EnvironmentVersionHelper.GetDotNetFrameworkBuild(registryEditor)}");
         }
     }
 }

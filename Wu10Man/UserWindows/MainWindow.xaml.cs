@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
-using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.Core;
+using WereDev.Utils.Wu10Man.Core.Interfaces;
+using WereDev.Utils.Wu10Man.Services;
 
 namespace WereDev.Utils.Wu10Man.UserWindows
 {
@@ -9,11 +11,15 @@ namespace WereDev.Utils.Wu10Man.UserWindows
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ILogWriter _logWriter;
+
         public MainWindow()
         {
-            Wu10Logger.LogInfo("Main window initializing.");
+            _logWriter = DependencyManager.Resolve<ILogWriter>();
+
+            _logWriter.LogInfo("Main window initializing.");
             InitializeComponent();
-            Wu10Logger.LogInfo("Main window initialized.");
+            _logWriter.LogInfo("Main window initialized.");
         }
 
         protected override void OnClosed(EventArgs e)
@@ -37,7 +43,7 @@ namespace WereDev.Utils.Wu10Man.UserWindows
 
         private void LogFilesItem_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(Wu10Logger.LogFolder);
+            System.Diagnostics.Process.Start((_logWriter as Wu10Logger)?.LogFolder);
         }
 
         private void ReadmeItem_Click(object sender, RoutedEventArgs e)

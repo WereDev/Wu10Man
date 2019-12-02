@@ -1,10 +1,10 @@
-﻿using Microsoft.Win32;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using WereDev.Utils.Wu10Man.Core;
+using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
-using WereDev.Utils.Wu10Man.Interfaces;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -30,20 +30,24 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private const string RegistryAuOptions = "AuOptions";
         private const string RegistryNoUpdate = "NoAutoUpdate";
 
+        private readonly ILogWriter _logWriter;
+        private readonly IRegistryEditor _registryEditor;
+
         public GroupPolicyControl()
         {
-            Wu10Logger.LogInfo("Group Policy Control initializing.");
+            _logWriter = DependencyManager.Resolve<ILogWriter>();
+            _registryEditor = DependencyManager.Resolve<IRegistryEditor>();
+
+            _logWriter.LogInfo("Group Policy Control initializing.");
             PolicyOptions = CreatePolicyOptions();
             GetCurrentStatus();
             InitializeComponent();
-            Wu10Logger.LogInfo("Group Policy Control initialized.");
+            _logWriter.LogInfo("Group Policy Control initialized.");
         }
 
         public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; }
 
         public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
-
-        private IRegistryEditor RegistryEditor => DependencyManager.Resolve<IRegistryEditor>();
 
         private ObservableCollection<KeyValuePair<string, string>> CreatePolicyOptions()
         {
@@ -69,7 +73,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private string GetNoUpdateStatus()
         {
-            var nauValue = RegistryEditor.ReadLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
+            var nauValue = _registryEditor.ReadLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
             switch (nauValue)
             {
                 case NoUpdateEnable:
@@ -82,7 +86,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private string GetAuOptionStatus()
         {
-            var registryValue = RegistryEditor.ReadLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
+            var registryValue = _registryEditor.ReadLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
 
             switch (registryValue)
             {
@@ -107,28 +111,28 @@ namespace WereDev.Utils.Wu10Man.UserControls
             switch (SelectedPolicyOption.Key)
             {
                 case PolicyEnableUpdate:
-                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
+                    _registryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
+                    _registryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
                 case PolicyDisableUpdate:
-                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate, NoUpdateEnable, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
+                    _registryEditor.WriteLocalMachineRegistryDword(RegistryRoot, RegistryNoUpdate, NoUpdateEnable);
+                    _registryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions);
                     break;
                 case PolicyNotifyForDownload:
-                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions, AuOptionNotifyDownload, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
+                    _registryEditor.WriteLocalMachineRegistryDword(RegistryRoot, RegistryAuOptions, AuOptionNotifyDownload);
+                    _registryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
                 case PolicyNotifyForInstall:
-                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions, AuOptionNotifyInstall, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
+                    _registryEditor.WriteLocalMachineRegistryDword(RegistryRoot, RegistryAuOptions, AuOptionNotifyInstall);
+                    _registryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
                 case PolicyScheduleInstall:
-                    RegistryEditor.WriteLocalMachineRegistryValue(RegistryRoot, RegistryAuOptions, AuOptionScheduleInstall, RegistryValueKind.DWord);
-                    RegistryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
+                    _registryEditor.WriteLocalMachineRegistryDword(RegistryRoot, RegistryAuOptions, AuOptionScheduleInstall);
+                    _registryEditor.DeleteLocalMachineRegistryValue(RegistryRoot, RegistryNoUpdate);
                     break;
             }
 
-            Wu10Logger.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
+            _logWriter.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
             System.Windows.MessageBox.Show("Registry settings updated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
