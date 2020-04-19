@@ -35,10 +35,12 @@ namespace WereDev.Utils.Wu10Man.UserWindows
 
         private void AboutItem_Click(object sender, RoutedEventArgs e)
         {
-            var aboutWindow = new About();
-            aboutWindow.Left = Left + ((Width - aboutWindow.Width) / 2);
-            aboutWindow.Top = Top + ((Height - aboutWindow.Height) / 2);
-            aboutWindow.ShowDialog();
+            DisplayWindow(new About());
+        }
+
+        private void GroupPolicyItem_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayWindow(new GroupPolicyWindow());
         }
 
         private void LogFilesItem_Click(object sender, RoutedEventArgs e)
@@ -49,6 +51,13 @@ namespace WereDev.Utils.Wu10Man.UserWindows
         private void ReadmeItem_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/WereDev/Wu10Man/blob/master/README.md");
+        }
+
+        private void DisplayWindow(Window window)
+        {
+            window.Left = Left + ((Width - window.Width) / 2);
+            window.Top = Top + ((Height - window.Height) / 2);
+            window.ShowDialog();
         }
     }
 }

@@ -21,7 +21,10 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="_File" >
-                <MenuItem Header="_Exit" Click="ExitItem_Click" />
+                <MenuItem Header="_Exit" Click="ExitItem_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Legacy">
+                <MenuItem Header="_Group Policy" Click="GroupPolicyItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" HorizontalAlignment="Right">
                 <MenuItem Header="_About" Click="AboutItem_Click"></MenuItem>
@@ -46,9 +49,9 @@
                         <usercontrols:PauseUpdatesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="Group Policy">
+                <TabItem Header="Now what?">
                     <Grid Background="#ffb901">
-                        <usercontrols:GroupPolicyControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
+                        <!--<usercontrols:GroupPolicyControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />-->
                     </Grid>
                 </TabItem>
             </TabControl>
