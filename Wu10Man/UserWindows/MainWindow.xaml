@@ -49,9 +49,9 @@
                         <usercontrols:PauseUpdatesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="Now what?">
+                <TabItem Header="Declutter">
                     <Grid Background="#ffb901">
-                        <!--<usercontrols:GroupPolicyControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />-->
+                        <usercontrols:DeclutterControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -1,6 +1,12 @@
 ﻿using Autofac;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Xml;
+using System.Xml.Serialization;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Core.Interfaces.Providers;
@@ -9,6 +15,10 @@ using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.Providers;
 using WereDev.Utils.Wu10Man.Services;
 using WereDev.Utils.Wu10Man.UserWindows;
+using Windows.ApplicationModel;
+using Windows.Management.Deployment;
+using Windows.Services.Store;
+using StorageFolder = Windows.Storage.StorageFolder;
 
 namespace WereDev.Utils.Wu10Man
 {
@@ -60,12 +70,14 @@ namespace WereDev.Utils.Wu10Man
             builder.RegisterType<UserProvider>().As<IUserProvider>();
             builder.RegisterType<WindowsApiAdapter>().As<IWindowsApiProvider>();
             builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
+            builder.RegisterType<WindowsPackageProvider>().As<IWindowsPackageProvider>();
 
             // Services
             builder.RegisterType<FileManager>().As<IFileManager>();
             builder.RegisterType<HostsFileEditor>().As<IHostsFileEditor>();
             builder.RegisterType<RegistryEditor>().As<IRegistryEditor>();
             builder.RegisterType<WindowsServiceManager>().As<IWindowsServiceManager>();
+            builder.RegisterType<WindowsPackageManager>().As<IWindowsPackageManager>();
 
             DependencyManager.Container = builder.Build();
         }

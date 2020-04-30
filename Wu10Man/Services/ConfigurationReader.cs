@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Linq;
 using WereDev.Utils.Wu10Man.Core.Interfaces.Providers;
+using WereDev.Utils.Wu10Man.Core.Models;
 
 namespace WereDev.Utils.Wu10Man.Helpers
 {
@@ -18,6 +21,13 @@ namespace WereDev.Utils.Wu10Man.Helpers
             var array = GetStringArray("WindowsUpdateUrls");
             array = array.Select(x => x.ToLower().Trim()).ToArray();
             return array;
+        }
+
+        public Declutter GetDeclutter()
+        {
+            var declutterJson = File.ReadAllText("declutter.json");
+            var declutter = JsonConvert.DeserializeObject<Declutter>(declutterJson);
+            return declutter;
         }
 
         private string[] GetStringArray(string key)
