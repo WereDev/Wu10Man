@@ -14,9 +14,9 @@ namespace WereDev.Utils.Wu10Man.Providers
     // https://stackoverflow.com/questions/3876787/change-windows-service-password/3877268#3877268
     public class WindowsServiceProvider : IWindowsServiceProvider
     {
-        private ServiceController _serviceController;
-
         public const string UserNameLocalSystem = @".\LocalSystem";
+
+        private ServiceController _serviceController;
 
         public WindowsServiceProvider(string serviceName)
         {

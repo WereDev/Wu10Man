@@ -1,5 +1,4 @@
 ﻿using System;
-using Windows.ApplicationModel.Activation;
 
 namespace WereDev.Utils.Wu10Man.UserControls.Models
 {

@@ -12,12 +12,13 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// <summary>
     /// Interaction logic for DeclutterControl.xaml.
     /// </summary>
-    public partial class DeclutterControl : UserControl
+    public partial class DeclutterControl : UserControl, IDisposable
     {
         private readonly ILogWriter _logWriter;
         private readonly IWindowsPackageManager _packageManager;
         private readonly DeclutterModel _model;
         private BackgroundWorker _worker;
+        private bool _isDisposed = false;
 
         public DeclutterControl()
         {
@@ -36,13 +37,25 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _logWriter.LogInfo("Declutter Control initialized.");
         }
 
-        ~DeclutterControl()
+        // Dispose() calls Dispose(true)
+        public void Dispose()
         {
-            if (_worker != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // The bulk of the clean-up code is implemented in Dispose(bool)
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_isDisposed)
+                return;
+
+            if (disposing)
             {
                 _worker.Dispose();
-                _worker = null;
             }
+
+            _isDisposed = true;
         }
 
         private void SetRuntimeOptions()

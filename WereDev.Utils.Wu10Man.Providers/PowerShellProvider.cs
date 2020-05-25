@@ -19,7 +19,7 @@ namespace WereDev.Utils.Wu10Man.Providers
                 ps.AddCommand(CommandGetPackages);
                 var results = ps.Invoke();
 
-                foreach(var result in results)
+                foreach (var result in results)
                 {
                     dynamic appx = result.BaseObject;
                     var package = new PackageInfo()
