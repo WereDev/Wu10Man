@@ -2,6 +2,7 @@
 	"microsoft":
 	[
 		{ "appName": "3d Viewer", "packageName": "Microsoft.Microsoft3DViewer" },
+        { "appName": "Advertising", "packageName": "Microsoft.Advertising.Xaml" },
         { "appName": "Alarms", "packageName": "Microsoft.WindowsAlarms" },
         { "appName": "Bing News", "packageName": "Microsoft.BingNews" },
         { "appName": "Bing Weather", "packageName": "Microsoft.BingWeather" },
@@ -16,6 +17,7 @@
         { "appName": "Office Hub", "packageName": "Microsoft.MicrosoftOfficeHub" },
         { "appName": "Office Sway", "packageName": "Microsoft.Office.Sway" },
         { "appName": "One Connect", "packageName": "Microsoft.OneConnect" },
+        { "appName": "OneNote", "packageName": "Microsoft.Office.OneNote" },
         { "appName": "Paint 3d", "packageName": "Microsoft.MSPaint" },
         { "appName": "People", "packageName": "Microsoft.People" },
         { "appName": "Photos", "packageName": "Microsoft.Windows.Photos" },
@@ -26,9 +28,11 @@
         { "appName": "Sticky Notes", "packageName": "Microsoft.MicrosoftStickyNotes" },
         { "appName": "Sway", "packageName": "Microsoft.Office.Sway" },
         { "appName": "Xbox App", "packageName": "Microsoft.XboxApp" },
-        { "appName": "Xbox Game Overlay", "packageName": "Microsoft.XboxGameOverlay" },
+        { "appName": "Xbox Game Bar", "packageName": "Microsoft.XboxGameOverlay" },
+        { "appName": "Xbox Game Overlay", "packageName": "Microsoft.XboxGamingOverlay" },
         { "appName": "Xbox Identity Provider", "packageName": "Microsoft.XboxIdentityProvider" },
         { "appName": "Xbox Live", "packageName": "Microsoft.Xbox.TCUI" },
+        { "appName": "Xbox Beta UI", "packageName": "Microsoft.XboxGameCallableUI" },
         { "appName": "Xbox Speech to Text", "packageName": "Microsoft.XboxSpeechToTextOverlay" },
         { "appName": "Zune Music", "packageName": "Microsoft.ZuneMusic" },
         { "appName": "Zune Video", "packageName": "Microsoft.ZuneVideo" }
@@ -48,6 +52,7 @@
         { "appName": "Twitter", "packageName": "Twitter" },
         { "appName": "Wunderlist", "packageName": "Wunderlist" },
         { "appName": "Farm Heroes Saga", "packageName": "king.com.FarmHeroesSaga" },
-        { "appName": "Candy Crush Friends", "packageName": "king.com.CandyCrushFriends"}
+        { "appName": "Candy Crush Friends", "packageName": "king.com.CandyCrushFriends"},
+        { "appName": "Pandora", "packageName": "PandoraMediaInc.29680B314EFC2"},
 	]
 }
