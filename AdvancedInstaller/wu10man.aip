@@ -45,9 +45,26 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{59364A24-962A-4BEA-9AE3-2B030E26D40E}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="Autofac.dll" ComponentId="{65DA51B4-1478-430E-9ADF-E4123E566777}" Directory_="APPDIR" Attributes="0" KeyPath="Autofac.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{D6953D0C-0C98-4EA2-8445-019E6F340B36}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.Expression.Interactions.dll" ComponentId="{6451A2A7-0FBD-4469-B4AC-3FBFC9355C6E}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Expression.Interactions.dll"/>
+    <ROW Component="Microsoft.Management.Infrastructure.dll" ComponentId="{EB025B8E-512D-467E-8BEC-1202E33D64B7}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Management.Infrastructure.dll"/>
+    <ROW Component="NLog.dll" ComponentId="{CBBE4DD2-E277-41C6-9001-DC58874A76E1}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
+    <ROW Component="Newtonsoft.Json.dll" ComponentId="{18337FEC-F05F-4F64-9F29-C0482A6A4B23}" Directory_="APPDIR" Attributes="0" KeyPath="Newtonsoft.Json.dll"/>
     <ROW Component="ProductInformation" ComponentId="{71412340-B01D-4815-A1B9-38799C2662D3}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
     <ROW Component="SHORTCUTDIR" ComponentId="{67BBCAC2-83AE-4110-98F9-2B38EDFFDAF6}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="System.Management.Automation.dll" ComponentId="{BF4E1771-11CE-4ED1-82EA-A4AD1775E372}" Directory_="APPDIR" Attributes="0" KeyPath="System.Management.Automation.dll"/>
+    <ROW Component="System.Security.AccessControl.dll" ComponentId="{D8A817CD-15C3-4073-9014-123A29A69B8D}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.AccessControl.dll"/>
+    <ROW Component="System.Security.Permissions.dll" ComponentId="{88BDFC69-D454-4C30-A805-42AA8FDE5B8E}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.Permissions.dll"/>
+    <ROW Component="System.Security.Principal.Windows.dll" ComponentId="{6B1BED21-32B8-4B5A-A2EE-AF93653D5DB3}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.Principal.Windows.dll"/>
+    <ROW Component="System.Threading.Tasks.Extensions.dll" ComponentId="{51BBEA26-91DF-4C1F-9F73-F8A921CE0A81}" Directory_="APPDIR" Attributes="0" KeyPath="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Component="System.Windows.Interactivity.dll" ComponentId="{F18C0EDD-E816-420F-A2ED-3D7DF7B63CEC}" Directory_="APPDIR" Attributes="0" KeyPath="System.Windows.Interactivity.dll"/>
+    <ROW Component="WPFSpark.dll" ComponentId="{0A2BF8E1-4C2F-4ABC-AADE-4A68F1B82C3D}" Directory_="APPDIR" Attributes="0" KeyPath="WPFSpark.dll"/>
+    <ROW Component="WereDev.Utils.Win32Wrappers.dll" ComponentId="{2A37F9EF-7C6D-4D99-931E-864DD0D231B9}" Directory_="APPDIR" Attributes="0" KeyPath="WereDev.Utils.Win32Wrappers.dll"/>
+    <ROW Component="WereDev.Utils.Wu10Man.Core.dll" ComponentId="{01EEF98D-6EE9-41E3-AA14-267FED74BD2B}" Directory_="APPDIR" Attributes="0" KeyPath="WereDev.Utils.Wu10Man.Core.dll"/>
+    <ROW Component="WereDev.Utils.Wu10Man.Providers.dll" ComponentId="{017D323D-A63D-47D2-BA08-66347A56C6A9}" Directory_="APPDIR" Attributes="0" KeyPath="WereDev.Utils.Wu10Man.Providers.dll"/>
     <ROW Component="Wu10Man.exe" ComponentId="{302C40F2-9077-4975-B738-3C84CA5A3776}" Directory_="APPDIR" Attributes="0" KeyPath="Wu10Man.exe"/>
+    <ROW Component="declutter.json" ComponentId="{1D062AFF-B574-48DD-A581-E0317D1D512E}" Directory_="APPDIR" Attributes="0" KeyPath="declutter.json" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -55,6 +72,25 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="Wu10Man.exe" Component_="Wu10Man.exe" FileName="Wu10Man.exe" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Wu10Man.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="Autofac.dll" Component_="Autofac.dll" FileName="Autofac.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Autofac.dll" SelfReg="false"/>
+    <ROW File="declutter.json" Component_="declutter.json" FileName="DECLUT~1.JSO|declutter.json" Attributes="0" SourcePath="..\Wu10Man\bin\Release\declutter.json" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Expression.Interactions.dll" Component_="Microsoft.Expression.Interactions.dll" FileName="MICROS~2.DLL|Microsoft.Expression.Interactions.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Expression.Interactions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Management.Infrastructure.dll" Component_="Microsoft.Management.Infrastructure.dll" FileName="MICROS~3.DLL|Microsoft.Management.Infrastructure.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Management.Infrastructure.dll" SelfReg="false"/>
+    <ROW File="Newtonsoft.Json.dll" Component_="Newtonsoft.Json.dll" FileName="NEWTON~1.DLL|Newtonsoft.Json.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Newtonsoft.Json.dll" SelfReg="false"/>
+    <ROW File="nlog.config" Component_="declutter.json" FileName="NLOG~1.CON|nlog.config" Attributes="0" SourcePath="..\Wu10Man\bin\Release\nlog.config" SelfReg="false"/>
+    <ROW File="NLog.dll" Component_="NLog.dll" FileName="NLog.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\NLog.dll" SelfReg="false"/>
+    <ROW File="System.Management.Automation.dll" Component_="System.Management.Automation.dll" FileName="SYSTEM~1.DLL|System.Management.Automation.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Management.Automation.dll" SelfReg="false"/>
+    <ROW File="System.Security.AccessControl.dll" Component_="System.Security.AccessControl.dll" FileName="SYSTEM~2.DLL|System.Security.AccessControl.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Security.AccessControl.dll" SelfReg="false"/>
+    <ROW File="System.Security.Permissions.dll" Component_="System.Security.Permissions.dll" FileName="SYSTEM~3.DLL|System.Security.Permissions.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Security.Permissions.dll" SelfReg="false"/>
+    <ROW File="System.Security.Principal.Windows.dll" Component_="System.Security.Principal.Windows.dll" FileName="SYSTEM~4.DLL|System.Security.Principal.Windows.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Security.Principal.Windows.dll" SelfReg="false"/>
+    <ROW File="System.Threading.Tasks.Extensions.dll" Component_="System.Threading.Tasks.Extensions.dll" FileName="SYSTEM~5.DLL|System.Threading.Tasks.Extensions.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Threading.Tasks.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.Windows.Interactivity.dll" Component_="System.Windows.Interactivity.dll" FileName="SYSTEM~6.DLL|System.Windows.Interactivity.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\System.Windows.Interactivity.dll" SelfReg="false"/>
+    <ROW File="WereDev.Utils.Win32Wrappers.dll" Component_="WereDev.Utils.Win32Wrappers.dll" FileName="WEREDE~1.DLL|WereDev.Utils.Win32Wrappers.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\WereDev.Utils.Win32Wrappers.dll" SelfReg="false"/>
+    <ROW File="WereDev.Utils.Wu10Man.Core.dll" Component_="WereDev.Utils.Wu10Man.Core.dll" FileName="WEREDE~2.DLL|WereDev.Utils.Wu10Man.Core.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\WereDev.Utils.Wu10Man.Core.dll" SelfReg="false"/>
+    <ROW File="WereDev.Utils.Wu10Man.Providers.dll" Component_="WereDev.Utils.Wu10Man.Providers.dll" FileName="WEREDE~3.DLL|WereDev.Utils.Wu10Man.Providers.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\WereDev.Utils.Wu10Man.Providers.dll" SelfReg="false"/>
+    <ROW File="WPFSpark.dll" Component_="WPFSpark.dll" FileName="WPFSpark.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\WPFSpark.dll" SelfReg="false"/>
+    <ROW File="Wu10Man.exe.config" Component_="declutter.json" FileName="WU10MA~1.CON|Wu10Man.exe.config" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Wu10Man.exe.config" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -131,6 +167,23 @@
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="Wu10Man.exe"/>
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="Autofac.dll"/>
+    <ROW Feature_="MainFeature" Component_="declutter.json"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Expression.Interactions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Management.Infrastructure.dll"/>
+    <ROW Feature_="MainFeature" Component_="Newtonsoft.Json.dll"/>
+    <ROW Feature_="MainFeature" Component_="NLog.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Management.Automation.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.AccessControl.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Permissions.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Principal.Windows.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Threading.Tasks.Extensions.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Windows.Interactivity.dll"/>
+    <ROW Feature_="MainFeature" Component_="WereDev.Utils.Win32Wrappers.dll"/>
+    <ROW Feature_="MainFeature" Component_="WereDev.Utils.Wu10Man.Core.dll"/>
+    <ROW Feature_="MainFeature" Component_="WereDev.Utils.Wu10Man.Providers.dll"/>
+    <ROW Feature_="MainFeature" Component_="WPFSpark.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="wu10man.exe" SourcePath="..\Wu10Man\wu10man.ico" Index="0"/>
