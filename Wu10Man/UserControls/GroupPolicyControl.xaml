@@ -22,13 +22,7 @@
                         <TextBlock Margin="0, 20, 0, 0">
                             <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />    
                         </TextBlock>
-                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
-                            NOTE: In my usage and testing, I'm not certain
-                            that Windows is actually adhereing to this
-                            policy.  I have not been able to get a
-                            notification about either availability or
-                            download of an update.
-                        </TextBlock>
+                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap"><Run Text="NOTE: This has not worked for anyone I've talked with and now appears to be removed functionality as of build 2004."/><LineBreak/><Run/><LineBreak/><Run Text="Thanks to @sungerbob for the updated info."/></TextBlock>
                     </StackPanel>
                 </Label.Content>
             </Label>

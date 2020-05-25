@@ -13,7 +13,7 @@ namespace WereDev.Utils.Wu10Man.UserWindows
         public About()
         {
             InitializeComponent();
-            var version = this.GetType().Assembly.GetName().Version;
+            var version = GetType().Assembly.GetName().Version;
             lblAppVersion.Text = "v" + version.ToString();
         }
 

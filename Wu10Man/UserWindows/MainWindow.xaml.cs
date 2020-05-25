@@ -1,19 +1,30 @@
 ﻿using System;
 using System.Windows;
-using WereDev.Utils.Wu10Man.Helpers;
+using WereDev.Utils.Wu10Man.Core;
+using WereDev.Utils.Wu10Man.Core.Interfaces;
+using WereDev.Utils.Wu10Man.Providers;
+using WereDev.Utils.Wu10Man.Services;
+using WereDev.Utils.Wu10Man.UserWindows.Models;
 
 namespace WereDev.Utils.Wu10Man.UserWindows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ILogWriter _logWriter;
+        private readonly MainWindowModel _mainWindowModel;
+
         public MainWindow()
         {
-            Wu10Logger.LogInfo("Main window initializing.");
+            _logWriter = DependencyManager.Resolve<ILogWriter>();
+            _mainWindowModel = new MainWindowModel();
+
+            _logWriter.LogInfo("Main window initializing.");
             InitializeComponent();
-            Wu10Logger.LogInfo("Main window initialized.");
+            DataContext = _mainWindowModel;
+            _logWriter.LogInfo("Main window initialized.");
         }
 
         protected override void OnClosed(EventArgs e)
@@ -24,26 +35,39 @@ namespace WereDev.Utils.Wu10Man.UserWindows
 
         private void ExitItem_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void AboutItem_Click(object sender, RoutedEventArgs e)
         {
-            var aboutWindow = new About();
-            aboutWindow.Left = this.Left + ((this.Width - aboutWindow.Width) / 2);
-            aboutWindow.Top = this.Top + ((this.Height - aboutWindow.Height) / 2);
-            aboutWindow.ShowDialog();
+            DisplayWindow(new About());
         }
 
         private void LogFilesItem_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(Wu10Logger.LogFolder);
+            System.Diagnostics.Process.Start((_logWriter as Wu10Logger)?.LogFolder);
         }
 
         private void ReadmeItem_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/WereDev/Wu10Man/blob/master/README.md");
+            System.Diagnostics.Process.Start("https://weredev.com/developer/wu10man/");
+        }
+
+        private void DisplayWindow(Window window)
+        {
+            window.Left = Left + ((Width - window.Width) / 2);
+            window.Top = Top + ((Height - window.Height) / 2);
+            window.ShowDialog();
+        }
+
+        private void BuyMeACoffee_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.buymeacoffee.com/weredev");
+        }
+
+        private void ViewLegacy_Click(object sender, RoutedEventArgs e)
+        {
+            _mainWindowModel.ShowLegacy = !_mainWindowModel.ShowLegacy;
         }
     }
 }
-

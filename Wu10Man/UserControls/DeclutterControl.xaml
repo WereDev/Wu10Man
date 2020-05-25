@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="WereDev.Utils.Wu10Man.UserControls.DeclutterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="353"
+             d:DesignWidth="558">
+    <Grid Background="LightGray">
+        <Label Content="Uninstall Windows Clutter" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        
+        <Grid Width="200" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
+            <Label>
+                <Label.Content>
+                    <StackPanel>
+                        <TextBlock Margin="5, 0, 5, 0" TextWrapping="Wrap">
+                            Windows 10 comes with a lot of "extra" software, aka clutter.
+                            Many of them are more annoying than useful and can be
+                            somewhat obtrusive.  This screen can be used to uninstall
+                            that software.  Reinstalling them can be done through
+                            the Windows Store.
+                        </TextBlock>
+                        <Button x:Name="btnShowMicrosoft" Margin="15, 30, 15, 0" Click="ShowMicrosoftApps">Show Microsoft Apps</Button>
+                        <Button x:Name="btnShowThirdParty" Margin="15, 30, 15, 0" Click="ShowThirdPartyApps">Show 3rd Party Apps</Button>
+                    </StackPanel>
+                </Label.Content>
+            </Label>
+        </Grid>
+        <Grid Width="350" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE" Name="grdMicrosoft" Visibility="Visible">
+             <ListView Height="275" Width="350" VerticalAlignment="Top" ItemsSource="{Binding Path=MicrosoftPackages}"
+                      BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Name="ListViewWindowsApps">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <!--<Style.Triggers>
+                            <DataTrigger Binding="{Binding Path= ServiceExists}" Value="False">
+                                <Setter Property="Border.Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>-->
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <!--<Setter Property="Height" Value="34" />-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0" Visibility="{Binding GetVisibility}">
+                            <CheckBox Margin="0" VerticalAlignment="Center" IsChecked="{Binding CheckedForRemoval}" />
+                            <Label Content="{Binding AppName}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300"/>
+                            <!--<wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."
+                                                   Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleHostItem"
+                                                    AccentMode="User" AccentBrush="#7fba00"/>-->
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="Remove Checked Apps" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="150" Click="RemoveCheckedApps" />
+            
+            <!--<Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>-->
+        </Grid>
+        <local:ProgressBarControl Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ProgressBar"></local:ProgressBarControl>
+
+    </Grid>
+</UserControl>

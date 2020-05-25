@@ -22,6 +22,12 @@
                             from being able to get the true IP Address of those
                             Domains.
                         </TextBlock>
+                        <TextBlock Margin="0, 20, 0, 0">
+                            <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />
+                        </TextBlock>
+                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
+                            <Run Text="NOTE: Windows Defender seems to not like this particular part of Wu10Man.  You might need to allow it through."/>
+                        </TextBlock>
                     </StackPanel>
                 </Label.Content>
             </Label>

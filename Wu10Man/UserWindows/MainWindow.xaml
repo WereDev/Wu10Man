@@ -21,12 +21,14 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="_File" >
-                <MenuItem Header="_Exit" Click="ExitItem_Click" />
+                <MenuItem Header="View _Legacy" Click="ViewLegacy_Click" IsChecked="{Binding ShowLegacy}" ></MenuItem>
+                <MenuItem Header="_Exit" Click="ExitItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Help" HorizontalAlignment="Right">
                 <MenuItem Header="_About" Click="AboutItem_Click"></MenuItem>
                 <MenuItem Header="_Readme" Click="ReadmeItem_Click"></MenuItem>
                 <MenuItem Header="_Log Files" Click="LogFilesItem_Click"></MenuItem>
+                <MenuItem Header="_Buy Me a Coffee?" Click="BuyMeACoffee_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid Margin="0,20,0,0">
@@ -46,8 +48,13 @@
                         <usercontrols:PauseUpdatesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="Group Policy">
+                <TabItem Header="BETA - Declutter">
                     <Grid Background="#ffb901">
+                        <usercontrols:DeclutterControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="LEGACY - Group Policy" Visibility="{Binding LegacyVisibility}">
+                    <Grid>
                         <usercontrols:GroupPolicyControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>

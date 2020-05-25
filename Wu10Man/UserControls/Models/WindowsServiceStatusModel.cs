@@ -2,16 +2,23 @@
 {
     public class WindowsServiceStatusModel : ModelBase
     {
+        private string _serviceName = null;
+        private string _displayName = null;
+        private bool _isServiceEnabled = false;
+        private bool _serviceExists = false;
 
         public WindowsServiceStatusModel(string serviceName)
         {
             _serviceName = serviceName;
         }
 
-        private string _serviceName = null;
         public string ServiceName
         {
-            get { return _serviceName; }
+            get
+            {
+                return _serviceName;
+            }
+
             set
             {
                 if (_serviceName != value)
@@ -22,10 +29,13 @@
             }
         }
 
-        private string _displayName = null;
         public string DisplayName
         {
-            get { return _displayName; }
+            get
+            {
+                return _displayName;
+            }
+
             set
             {
                 if (_displayName != value)
@@ -36,10 +46,13 @@
             }
         }
 
-        private bool _isServiceEnabled = false;
         public bool IsServiceEnabled
         {
-            get { return _isServiceEnabled; }
+            get
+            {
+                return _isServiceEnabled;
+            }
+
             set
             {
                 if (_isServiceEnabled != value)
@@ -50,10 +63,13 @@
             }
         }
 
-        private bool _serviceExists = false;
         public bool ServiceExists
         {
-            get { return _serviceExists; }
+            get
+            {
+                return _serviceExists;
+            }
+
             set
             {
                 if (_serviceExists != value)
