@@ -107,6 +107,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 _packageManager.RemovePackage(ptr.PackageName);
                 ptr.IsInstalled = false;
                 ptr.CheckedForRemoval = false;
+                _logWriter.LogInfo($"Removing Windows App: ${ptr.PackageName}");
                 AdvanceProgressBar();
             }
         }
