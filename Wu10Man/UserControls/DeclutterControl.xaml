@@ -9,6 +9,7 @@
              d:DesignWidth="558">
     <Grid Background="LightGray">
         <Label Content="Uninstall Windows Clutter" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        
         <Grid Width="200" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
@@ -27,7 +28,7 @@
             </Label>
         </Grid>
         <Grid Width="350" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE" Name="grdMicrosoft" Visibility="Visible">
-            <ListView Height="275" Width="350" VerticalAlignment="Top" ItemsSource="{Binding Path=MicrosoftPackages}"
+             <ListView Height="275" Width="350" VerticalAlignment="Top" ItemsSource="{Binding Path=MicrosoftPackages}"
                       BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Name="ListViewWindowsApps">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
@@ -50,7 +51,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0" Visibility="{Binding GetVisibility}">
                             <CheckBox Margin="0" VerticalAlignment="Center" IsChecked="{Binding CheckedForRemoval}" />
                             <Label Content="{Binding AppName}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300"/>
                             <!--<wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."
@@ -60,42 +61,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Content="Remove Checked Apps" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="125" Click="RemoveCheckedApps" />
+            <Button Content="Remove Checked Apps" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="150" Click="RemoveCheckedApps" />
+            
             <!--<Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>-->
         </Grid>
-        <!--<Grid Width="276" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
-            <ListView Height="290" Margin="0,0,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path= ServiceExists}" Value="False">
-                                <Setter Property="Border.Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="Height" Value="34" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <ContentPresenter />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <Label Content="{Binding Host}" Width="210" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."
-                                                   Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleHostItem"
-                                                    AccentMode="User" AccentBrush="#7fba00"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="125" Click="UnblockAllHosts_Click"/>
-            <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>
-        </Grid>-->
+        <local:ProgressBarControl Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ProgressBar"></local:ProgressBarControl>
+
     </Grid>
 </UserControl>

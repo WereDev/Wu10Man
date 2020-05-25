@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.UserControls.Models;
@@ -28,6 +17,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private readonly ILogWriter _logWriter;
         private readonly IWindowsPackageManager _packageManager;
         private readonly DeclutterModel _model;
+        private BackgroundWorker _worker;
 
         public DeclutterControl()
         {
@@ -36,9 +26,23 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _model = new DeclutterModel();
 
             _logWriter.LogInfo("Declutter Control initializing.");
+
             if (!DesignerProperties.GetIsInDesignMode(this))
+            {
                 SetRuntimeOptions();
+                ShowMicrosoftApps(null, null);
+            }
+
             _logWriter.LogInfo("Declutter Control initialized.");
+        }
+
+        ~DeclutterControl()
+        {
+            if (_worker != null)
+            {
+                _worker.Dispose();
+                _worker = null;
+            }
         }
 
         private void SetRuntimeOptions()
@@ -54,30 +58,83 @@ namespace WereDev.Utils.Wu10Man.UserControls
             var installedApps = _packageManager.ListInstalledPackages();
             var microsoftApps = _packageManager.MergePackageInfo(declutter.Microsoft, installedApps);
             var thirdPartyApps = _packageManager.MergePackageInfo(declutter.ThirdParty, installedApps);
-            _model.MicrosoftPackages = microsoftApps.Select(x => new PackageInfo(x)).OrderBy(x => x.AppName).ToArray();
-            _model.ThirdPartyPackages = thirdPartyApps.Select(x => new PackageInfo(x)).OrderBy(x => x.AppName).ToArray();
+            _model.MicrosoftPackages = microsoftApps.Select(x => new PackageInfo(x)).ToArray();
+            _model.ThirdPartyPackages = thirdPartyApps.Select(x => new PackageInfo(x)).ToArray();
         }
 
         private void ShowMicrosoftApps(object sender, RoutedEventArgs e)
         {
-            ListViewWindowsApps.ItemsSource = _model.MicrosoftPackages;
+            _model.PackageSource = DeclutterModel.PackageSources.Microsoft;
+            SetItemSource();
         }
 
         private void ShowThirdPartyApps(object sender, RoutedEventArgs e)
         {
-            ListViewWindowsApps.ItemsSource = _model.ThirdPartyPackages;
+            _model.PackageSource = DeclutterModel.PackageSources.ThirdParty;
+            SetItemSource();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "_worker part of larger scope.")]
         private void RemoveCheckedApps(object sender, RoutedEventArgs e)
         {
             var packages = (PackageInfo[])ListViewWindowsApps.ItemsSource;
             var packagesToRemove = packages.Where(x => x.CheckedForRemoval).ToArray();
+            InitializeProgressBar(0, packagesToRemove.Length);
 
-            foreach(var ptr in packagesToRemove)
+            _worker = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+            };
+            _worker.DoWork += RemoveCheckedAppWorker;
+            _worker.RunWorkerCompleted += RunWorkerCompleted;
+            _worker.RunWorkerAsync();
+        }
+
+        private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ShowMessage("Windows Apps have been removed.");
+            ProgressBar.Visibility = Visibility.Hidden;
+            SetItemSource();
+        }
+
+        private void RemoveCheckedAppWorker(object sender, EventArgs e)
+        {
+            var packages = (PackageInfo[])ListViewWindowsApps.ItemsSource;
+            var packagesToRemove = packages.Where(x => x.CheckedForRemoval).ToArray();
+
+            foreach (var ptr in packagesToRemove)
             {
                 _packageManager.RemovePackage(ptr.PackageName);
+                ptr.IsInstalled = false;
+                ptr.CheckedForRemoval = false;
+                AdvanceProgressBar();
             }
-            var s = "";
+        }
+
+        private void SetItemSource()
+        {
+            PackageInfo[] packages = _model.PackageSource == DeclutterModel.PackageSources.ThirdParty
+                                     ? _model.ThirdPartyPackages
+                                     : _model.MicrosoftPackages;
+
+            var sorted = packages.OrderByDescending(x => x.IsInstalled).ThenBy(x => x.AppName).ToArray();
+            ListViewWindowsApps.ItemsSource = sorted;
+        }
+
+        private void ShowMessage(string message)
+        {
+            MessageBox.Show(message, "Declutter", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+        }
+
+        private void InitializeProgressBar(int minValue, int maxValue)
+        {
+            ProgressBar.Visibility = Visibility.Visible;
+            ProgressBar.Initialize(minValue, maxValue);
+        }
+
+        private void AdvanceProgressBar()
+        {
+            ProgressBar.Advance();
         }
     }
 }

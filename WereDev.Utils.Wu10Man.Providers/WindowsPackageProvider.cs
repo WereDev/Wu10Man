@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using WereDev.Utils.Wu10Man.Core.Interfaces.Providers;
@@ -31,7 +32,6 @@ namespace WereDev.Utils.Wu10Man.Providers
                 var packageInfo = new PackageInfo
                 {
                     InstallLocation = package.InstalledLocation.Path,
-                    PackageFullName = package.Id.FullName,
                     PackageName = package.Id.Name,
                 };
                 packageInfoList.Add(packageInfo);
@@ -40,46 +40,16 @@ namespace WereDev.Utils.Wu10Man.Providers
             return packageInfoList.ToArray();
         }
 
-        public string GetLogoUrl(PackageInfo packageInfo)
+        public void RemovePackage(string packageName)
         {
-            return string.Empty;
-        }
+            var package = _packageManager.FindPackage(packageName);
+            var installerInfo = package.GetAppInstallerInfo();
 
-        private string GetLogoUrl(string packagePath)
-        {
-            var manifest = GetAppManifest(packagePath);
-            var manifestIconPath = Path.Combine(packagePath, manifest.Properties.Logo);
-
-            var iconDirectory = Path.GetDirectoryName(manifestIconPath);
-            var iconFileName = Path.GetFileNameWithoutExtension(manifestIconPath) + ".scale-100." + Path.GetExtension(manifestIconPath);
-            var iconPath = Path.Combine(iconDirectory, iconFileName);
-            return iconPath;
-        }
-
-        private Package GetAppManifest(string packagePath)
-        {
-            
-
-            var manifestPath = Path.Combine(packagePath, "AppxManifest.xml");
-            var xDoc = new XmlDocument();
-
-            xDoc.Load(manifestPath);
-
-            var xNodeReader = new XmlNodeReader(xDoc.DocumentElement);
-
-            var xmlSerializer = new XmlSerializer(typeof(Package));
-
-            var employeeData = xmlSerializer.Deserialize(xNodeReader);
-
-            Package deserializedEmployee = (Package)employeeData;
-
-            return deserializedEmployee;
-        }
-
-        public void RemovePackage(string packageFullName)
-        {
-            var task = _packageManager.RemovePackageAsync(packageFullName, RemovalOptions.RemoveForAllUsers);
-            var results = task.GetResults();
+            //var task = _packageManager.RemovePackageAsync(packageFullName, RemovalOptions.RemoveForAllUsers);
+            //var completed = new AutoResetEvent(false);
+            //task.Completed = (waitResult, status) => { completed.Set(); } ;
+            //completed.WaitOne();
+            //var result = task.GetResults();
         }
     }
 }

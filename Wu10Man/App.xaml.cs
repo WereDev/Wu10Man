@@ -70,7 +70,7 @@ namespace WereDev.Utils.Wu10Man
             builder.RegisterType<UserProvider>().As<IUserProvider>();
             builder.RegisterType<WindowsApiAdapter>().As<IWindowsApiProvider>();
             builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
-            builder.RegisterType<WindowsPackageProvider>().As<IWindowsPackageProvider>();
+            builder.RegisterType<PowerShellProvider>().As<IWindowsPackageProvider>();
 
             // Services
             builder.RegisterType<FileManager>().As<IFileManager>();
@@ -93,7 +93,7 @@ namespace WereDev.Utils.Wu10Man
         private void WriteStartupLogs()
         {
             var appVersion = GetType().Assembly.GetName().Version;
-            _logWriter.LogInfo($"Application version: v{appVersion.ToString()}");
+            _logWriter.LogInfo($"Application version: v{appVersion}");
 
             var registryEditor = DependencyManager.Resolve<IRegistryEditor>();
             _logWriter.LogInfo(EnvironmentVersionHelper.GetWindowsVersion(registryEditor));

@@ -16,7 +16,7 @@
         { "appName": "Office Hub", "packageName": "Microsoft.MicrosoftOfficeHub" },
         { "appName": "Office Sway", "packageName": "Microsoft.Office.Sway" },
         { "appName": "One Connect", "packageName": "Microsoft.OneConnect" },
-        { "appName": "Paint", "packageName": "Microsoft.MSPaint" },
+        { "appName": "Paint 3d", "packageName": "Microsoft.MSPaint" },
         { "appName": "People", "packageName": "Microsoft.People" },
         { "appName": "Photos", "packageName": "Microsoft.Windows.Photos" },
         { "appName": "Print 3d", "packageName": "Microsoft.Print3D" },

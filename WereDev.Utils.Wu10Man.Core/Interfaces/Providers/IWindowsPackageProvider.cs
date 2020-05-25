@@ -6,6 +6,6 @@ namespace WereDev.Utils.Wu10Man.Core.Interfaces.Providers
     {
         PackageInfo[] ListInstalledPackages();
 
-        void RemovePackage(string packageFullName);
+        void RemovePackage(string packageName);
     }
 }

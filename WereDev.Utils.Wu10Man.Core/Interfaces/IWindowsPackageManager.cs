@@ -11,6 +11,6 @@ namespace WereDev.Utils.Wu10Man.Core.Interfaces
 
         AppInfoExtended[] MergePackageInfo(IEnumerable<AppInfo> apps, IEnumerable<PackageInfo> packages);
 
-        void RemovePackage(string packageFullName);
+        void RemovePackage(string packageName);
     }
 }

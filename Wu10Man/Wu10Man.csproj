@@ -162,11 +162,12 @@
     </Compile>
     <Compile Include="UserControls\Models\DeclutterModel.cs" />
     <Compile Include="UserControls\Models\PackageInfo.cs" />
+    <Compile Include="UserControls\Models\ProgressBarModel.cs" />
+    <Compile Include="UserControls\ProgressBarControl.xaml.cs">
+      <DependentUpon>ProgressBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserWindows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserWindows\GroupPolicyWindow.xaml.cs">
-      <DependentUpon>GroupPolicyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserWindows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -189,7 +190,12 @@
     <Compile Include="UserControls\WindowsServicesControl.xaml.cs">
       <DependentUpon>WindowsServicesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserWindows\Models\MainWindowModel.cs" />
     <Page Include="UserControls\DeclutterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ProgressBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,10 +207,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserWindows\GroupPolicyWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserWindows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -294,6 +296,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

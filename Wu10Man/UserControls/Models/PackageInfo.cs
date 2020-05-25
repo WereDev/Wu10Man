@@ -1,4 +1,6 @@
-﻿using WereDev.Utils.Wu10Man.Core.Models;
+﻿using System;
+using System.Windows;
+using WereDev.Utils.Wu10Man.Core.Models;
 
 namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
@@ -12,10 +14,13 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
 
         public PackageInfo(AppInfoExtended appInfo)
         {
+            if (appInfo == null)
+                throw new ArgumentNullException(nameof(appInfo));
+
             _appName = appInfo.AppName;
             _iconPath = appInfo.IconPath;
             _isInstalled = appInfo.IsInstalled;
-            _packageName = appInfo.PackageFullName;
+            _packageName = appInfo.PackageName;
         }
 
         public string AppName
@@ -86,6 +91,13 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
                 _checkedForRemoval = value;
                 OnPropertyChanged(nameof(CheckedForRemoval));
             }
+        }
+
+        public Visibility GetVisibility => IsInstalled ? Visibility.Visible : Visibility.Collapsed;
+
+        public override string ToString()
+        {
+            return _appName;
         }
     }
 }

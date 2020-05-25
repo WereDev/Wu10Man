@@ -37,7 +37,6 @@ namespace WereDev.Utils.Wu10Man.Core.Services
                 var package = packages.FirstOrDefault(x => x.PackageName == app.PackageName);
                 if (package != null)
                 {
-                    appInfo.PackageFullName = package.PackageFullName;
                     appInfo.IsInstalled = true;
                 }
 
@@ -47,9 +46,9 @@ namespace WereDev.Utils.Wu10Man.Core.Services
             return appInfos.ToArray();
         }
 
-        public void RemovePackage(string packageFullName)
+        public void RemovePackage(string packageName)
         {
-            _packageProvider.RemovePackage(packageFullName);
+            _packageProvider.RemovePackage(packageName);
         }
     }
 }
