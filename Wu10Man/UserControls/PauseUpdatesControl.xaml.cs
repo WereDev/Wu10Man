@@ -24,6 +24,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private const string PauseQualityUpdatesEndTime = "PauseQualityUpdatesEndTime";
         private const string PauseUpdatesExpiryTime = "PauseUpdatesExpiryTime";
         // private const string PendingRebootStartTime = "PendingRebootStartTime";
+        private const string TabTitle = "Pause and Defer";
 
         private readonly Regex _numberOnlyRegex = new Regex("[^0-9]+");
         private readonly PauseUpdatesModel _model = new PauseUpdatesModel();
@@ -38,8 +39,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _logWriter.LogInfo("Pause and Defer initializing.");
             DataContext = _model;
             InitializeComponent();
-            ReadCurrentSettings();
-            _logWriter.LogInfo("Pause and Defer initialized.");
+            if (SetRuntimeOptions())
+                _logWriter.LogInfo("Pause and Defer initialized.");
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -47,12 +48,26 @@ namespace WereDev.Utils.Wu10Man.UserControls
             e.Handled = _numberOnlyRegex.IsMatch(e.Text);
         }
 
-        private void ReadCurrentSettings()
+        private bool SetRuntimeOptions()
         {
-            _model.FeatureUpdateDelayDays = GetIntFromRegistryValue(DeferFeatureUpdatesPeriodInDays);
-            _model.FeatureUpdatePauseDate = GetDateFromRegistryValue(PauseFeatureUpdatesEndTime);
-            _model.QualityUpdateDelayDays = GetIntFromRegistryValue(DeferQualityUpdatesPeriodInDays);
-            _model.QualityUpdatePauseDate = GetDateFromRegistryValue(PauseQualityUpdatesEndTime);
+            try
+            {
+                _model.FeatureUpdateDelayDays = GetIntFromRegistryValue(DeferFeatureUpdatesPeriodInDays);
+                _model.FeatureUpdatePauseDate = GetDateFromRegistryValue(PauseFeatureUpdatesEndTime);
+                _model.QualityUpdateDelayDays = GetIntFromRegistryValue(DeferQualityUpdatesPeriodInDays);
+                _model.QualityUpdatePauseDate = GetDateFromRegistryValue(PauseQualityUpdatesEndTime);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logWriter.LogError(ex);
+                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return false;
+            }
+            finally
+            {
+                InitializeComponent();
+            }
         }
 
         private DateTime? GetDateFromRegistryValue(string registryName)
@@ -154,7 +169,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 _logWriter.LogInfo($"Removing Pause Date Expiry");
             }
 
-            MessageBox.Show($"Windows Update pause dates and deferal period have been saved.", "Pause and Defer", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            MessageBox.Show($"Windows Update pause dates and deferal period have been saved.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
         private string GetDateString(DateTime datetime)

@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
@@ -30,6 +33,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private const string RegistryAuOptions = "AuOptions";
         private const string RegistryNoUpdate = "NoAutoUpdate";
 
+        private const string TabTitle = "Group Policies";
+
         private readonly ILogWriter _logWriter;
         private readonly IRegistryEditor _registryEditor;
 
@@ -39,15 +44,37 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _registryEditor = DependencyManager.Resolve<IRegistryEditor>();
 
             _logWriter.LogInfo("Group Policy Control initializing.");
-            PolicyOptions = CreatePolicyOptions();
-            GetCurrentStatus();
-            InitializeComponent();
-            _logWriter.LogInfo("Group Policy Control initialized.");
+
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                if (SetRuntimeOptions())
+                    _logWriter.LogInfo("Group Policy Control initialized.");
+            }
         }
 
-        public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; }
+        public ObservableCollection<KeyValuePair<string, string>> PolicyOptions { get; private set; }
 
         public KeyValuePair<string, string> SelectedPolicyOption { get; set; }
+
+        private bool SetRuntimeOptions()
+        {
+            try
+            {
+                PolicyOptions = CreatePolicyOptions();
+                GetCurrentStatus();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logWriter.LogError(ex);
+                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return false;
+            }
+            finally
+            {
+                InitializeComponent();
+            }
+        }
 
         private ObservableCollection<KeyValuePair<string, string>> CreatePolicyOptions()
         {
@@ -133,7 +160,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
 
             _logWriter.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
-            System.Windows.MessageBox.Show("Registry settings updated.", "Group Policies", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("Registry settings updated.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
 }

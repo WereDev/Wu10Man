@@ -14,6 +14,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// </summary>
     public partial class DeclutterControl : UserControl, IDisposable
     {
+        private const string TabTitle = "Declutter";
         private readonly ILogWriter _logWriter;
         private readonly IWindowsPackageManager _packageManager;
         private readonly DeclutterModel _model;
@@ -30,11 +31,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                SetRuntimeOptions();
-                ShowMicrosoftApps(null, null);
+                if (SetRuntimeOptions())
+                {
+                    ShowMicrosoftApps(null, null);
+                    _logWriter.LogInfo("Declutter Control initialized.");
+                }
             }
-
-            _logWriter.LogInfo("Declutter Control initialized.");
         }
 
         // Dispose() calls Dispose(true)
@@ -58,11 +60,24 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _isDisposed = true;
         }
 
-        private void SetRuntimeOptions()
+        private bool SetRuntimeOptions()
         {
-            GetPackageStatus();
-            DataContext = _model;
-            InitializeComponent();
+            try
+            {
+                GetPackageStatus();
+                DataContext = _model;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logWriter.LogError(ex);
+                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return false;
+            }
+            finally
+            {
+                InitializeComponent();
+            }
         }
 
         private void GetPackageStatus()
@@ -137,7 +152,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void ShowMessage(string message)
         {
-            MessageBox.Show(message, "Declutter", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            MessageBox.Show(message, TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
         private void InitializeProgressBar(int minValue, int maxValue)

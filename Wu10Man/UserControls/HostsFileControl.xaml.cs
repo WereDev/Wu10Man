@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Core;
@@ -13,6 +14,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// </summary>
     public partial class HostsFileControl : UserControl
     {
+        private const string TabTitle = "Hosts File";
         private readonly HostsFileModel _model;
         private readonly IHostsFileEditor _hostsFileEditor;
         private readonly ILogWriter _logWriter;
@@ -25,15 +27,30 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _logWriter.LogInfo("Hosts File initializing.");
             _model = new HostsFileModel();
             if (!DesignerProperties.GetIsInDesignMode(this))
-                SetRuntimeOptions();
-            _logWriter.LogInfo("Hosts File initialized.");
+            {
+                if (SetRuntimeOptions())
+                    _logWriter.LogInfo("Hosts File initialized.");
+            }
         }
 
-        private void SetRuntimeOptions()
+        private bool SetRuntimeOptions()
         {
-            GetHostSettings();
-            DataContext = _model;
-            InitializeComponent();
+            try
+            {
+                GetHostSettings();
+                DataContext = _model;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logWriter.LogError(ex);
+                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return false;
+            }
+            finally
+            {
+                InitializeComponent();
+            }
         }
 
         private void GetHostSettings()
@@ -94,7 +111,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void ShowUpdateNotice()
         {
-            System.Windows.MessageBox.Show("Hosts file updated.", "Hosts File", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("Hosts file updated.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
         private bool IsHostsFileLocked()
@@ -105,7 +122,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 var processNames = string.Join("\r\n", lockingProcesses);
                 var message = "The Hosts file is being locked by the following processes and cannot be updated:\r\n" + processNames;
                 _logWriter.LogInfo(message);
-                System.Windows.MessageBox.Show(message, "Hosts File Locked", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(message, TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return true;
             }
 
