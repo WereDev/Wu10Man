@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Core;
@@ -14,6 +15,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// </summary>
     public partial class WindowsServicesControl : UserControl
     {
+        private const string TabTitle = "Windows Services";
+
         private readonly WindowsServicesModel _model = new WindowsServicesModel();
         private readonly ILogWriter _logWriter;
         private readonly IWindowsServiceManager _windowsServiceManager;
@@ -27,14 +30,29 @@ namespace WereDev.Utils.Wu10Man.UserControls
             DataContext = _model;
 
             if (!DesignerProperties.GetIsInDesignMode(this))
-                SetRuntimeOptions();
-            _logWriter.LogInfo("Windows Services initialized.");
+            {
+                if (SetRuntimeOptions())
+                    _logWriter.LogInfo("Windows Services initialized.");
+            }
         }
 
-        private void SetRuntimeOptions()
+        private bool SetRuntimeOptions()
         {
-            BuildServiceStatus();
-            InitializeComponent();
+            try
+            {
+                BuildServiceStatus();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logWriter.LogError(ex);
+                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                return false;
+            }
+            finally
+            {
+                InitializeComponent();
+            }
         }
 
         private void BuildServiceStatus()
@@ -81,14 +99,14 @@ namespace WereDev.Utils.Wu10Man.UserControls
             if (!enabledRealtime)
                 message += "\r\rYou will need to reboot for the setting to take effect.";
 
-            System.Windows.MessageBox.Show(message, "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show(message, TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
 
         private void DisableService(string serviceName, string displayName)
         {
             _windowsServiceManager.DisableService(serviceName);
             SetServiceStatus(serviceName);
-            System.Windows.MessageBox.Show($"{displayName} has been DISABLED", "Windows Service", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            System.Windows.MessageBox.Show($"{displayName} has been DISABLED", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
 }
