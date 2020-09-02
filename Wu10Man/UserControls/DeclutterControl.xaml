@@ -62,6 +62,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Button Content="Remove Checked Apps" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="150" Click="RemoveCheckedApps" />
+            <Button Content="Select All" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="150" Click="CheckAllApps" ToolTip="Checks and unchecks all items on the list." />
             
             <!--<Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>-->
         </Grid>

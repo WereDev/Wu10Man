@@ -118,6 +118,18 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _worker.RunWorkerAsync();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "_worker part of larger scope.")]
+        private void CheckAllApps(object sender, RoutedEventArgs e)
+        {
+            var packages = (PackageInfo[])ListViewWindowsApps.ItemsSource;
+            var allSelected = packages.Count(x => x.CheckedForRemoval).Equals(packages.Length);
+
+            foreach (var package in packages)
+            {
+                package.CheckedForRemoval = allSelected ? false : true;
+            }
+        }
+
         private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             ShowMessage("Windows Apps have been removed.");
