@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.UserControls.Models;
@@ -28,15 +30,6 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _model = new DeclutterModel();
 
             _logWriter.LogInfo("Declutter Control initializing.");
-
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                if (SetRuntimeOptions())
-                {
-                    ShowMicrosoftApps(null, null);
-                    _logWriter.LogInfo("Declutter Control initialized.");
-                }
-            }
         }
 
         // Dispose() calls Dispose(true)
@@ -44,6 +37,24 @@ namespace WereDev.Utils.Wu10Man.UserControls
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                if (SetRuntimeOptions())
+                {
+                    ShowMicrosoftApps(null, null);
+                    _logWriter.LogInfo("Declutter Control rendered.");
+                }
+            }
+
+            base.OnRender(drawingContext);
+
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         // The bulk of the clean-up code is implemented in Dispose(bool)
@@ -71,7 +82,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return false;
             }
             finally

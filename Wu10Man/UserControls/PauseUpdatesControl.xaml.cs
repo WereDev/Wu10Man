@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
@@ -38,9 +40,21 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
             _logWriter.LogInfo("Pause and Defer initializing.");
             DataContext = _model;
-            InitializeComponent();
-            if (SetRuntimeOptions())
-                _logWriter.LogInfo("Pause and Defer initialized.");
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                if (SetRuntimeOptions())
+                    _logWriter.LogInfo("Pause and Defer rendered.");
+            }
+
+            base.OnRender(drawingContext);
+
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -61,7 +75,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return false;
             }
             finally

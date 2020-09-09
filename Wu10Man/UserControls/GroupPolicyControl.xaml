@@ -22,7 +22,9 @@
                         <TextBlock Margin="0, 20, 0, 0">
                             <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />    
                         </TextBlock>
-                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap"><Run Text="NOTE: This has not worked for anyone I've talked with and now appears to be removed functionality as of build 2004."/><LineBreak/><Run/><LineBreak/><Run Text="Thanks to @sungerbob for the updated info."/></TextBlock>
+                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
+                            NOTE: This has not worked for anyone I've talked with and now appears to be removed functionality as of Windows 10 build 2004.
+                        </TextBlock>
                     </StackPanel>
                 </Label.Content>
             </Label>

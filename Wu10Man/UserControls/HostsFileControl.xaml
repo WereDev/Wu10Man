@@ -17,7 +17,7 @@
                             Using the Windows Hosts file, you can specify to
                             which IP Address a Domain Name is routed to. The
                             default list of Domain Names are those associated
-                            with Windows Udpate.  By enabling the setting(s),
+                            with Windows Update.  By enabling the setting(s),
                             you will stop any application on this computer from
                             from being able to get the true IP Address of those
                             Domains.
@@ -26,7 +26,14 @@
                             <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />
                         </TextBlock>
                         <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
-                            <Run Text="NOTE: Windows Defender seems to not like this particular part of Wu10Man.  You might need to allow it through."/>
+                            NOTE: Windows Defender seems to not like this particular part of Wu10Man.  You might need to allow it through.
+                        </TextBlock>
+                        <TextBlock Margin="0, 20, 0, 0">
+                            <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />
+                        </TextBlock>
+                        <TextBlock Margin="20, -16, 0, 0" TextWrapping="Wrap">
+                            Moving this to Legacy as it's not a good way to continue
+                            to block Windows Updates.
                         </TextBlock>
                     </StackPanel>
                 </Label.Content>

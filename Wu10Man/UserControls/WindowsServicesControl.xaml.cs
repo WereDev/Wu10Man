@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
@@ -28,12 +30,21 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
             _logWriter.LogInfo("Windows Services initializing.");
             DataContext = _model;
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 if (SetRuntimeOptions())
                     _logWriter.LogInfo("Windows Services initialized.");
             }
+
+            base.OnRender(drawingContext);
+
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private bool SetRuntimeOptions()
