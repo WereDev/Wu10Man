@@ -21,8 +21,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public HostsFileControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _hostsFileEditor = DependencyManager.Resolve<IHostsFileEditor>();
+            _logWriter = DependencyManager.LogWriter;
+            _hostsFileEditor = DependencyManager.HostsFileEditor;
 
             _logWriter.LogInfo("Hosts File initializing.");
             _model = new HostsFileModel();

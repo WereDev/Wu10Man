@@ -1,9 +1,7 @@
-﻿using Autofac;
-using System;
+﻿using System;
 using System.Windows;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
-using WereDev.Utils.Wu10Man.Core.Interfaces.Providers;
 using WereDev.Utils.Wu10Man.Core.Services;
 using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.Providers;
@@ -49,27 +47,26 @@ namespace WereDev.Utils.Wu10Man
 
         private void RegisterDependencies()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterInstance(_logWriter);
+            DependencyManager.LogWriter = _logWriter;
 
             // Providers
-            builder.RegisterType<ConfigurationReader>().As<IConfigurationReader>();
-            builder.RegisterType<CredentialsProvider>().As<ICredentialsProvider>();
-            builder.RegisterType<FileIoProvider>().As<IFileIoProvider>();
-            builder.RegisterType<RegistryProvider>().As<IRegistryProvider>();
-            builder.RegisterType<UserProvider>().As<IUserProvider>();
-            builder.RegisterType<WindowsApiProvider>().As<IWindowsApiProvider>();
-            builder.RegisterType<WindowsServiceProviderFactory>().As<IWindowsServiceProviderFactory>();
-            builder.RegisterType<PowerShellProvider>().As<IWindowsPackageProvider>();
+            var configurationReader = new ConfigurationReader();
+            var credentialsProvider = new CredentialsProvider();
+            var fileIoProvider = new FileIoProvider();
+            var registryProvider = new RegistryProvider();
+            var userProvider = new UserProvider();
+            var windowsApiProvider = new WindowsApiProvider();
+            var windowsServiceProviderFactory = new WindowsServiceProviderFactory();
+            var powerShellProvider = new PowerShellProvider();
 
             // Services
-            builder.RegisterType<FileManager>().As<IFileManager>();
-            builder.RegisterType<HostsFileEditor>().As<IHostsFileEditor>();
-            builder.RegisterType<RegistryEditor>().As<IRegistryEditor>();
-            builder.RegisterType<WindowsServiceManager>().As<IWindowsServiceManager>();
-            builder.RegisterType<WindowsPackageManager>().As<IWindowsPackageManager>();
-
-            DependencyManager.Container = builder.Build();
+            var fileManager = new FileManager(fileIoProvider, windowsApiProvider, credentialsProvider);
+            DependencyManager.FileManager = fileManager;
+            DependencyManager.HostsFileEditor = new HostsFileEditor(fileIoProvider, configurationReader);
+            var registryEditor = new RegistryEditor(windowsApiProvider, registryProvider, userProvider);
+            DependencyManager.RegistryEditor = registryEditor;
+            DependencyManager.WindowsServiceManager = new WindowsServiceManager(windowsServiceProviderFactory, registryEditor, fileManager, configurationReader);
+            DependencyManager.WindowsPackageManager = new WindowsPackageManager(powerShellProvider, configurationReader);
         }
 
         private void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -85,7 +82,7 @@ namespace WereDev.Utils.Wu10Man
             var appVersion = GetType().Assembly.GetName().Version;
             _logWriter.LogInfo($"Application version: v{appVersion}");
 
-            var registryEditor = DependencyManager.Resolve<IRegistryEditor>();
+            var registryEditor = DependencyManager.RegistryEditor;
             _logWriter.LogInfo(EnvironmentVersionHelper.GetWindowsVersion(registryEditor));
             _logWriter.LogInfo($".Net Framework: {EnvironmentVersionHelper.GetDotNetFrameworkBuild(registryEditor)}");
         }

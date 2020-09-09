@@ -23,8 +23,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public WindowsServicesControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _windowsServiceManager = DependencyManager.Resolve<IWindowsServiceManager>();
+            _logWriter = DependencyManager.LogWriter;
+            _windowsServiceManager = DependencyManager.WindowsServiceManager;
 
             _logWriter.LogInfo("Windows Services initializing.");
             DataContext = _model;

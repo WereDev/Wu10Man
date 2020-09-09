@@ -18,7 +18,7 @@ namespace WereDev.Utils.Wu10Man.UserWindows
 
         public MainWindow()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
+            _logWriter = DependencyManager.LogWriter;
             _mainWindowModel = new MainWindowModel();
 
             _logWriter.LogInfo("Main window initializing.");

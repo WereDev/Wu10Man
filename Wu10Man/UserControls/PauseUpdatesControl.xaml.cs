@@ -33,8 +33,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public PauseUpdatesControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _registryEditor = DependencyManager.Resolve<IRegistryEditor>();
+            _logWriter = DependencyManager.LogWriter;
+            _registryEditor = DependencyManager.RegistryEditor;
 
             _logWriter.LogInfo("Pause and Defer initializing.");
             DataContext = _model;

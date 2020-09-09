@@ -23,8 +23,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public DeclutterControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _packageManager = DependencyManager.Resolve<IWindowsPackageManager>();
+            _logWriter = DependencyManager.LogWriter;
+            _packageManager = DependencyManager.WindowsPackageManager;
             _model = new DeclutterModel();
 
             _logWriter.LogInfo("Declutter Control initializing.");

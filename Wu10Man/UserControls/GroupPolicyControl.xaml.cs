@@ -40,8 +40,8 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public GroupPolicyControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _registryEditor = DependencyManager.Resolve<IRegistryEditor>();
+            _logWriter = DependencyManager.LogWriter;
+            _registryEditor = DependencyManager.RegistryEditor;
 
             _logWriter.LogInfo("Group Policy Control initializing.");
 
