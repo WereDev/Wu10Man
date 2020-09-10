@@ -66,6 +66,5 @@
             <!--<Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>-->
         </Grid>
         <local:ProgressBarControl Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ProgressBar"></local:ProgressBarControl>
-
     </Grid>
 </UserControl>

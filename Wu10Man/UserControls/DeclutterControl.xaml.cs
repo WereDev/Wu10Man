@@ -82,7 +82,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return false;
             }
             finally

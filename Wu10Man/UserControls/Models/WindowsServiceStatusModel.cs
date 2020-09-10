@@ -55,11 +55,8 @@
 
             set
             {
-                if (_isServiceEnabled != value)
-                {
-                    _isServiceEnabled = value;
-                    OnPropertyChanged(nameof(IsServiceEnabled));
-                }
+                _isServiceEnabled = value;
+                OnPropertyChanged(nameof(IsServiceEnabled));
             }
         }
 

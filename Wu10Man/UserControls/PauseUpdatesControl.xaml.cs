@@ -102,12 +102,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 return 0;
         }
 
-        private void SaveChanges(object sender, System.Windows.RoutedEventArgs e)
+        private void SaveChanges(object sender, RoutedEventArgs e)
         {
             WriteChanges();
         }
 
-        private void ClearValues(object sender, System.Windows.RoutedEventArgs e)
+        private void ClearValues(object sender, RoutedEventArgs e)
         {
             _model.FeatureUpdateDelayDays = 0;
             _model.FeatureUpdatePauseDate = null;
