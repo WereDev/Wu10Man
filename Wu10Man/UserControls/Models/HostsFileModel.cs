@@ -14,7 +14,7 @@
             set
             {
                 _hostStatus = value ?? new HostStatus[0];
-                OnPropertyChanged(nameof(HostStatus));
+                TriggerPropertyChanged(nameof(HostStatus));
             }
         }
     }

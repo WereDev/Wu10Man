@@ -45,11 +45,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                if (SetRuntimeOptions())
-                {
-                    ShowMicrosoftApps(null, null);
-                    _logWriter.LogInfo("Declutter Control rendered.");
-                }
+                SetRuntimeOptions();
             }
 
             base.OnRender(drawingContext);
@@ -77,12 +73,13 @@ namespace WereDev.Utils.Wu10Man.UserControls
             {
                 GetPackageStatus();
                 DataContext = _model;
+                _logWriter.LogInfo("Declutter Control rendered.");
                 return true;
             }
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             finally
@@ -96,21 +93,19 @@ namespace WereDev.Utils.Wu10Man.UserControls
             var declutter = _packageManager.GetDeclutterConfig();
             var installedApps = _packageManager.ListInstalledPackages();
             var microsoftApps = _packageManager.MergePackageInfo(declutter.Microsoft, installedApps);
+            _model.SetPackages(DeclutterModel.PackageSources.Microsoft, microsoftApps.Select(x => new PackageInfo(x)));
             var thirdPartyApps = _packageManager.MergePackageInfo(declutter.ThirdParty, installedApps);
-            _model.MicrosoftPackages = microsoftApps.Select(x => new PackageInfo(x)).ToArray();
-            _model.ThirdPartyPackages = thirdPartyApps.Select(x => new PackageInfo(x)).ToArray();
+            _model.SetPackages(DeclutterModel.PackageSources.ThirdParty, thirdPartyApps.Select(x => new PackageInfo(x)));
         }
 
         private void ShowMicrosoftApps(object sender, RoutedEventArgs e)
         {
             _model.PackageSource = DeclutterModel.PackageSources.Microsoft;
-            SetItemSource();
         }
 
         private void ShowThirdPartyApps(object sender, RoutedEventArgs e)
         {
             _model.PackageSource = DeclutterModel.PackageSources.ThirdParty;
-            SetItemSource();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "_worker part of larger scope.")]
@@ -129,11 +124,23 @@ namespace WereDev.Utils.Wu10Man.UserControls
             _worker.RunWorkerAsync();
         }
 
+        private void ToggleAppsSelection(object sender, RoutedEventArgs e)
+        {
+            var setChecked = !_model.AllPackagesSelected;
+
+            foreach (var package in _model.Packages)
+            {
+                if (package.CheckedForRemoval != setChecked)
+                {
+                    package.CheckedForRemoval = setChecked;
+                }
+            }
+        }
+
         private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ShowMessage("Windows Apps have been removed.");
+            ShowMessage("Selected Windows Apps have been removed.");
             ProgressBar.Visibility = Visibility.Hidden;
-            SetItemSource();
         }
 
         private void RemoveCheckedAppWorker(object sender, EventArgs e)
@@ -151,19 +158,9 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
         }
 
-        private void SetItemSource()
-        {
-            PackageInfo[] packages = _model.PackageSource == DeclutterModel.PackageSources.ThirdParty
-                                     ? _model.ThirdPartyPackages
-                                     : _model.MicrosoftPackages;
-
-            var sorted = packages.OrderByDescending(x => x.IsInstalled).ThenBy(x => x.AppName).ToArray();
-            ListViewWindowsApps.ItemsSource = sorted;
-        }
-
         private void ShowMessage(string message)
         {
-            MessageBox.Show(message, TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            MessageBox.Show(message, TabTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void InitializeProgressBar(int minValue, int maxValue)

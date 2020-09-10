@@ -22,19 +22,14 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
                 _services = value ?? new WindowsServiceStatusModel[0];
                 foreach (var service in _services)
                 {
-                    service.PropertyChanged += WindowsServiceStatusModel_PropertyChanged;
+                    service.PropertyChanged += (sender, e) =>
+                    {
+                        TriggerPropertyChanged(nameof(AllServicesButtonLabel), nameof(AllServicesDisabled), nameof(Services));
+                    };
                 }
 
-                OnPropertyChanged(nameof(WindowsServiceStatusModel));
-                OnPropertyChanged(nameof(AllServicesButtonLabel));
-                OnPropertyChanged(nameof(AllServicesDisabled));
+                TriggerPropertyChanged(nameof(AllServicesButtonLabel), nameof(AllServicesDisabled), nameof(Services));
             }
-        }
-
-        private void WindowsServiceStatusModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(AllServicesButtonLabel));
-            OnPropertyChanged(nameof(AllServicesDisabled));
         }
     }
 }

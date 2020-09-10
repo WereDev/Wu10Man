@@ -19,7 +19,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _featureUpdatePauseDate = value;
-                OnPropertyChanged(nameof(FeatureUpdatePauseDate));
+                TriggerPropertyChanged(nameof(FeatureUpdatePauseDate));
             }
         }
 
@@ -33,7 +33,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _featureUpdateDelayDays = value;
-                OnPropertyChanged(nameof(FeatureUpdateDelayDays));
+                TriggerPropertyChanged(nameof(FeatureUpdateDelayDays));
             }
         }
 
@@ -47,7 +47,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _qualityUpdatePauseDate = value;
-                OnPropertyChanged(nameof(QualityUpdatePauseDate));
+                TriggerPropertyChanged(nameof(QualityUpdatePauseDate));
             }
         }
 
@@ -61,7 +61,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _qualityUpdateDelayDays = value;
-                OnPropertyChanged(nameof(QualityUpdateDelayDays));
+                TriggerPropertyChanged(nameof(QualityUpdateDelayDays));
             }
         }
     }

@@ -27,7 +27,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _isActive = value;
-                OnPropertyChanged(nameof(IsActive));
+                TriggerPropertyChanged(nameof(IsActive));
             }
         }
     }
