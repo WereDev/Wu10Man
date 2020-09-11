@@ -8,7 +8,7 @@ If you've found this a useful app, perhaps you'd like to <a class="bmc-button" t
 
 ## Special Thanks
  - Govardhan - who bought me a coffee!
- - [Cereal-Killa](https://github.com/Cereal-Killa) - for providing a solution to [Issue #28](https://github.com/WereDev/Wu10Man/issues/28) even though I didn't end up using it.
+ - [Cereal-Killa](https://github.com/Cereal-Killa) - for providing a solution to [Issue #28](https://github.com/WereDev/Wu10Man/issues/28) and for making a "Select All" button.
  - [sungerbob](https://github.com/sungerbob) - for helping with research on [GPO in Windows 10, version 2004](https://github.com/WereDev/Wu10Man/issues/19)
  - [JohnnyTech](https://github.com/JonnyTech) - for contributing to code with some [typo and text fixes](https://github.com/WereDev/Wu10Man/pull/17).
 
