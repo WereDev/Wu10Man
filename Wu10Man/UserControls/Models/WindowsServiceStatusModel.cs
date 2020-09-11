@@ -24,7 +24,7 @@
                 if (_serviceName != value)
                 {
                     _serviceName = value;
-                    OnPropertyChanged(nameof(ServiceName));
+                    TriggerPropertyChanged(nameof(ServiceName));
                 }
             }
         }
@@ -41,7 +41,7 @@
                 if (_displayName != value)
                 {
                     _displayName = value;
-                    OnPropertyChanged(nameof(DisplayName));
+                    TriggerPropertyChanged(nameof(DisplayName));
                 }
             }
         }
@@ -55,11 +55,8 @@
 
             set
             {
-                if (_isServiceEnabled != value)
-                {
-                    _isServiceEnabled = value;
-                    OnPropertyChanged(nameof(IsServiceEnabled));
-                }
+                _isServiceEnabled = value;
+                TriggerPropertyChanged(nameof(IsServiceEnabled));
             }
         }
 
@@ -75,7 +72,7 @@
                 if (_serviceExists != value)
                 {
                     _serviceExists = value;
-                    OnPropertyChanged(nameof(ServiceExists));
+                    TriggerPropertyChanged(nameof(ServiceExists));
                 }
             }
         }

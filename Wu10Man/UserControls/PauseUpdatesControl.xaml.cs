@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
@@ -33,14 +35,26 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public PauseUpdatesControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _registryEditor = DependencyManager.Resolve<IRegistryEditor>();
+            _logWriter = DependencyManager.LogWriter;
+            _registryEditor = DependencyManager.RegistryEditor;
 
             _logWriter.LogInfo("Pause and Defer initializing.");
             DataContext = _model;
-            InitializeComponent();
-            if (SetRuntimeOptions())
-                _logWriter.LogInfo("Pause and Defer initialized.");
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                if (SetRuntimeOptions())
+                    _logWriter.LogInfo("Pause and Defer rendered.");
+            }
+
+            base.OnRender(drawingContext);
+
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -61,7 +75,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return false;
             }
             finally
@@ -88,12 +102,12 @@ namespace WereDev.Utils.Wu10Man.UserControls
                 return 0;
         }
 
-        private void SaveChanges(object sender, System.Windows.RoutedEventArgs e)
+        private void SaveChanges(object sender, RoutedEventArgs e)
         {
             WriteChanges();
         }
 
-        private void ClearValues(object sender, System.Windows.RoutedEventArgs e)
+        private void ClearValues(object sender, RoutedEventArgs e)
         {
             _model.FeatureUpdateDelayDays = 0;
             _model.FeatureUpdatePauseDate = null;

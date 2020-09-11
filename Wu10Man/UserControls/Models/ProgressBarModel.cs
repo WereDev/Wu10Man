@@ -18,7 +18,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _minValue = Math.Max(value, 0);
-                OnPropertyChanged(nameof(MinValue));
+                TriggerPropertyChanged(nameof(MinValue), nameof(CurrentValue));
             }
         }
 
@@ -32,7 +32,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _maxValue = Math.Max(value, _minValue);
-                OnPropertyChanged(nameof(MaxValue));
+                TriggerPropertyChanged(nameof(MaxValue), nameof(CurrentValue));
             }
         }
 
@@ -46,7 +46,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _currentValue = Math.Min(Math.Max(value, _minValue), _maxValue);
-                OnPropertyChanged(nameof(CurrentValue));
+                TriggerPropertyChanged(nameof(CurrentValue));
             }
         }
     }

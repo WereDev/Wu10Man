@@ -17,8 +17,8 @@ namespace WereDev.Utils.Wu10Man.UserWindows.Models
             set
             {
                 _showLegacy = value;
-                OnPropertyChanged(nameof(ShowLegacy));
-                OnPropertyChanged(nameof(LegacyVisibility));
+                TriggerPropertyChanged(nameof(ShowLegacy));
+                TriggerPropertyChanged(nameof(LegacyVisibility));
             }
         }
 

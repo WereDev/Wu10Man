@@ -33,7 +33,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _appName = value;
-                OnPropertyChanged(nameof(AppName));
+                TriggerPropertyChanged(nameof(AppName));
             }
         }
 
@@ -47,7 +47,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _packageName = value;
-                OnPropertyChanged(nameof(PackageName));
+                TriggerPropertyChanged(nameof(PackageName));
             }
         }
 
@@ -61,7 +61,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _isInstalled = value;
-                OnPropertyChanged(nameof(IsInstalled));
+                TriggerPropertyChanged(nameof(IsInstalled), nameof(GetVisibility));
             }
         }
 
@@ -75,7 +75,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _iconPath = value;
-                OnPropertyChanged(nameof(IconPath));
+                TriggerPropertyChanged(nameof(IconPath));
             }
         }
 
@@ -89,7 +89,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             set
             {
                 _checkedForRemoval = value;
-                OnPropertyChanged(nameof(CheckedForRemoval));
+                TriggerPropertyChanged(nameof(CheckedForRemoval));
             }
         }
 

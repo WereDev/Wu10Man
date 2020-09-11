@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="15.0" version="17.3" Modules="simple" RootPath="." Language="en" Id="{F18B9A17-E631-498A-8CF8-210F80EA0231}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="15.0" version="17.4.1" Modules="simple" RootPath="." Language="en" Id="{F18B9A17-E631-498A-8CF8-210F80EA0231}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_RUN_AS_ADMIN" Value="0"/>
@@ -16,7 +16,7 @@
     <ROW Property="ProductCode" Value="1033:{00273625-7096-487C-A5AB-A5116B423932} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Wu10Man"/>
-    <ROW Property="ProductVersion" Value="4.1.0.0" Type="32" TargetFile="Wu10Man.exe"/>
+    <ROW Property="ProductVersion" Value="4.2.0.0" Type="32" TargetFile="Wu10Man.exe"/>
     <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:ReallySuppress"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
@@ -42,8 +42,6 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{59364A24-962A-4BEA-9AE3-2B030E26D40E}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="Autofac.dll" ComponentId="{65DA51B4-1478-430E-9ADF-E4123E566777}" Directory_="APPDIR" Attributes="0" KeyPath="Autofac.dll"/>
-    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{D6953D0C-0C98-4EA2-8445-019E6F340B36}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
     <ROW Component="Microsoft.Expression.Interactions.dll" ComponentId="{6451A2A7-0FBD-4469-B4AC-3FBFC9355C6E}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Expression.Interactions.dll"/>
     <ROW Component="Microsoft.Management.Infrastructure.dll" ComponentId="{EB025B8E-512D-467E-8BEC-1202E33D64B7}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Management.Infrastructure.dll"/>
     <ROW Component="NLog.dll" ComponentId="{CBBE4DD2-E277-41C6-9001-DC58874A76E1}" Directory_="APPDIR" Attributes="0" KeyPath="NLog.dll"/>
@@ -69,9 +67,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="Wu10Man.exe" Component_="Wu10Man.exe" FileName="Wu10Man.exe" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Wu10Man.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="Autofac.dll" Component_="Autofac.dll" FileName="Autofac.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Autofac.dll" SelfReg="false"/>
     <ROW File="declutter.json" Component_="declutter.json" FileName="DECLUT~1.JSO|declutter.json" Attributes="0" SourcePath="..\Wu10Man\bin\Release\declutter.json" SelfReg="false"/>
-    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
     <ROW File="Microsoft.Expression.Interactions.dll" Component_="Microsoft.Expression.Interactions.dll" FileName="MICROS~2.DLL|Microsoft.Expression.Interactions.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Expression.Interactions.dll" SelfReg="false"/>
     <ROW File="Microsoft.Management.Infrastructure.dll" Component_="Microsoft.Management.Infrastructure.dll" FileName="MICROS~3.DLL|Microsoft.Management.Infrastructure.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Microsoft.Management.Infrastructure.dll" SelfReg="false"/>
     <ROW File="Newtonsoft.Json.dll" Component_="Newtonsoft.Json.dll" FileName="NEWTON~1.DLL|Newtonsoft.Json.dll" Attributes="0" SourcePath="..\Wu10Man\bin\Release\Newtonsoft.Json.dll" SelfReg="false"/>
@@ -164,9 +160,7 @@
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
     <ROW Feature_="MainFeature" Component_="Wu10Man.exe"/>
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
-    <ROW Feature_="MainFeature" Component_="Autofac.dll"/>
     <ROW Feature_="MainFeature" Component_="declutter.json"/>
-    <ROW Feature_="MainFeature" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.Expression.Interactions.dll"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.Management.Infrastructure.dll"/>
     <ROW Feature_="MainFeature" Component_="Newtonsoft.Json.dll"/>

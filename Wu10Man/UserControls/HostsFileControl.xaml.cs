@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.UserControls.Models;
@@ -21,16 +23,26 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         public HostsFileControl()
         {
-            _logWriter = DependencyManager.Resolve<ILogWriter>();
-            _hostsFileEditor = DependencyManager.Resolve<IHostsFileEditor>();
+            _logWriter = DependencyManager.LogWriter;
+            _hostsFileEditor = DependencyManager.HostsFileEditor;
 
             _logWriter.LogInfo("Hosts File initializing.");
             _model = new HostsFileModel();
+        }
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 if (SetRuntimeOptions())
-                    _logWriter.LogInfo("Hosts File initialized.");
+                    _logWriter.LogInfo("Hosts File rendered.");
             }
+
+            base.OnRender(drawingContext);
+
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private bool SetRuntimeOptions()
@@ -44,7 +56,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error initializing {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return false;
             }
             finally

@@ -1,14 +1,13 @@
-﻿namespace WereDev.Utils.Wu10Man.UserControls.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
     internal class DeclutterModel : ModelBase
     {
         private PackageInfo[] _microsoftPackages = new PackageInfo[0];
         private PackageInfo[] _thirdPartyPackages = new PackageInfo[0];
-
-        public DeclutterModel()
-        {
-            PackageSource = PackageSources.Microsoft;
-        }
+        private PackageSources _activeSource = PackageSources.Microsoft;
 
         public enum PackageSources
         {
@@ -16,34 +15,58 @@
             ThirdParty,
         }
 
-        public PackageSources PackageSource { get; set; }
+        public PackageInfo[] Packages { get; private set; }
 
-        public PackageInfo[] MicrosoftPackages
+        public bool AllPackagesSelected => !Packages.Any(x => !x.CheckedForRemoval);
+
+        public string SelectButtonText => AllPackagesSelected ? "Deselect All Apps" : "Select All Apps";
+
+        public PackageSources PackageSource
         {
             get
             {
-                return _microsoftPackages;
+                return _activeSource;
             }
 
             set
             {
-                _microsoftPackages = value ?? new PackageInfo[0];
-                OnPropertyChanged(nameof(MicrosoftPackages));
+                _activeSource = value;
+                SetActivePackages();
+                TriggerPropertyChanged(nameof(Packages), nameof(SelectButtonText));
             }
         }
 
-        public PackageInfo[] ThirdPartyPackages
+        public void SetPackages(PackageSources packageSource, IEnumerable<PackageInfo> packages)
         {
-            get
+            switch (packageSource)
             {
-                return _thirdPartyPackages;
+                case PackageSources.Microsoft:
+                    _microsoftPackages = packages.ToArray();
+                    break;
+                case PackageSources.ThirdParty:
+                    _thirdPartyPackages = packages.ToArray();
+                    break;
             }
 
-            set
+            foreach (var package in packages)
             {
-                _thirdPartyPackages = value ?? new PackageInfo[0];
-                OnPropertyChanged(nameof(ThirdPartyPackages));
+                package.PropertyChanged += (sender, e) =>
+                {
+                    TriggerPropertyChanged(nameof(Packages), nameof(SelectButtonText));
+                };
             }
+
+            SetActivePackages();
+            TriggerPropertyChanged(nameof(Packages), nameof(SelectButtonText));
+        }
+
+        private void SetActivePackages()
+        {
+            Packages = _activeSource == PackageSources.Microsoft
+                           ? _microsoftPackages
+                           : _thirdPartyPackages;
+
+            Packages = Packages.OrderBy(x => x.AppName).ToArray();
         }
     }
 }

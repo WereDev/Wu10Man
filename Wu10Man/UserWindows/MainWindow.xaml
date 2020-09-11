@@ -38,11 +38,6 @@
                         <usercontrols:WindowsServicesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
-                <TabItem Header="Hosts File">
-                    <Grid Background="#7fba00">
-                        <usercontrols:HostsFileControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                    </Grid>
-                </TabItem>
                 <TabItem Header="Pause Updates">
                     <Grid Background="#01a4ef">
                         <usercontrols:PauseUpdatesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
@@ -51,6 +46,11 @@
                 <TabItem Header="BETA - Declutter">
                     <Grid Background="#ffb901">
                         <usercontrols:DeclutterControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="LEGACY - Hosts File" Visibility="{Binding LegacyVisibility}">
+                    <Grid>
+                        <usercontrols:HostsFileControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
                 <TabItem Header="LEGACY - Group Policy" Visibility="{Binding LegacyVisibility}">
