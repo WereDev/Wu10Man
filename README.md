@@ -49,6 +49,27 @@ If you have Windows 10 Home, you don't have access to the Group Policy Editor, b
  - **Automatic Download, Notify of Installation:** Will automatically download updates, but provide notification before installation.
 
 
+## BETA - Declutter
+Windows 10 comes with a lot of clutter.  There's the random stuff that they install that aren't particularly necessary, and then there's the 3rd party apps that Windows tries to include.  There's plenty of apps and scripts to remove a bunch of these, but I wanted to add it here as well so that I had a single solution.
+
+This is still sort of in BETA, so definitely use with added caution.
+
+
+## Legacy
+With any application, somethings things just are no longer necessary.  With that, there comes some depricated parts of this application as well.  These parts aren't really supported any more, as much as this application has support.
+
+
+### Group Policy
+
+If you have Windows 10 Home, you don't have access to the Group Policy Editor, but you can still set it via the registry.  This application will make those updates for you, because who can remember where those settings are.  This setting should be sufficient to block most automatic updates, but with some security updates, Microsoft will push those down regardless of these settings.
+
+#### Group Policy Options:
+ - **Enable Automatic Updates:** Allows updates to function as normal.
+ - **Disable Automatic Updates:** Disables automatic updates.
+ - **Notify of Download and Installation:** Provides notifications for download and install.  Should function similar to older version of Windows that had this option.
+ - **Automatic Download, Notify of Installation:** Will automatically download updates, but provide notification before installation.
+
+
 ## Additional Info
 
 ### System Updates
