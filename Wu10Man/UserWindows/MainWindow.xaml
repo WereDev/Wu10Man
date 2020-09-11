@@ -49,7 +49,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="LEGACY - Hosts File" Visibility="{Binding LegacyVisibility}">
-                    <Grid Background="#7fba00">
+                    <Grid>
                         <usercontrols:HostsFileControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                     </Grid>
                 </TabItem>
