@@ -133,6 +133,8 @@
     <Compile Include="UserControls\ProgressBarControl.xaml.cs">
       <DependentUpon>ProgressBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UserControlBase.cs" />
+    <Compile Include="UserControls\UserControlBaseWithWorker.cs" />
     <Compile Include="UserWindows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -157,7 +159,9 @@
     <Compile Include="UserControls\WindowsServicesControl.xaml.cs">
       <DependentUpon>WindowsServicesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserWindows\Models\ITabItemModel.cs" />
     <Compile Include="UserWindows\Models\MainWindowModel.cs" />
+    <Compile Include="UserWindows\Models\TabItemModel.cs" />
     <Page Include="UserControls\DeclutterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

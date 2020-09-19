@@ -1,13 +1,16 @@
-﻿<UserControl x:Class="WereDev.Utils.Wu10Man.UserControls.WindowsServicesControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
-             xmlns:local="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
-             mc:Ignorable="d"
-             d:DesignHeight="353"
-             d:DesignWidth="558">
+﻿<localControls:UserControlBaseWithWorker
+    x:Class="WereDev.Utils.Wu10Man.UserControls.WindowsServicesControl"
+    x:TypeArguments="localModels:WindowsServicesModel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
+    xmlns:localControls="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
+    xmlns:localModels="clr-namespace:WereDev.Utils.Wu10Man.UserControls.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="353"
+    d:DesignWidth="558">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
@@ -87,6 +90,5 @@
             </ListView>
             <Button HorizontalAlignment="Center" Margin="10" VerticalAlignment="Bottom" Width="200" Content="{Binding AllServicesButtonLabel}" Click="UpdateServices" />
         </Grid>
-        <local:ProgressBarControl Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ServicesProgressBar"></local:ProgressBarControl>
     </Grid>
-</UserControl>
+</localControls:UserControlBaseWithWorker>

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
-using WereDev.Utils.Wu10Man.Helpers;
 
 namespace WereDev.Utils.Wu10Man.UserControls
 {
@@ -78,7 +77,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             catch (Exception ex)
             {
                 _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                MessageBox.Show($"Error rendering {TabTitle} tab.\r\n\r\n{ex.Message}\r\n\r\nCheck the logs for more details.", TabTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
             finally
@@ -144,7 +143,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             SelectedPolicyOption = (KeyValuePair<string, string>)e.AddedItems[0];
         }
 
-        private void SetGroupPolicy(object sender, System.Windows.RoutedEventArgs e)
+        private void SetGroupPolicy(object sender, RoutedEventArgs e)
         {
             switch (SelectedPolicyOption.Key)
             {
@@ -171,7 +170,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
 
             _logWriter.LogInfo(string.Format("Group Policy set: {0}", SelectedPolicyOption.Value));
-            System.Windows.MessageBox.Show("Registry settings updated.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            MessageBox.Show("Registry settings updated.", TabTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

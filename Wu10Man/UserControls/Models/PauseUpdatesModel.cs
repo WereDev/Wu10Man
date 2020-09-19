@@ -2,7 +2,7 @@
 
 namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
-    internal class PauseUpdatesModel : ModelBase
+    public class PauseUpdatesModel : ModelBase
     {
         private DateTime? _featureUpdatePauseDate = null;
         private int _featureUpdateDelayDays = 0;

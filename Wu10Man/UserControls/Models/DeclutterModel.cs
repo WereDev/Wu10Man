@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace WereDev.Utils.Wu10Man.UserControls.Models
 {
-    internal class DeclutterModel : ModelBase
+    public class DeclutterModel : ModelBase
     {
         private PackageInfo[] _microsoftPackages = new PackageInfo[0];
         private PackageInfo[] _thirdPartyPackages = new PackageInfo[0];
-        private PackageSources _activeSource = PackageSources.Microsoft;
+        private PackageSource _activeSource = PackageSource.Microsoft;
 
-        public enum PackageSources
+        public enum PackageSource
         {
             Microsoft,
             ThirdParty,
@@ -17,11 +17,11 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
 
         public PackageInfo[] Packages { get; private set; }
 
-        public bool AllPackagesSelected => !Packages.Any(x => !x.CheckedForRemoval);
+        public bool AllPackagesSelected => !(Packages?.Any(x => !x.CheckedForRemoval) ?? false);
 
         public string SelectButtonText => AllPackagesSelected ? "Deselect All Apps" : "Select All Apps";
 
-        public PackageSources PackageSource
+        public PackageSource ActiveSource
         {
             get
             {
@@ -36,14 +36,16 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
             }
         }
 
-        public void SetPackages(PackageSources packageSource, IEnumerable<PackageInfo> packages)
+        public void SetPackages(PackageSource packageSource, IEnumerable<PackageInfo> packages)
         {
+            packages = packages ?? System.Array.Empty<PackageInfo>();
+
             switch (packageSource)
             {
-                case PackageSources.Microsoft:
+                case PackageSource.Microsoft:
                     _microsoftPackages = packages.ToArray();
                     break;
-                case PackageSources.ThirdParty:
+                case PackageSource.ThirdParty:
                     _thirdPartyPackages = packages.ToArray();
                     break;
             }
@@ -62,11 +64,11 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
 
         private void SetActivePackages()
         {
-            Packages = _activeSource == PackageSources.Microsoft
+            Packages = _activeSource == PackageSource.Microsoft
                            ? _microsoftPackages
                            : _thirdPartyPackages;
 
-            Packages = Packages.OrderBy(x => x.AppName).ToArray();
+            Packages = Packages.Where(x => x.IsInstalled).OrderBy(x => x.AppName).ToArray();
         }
     }
 }
