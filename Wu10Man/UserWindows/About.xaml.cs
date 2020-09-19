@@ -5,9 +5,6 @@ using System.Windows.Navigation;
 
 namespace WereDev.Utils.Wu10Man.UserWindows
 {
-    /// <summary>
-    /// Interaction logic for About.xaml
-    /// </summary>
     public partial class About : Window
     {
         public About()

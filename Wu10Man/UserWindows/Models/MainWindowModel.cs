@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.UserControls.Models;
 
 namespace WereDev.Utils.Wu10Man.UserWindows.Models
@@ -17,11 +19,14 @@ namespace WereDev.Utils.Wu10Man.UserWindows.Models
             set
             {
                 _showLegacy = value;
-                TriggerPropertyChanged(nameof(ShowLegacy));
-                TriggerPropertyChanged(nameof(LegacyVisibility));
+                TriggerPropertyChanged(nameof(ShowLegacy), nameof(LegacyVisibility), nameof(VisibleTabItems));
             }
         }
 
         public Visibility LegacyVisibility => _showLegacy ? Visibility.Visible : Visibility.Hidden;
+
+        public ITabItemModel<UserControl>[] TabItems { get; set; }
+
+        public ITabItemModel<UserControl>[] VisibleTabItems => TabItems.Where(x => _showLegacy || !x.IsLegacy).ToArray();
     }
 }

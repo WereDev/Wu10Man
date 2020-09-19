@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Helpers;
@@ -15,7 +14,7 @@ namespace WereDev.Utils.Wu10Man.UserControls
     /// <summary>
     /// Interaction logic for PauseUpdates.xaml.
     /// </summary>
-    public partial class PauseUpdatesControl : UserControl
+    public partial class PauseUpdatesControl : UserControlBase<PauseUpdatesModel>
     {
         private const string UXRegistryKey = @"SOFTWARE\Microsoft\WindowsUpdate\UX\Settings";
         private const string DeferFeatureUpdatesPeriodInDays = "DeferFeatureUpdatesPeriodInDays";
@@ -26,62 +25,30 @@ namespace WereDev.Utils.Wu10Man.UserControls
         private const string PauseQualityUpdatesEndTime = "PauseQualityUpdatesEndTime";
         private const string PauseUpdatesExpiryTime = "PauseUpdatesExpiryTime";
         // private const string PendingRebootStartTime = "PendingRebootStartTime";
-        private const string TabTitle = "Pause and Defer";
 
         private readonly Regex _numberOnlyRegex = new Regex("[^0-9]+");
-        private readonly PauseUpdatesModel _model = new PauseUpdatesModel();
-        private readonly ILogWriter _logWriter;
         private readonly IRegistryEditor _registryEditor;
 
         public PauseUpdatesControl()
+            : base()
         {
-            _logWriter = DependencyManager.LogWriter;
             _registryEditor = DependencyManager.RegistryEditor;
-
-            _logWriter.LogInfo("Pause and Defer initializing.");
-            DataContext = _model;
+            TabTitle = "Pause and Defer";
+            InitializeComponent();
         }
 
-        protected override void OnRender(DrawingContext drawingContext)
+        protected override bool SetRuntimeOptions()
         {
-            Mouse.OverrideCursor = Cursors.Wait;
-
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                if (SetRuntimeOptions())
-                    _logWriter.LogInfo("Pause and Defer rendered.");
-            }
-
-            base.OnRender(drawingContext);
-
-            Mouse.OverrideCursor = Cursors.Arrow;
+            Model.FeatureUpdateDelayDays = GetIntFromRegistryValue(DeferFeatureUpdatesPeriodInDays);
+            Model.FeatureUpdatePauseDate = GetDateFromRegistryValue(PauseFeatureUpdatesEndTime);
+            Model.QualityUpdateDelayDays = GetIntFromRegistryValue(DeferQualityUpdatesPeriodInDays);
+            Model.QualityUpdatePauseDate = GetDateFromRegistryValue(PauseQualityUpdatesEndTime);
+            return true;
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = _numberOnlyRegex.IsMatch(e.Text);
-        }
-
-        private bool SetRuntimeOptions()
-        {
-            try
-            {
-                _model.FeatureUpdateDelayDays = GetIntFromRegistryValue(DeferFeatureUpdatesPeriodInDays);
-                _model.FeatureUpdatePauseDate = GetDateFromRegistryValue(PauseFeatureUpdatesEndTime);
-                _model.QualityUpdateDelayDays = GetIntFromRegistryValue(DeferQualityUpdatesPeriodInDays);
-                _model.QualityUpdatePauseDate = GetDateFromRegistryValue(PauseQualityUpdatesEndTime);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logWriter.LogError(ex);
-                System.Windows.MessageBox.Show($"Error rendering {TabTitle} tab.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                return false;
-            }
-            finally
-            {
-                InitializeComponent();
-            }
         }
 
         private DateTime? GetDateFromRegistryValue(string registryName)
@@ -109,81 +76,81 @@ namespace WereDev.Utils.Wu10Man.UserControls
 
         private void ClearValues(object sender, RoutedEventArgs e)
         {
-            _model.FeatureUpdateDelayDays = 0;
-            _model.FeatureUpdatePauseDate = null;
-            _model.QualityUpdateDelayDays = 0;
-            _model.QualityUpdatePauseDate = null;
+            Model.FeatureUpdateDelayDays = 0;
+            Model.FeatureUpdatePauseDate = null;
+            Model.QualityUpdateDelayDays = 0;
+            Model.QualityUpdatePauseDate = null;
             WriteChanges();
         }
 
         private void WriteChanges()
         {
             var nowString = GetDateString(DateTime.Now);
-            if (_model.FeatureUpdatePauseDate.HasValue)
+            if (Model.FeatureUpdatePauseDate.HasValue)
             {
-                var pauseDateString = GetDateString(_model.FeatureUpdatePauseDate.Value);
+                var pauseDateString = GetDateString(Model.FeatureUpdatePauseDate.Value);
 
                 _registryEditor.WriteLocalMachineRegistryString(UXRegistryKey, PauseFeatureUpdatesStartTime, nowString);
                 _registryEditor.WriteLocalMachineRegistryString(UXRegistryKey, PauseFeatureUpdatesEndTime, pauseDateString);
-                _logWriter.LogInfo($"Saving Feature Pause Date: {pauseDateString}");
+                LogWriter.LogInfo($"Saving Feature Pause Date: {pauseDateString}");
             }
             else
             {
                 _registryEditor.DeleteLocalMachineRegistryValue(UXRegistryKey, PauseFeatureUpdatesStartTime);
                 _registryEditor.DeleteLocalMachineRegistryValue(UXRegistryKey, PauseFeatureUpdatesEndTime);
-                _logWriter.LogInfo("Removing Feature Pause Date");
+                LogWriter.LogInfo("Removing Feature Pause Date");
             }
 
-            if (_model.FeatureUpdateDelayDays > 0)
+            if (Model.FeatureUpdateDelayDays > 0)
             {
-                _registryEditor.WriteLocalMachineRegistryDword(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, _model.FeatureUpdateDelayDays.ToString());
-                _logWriter.LogInfo($"Saving Feature Deferral Days: {_model.FeatureUpdateDelayDays}");
+                _registryEditor.WriteLocalMachineRegistryDword(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, Model.FeatureUpdateDelayDays.ToString());
+                LogWriter.LogInfo($"Saving Feature Deferral Days: {Model.FeatureUpdateDelayDays}");
             }
             else
             {
                 _registryEditor.WriteLocalMachineRegistryDword(UXRegistryKey, DeferFeatureUpdatesPeriodInDays, "0");
-                _logWriter.LogInfo($"Saving Feature Deferral Days: 0");
+                LogWriter.LogInfo($"Saving Feature Deferral Days: 0");
             }
 
-            if (_model.QualityUpdatePauseDate.HasValue)
+            if (Model.QualityUpdatePauseDate.HasValue)
             {
-                var pauseDateString = GetDateString(_model.QualityUpdatePauseDate.Value);
+                var pauseDateString = GetDateString(Model.QualityUpdatePauseDate.Value);
                 _registryEditor.WriteLocalMachineRegistryString(UXRegistryKey, PauseQualityUpdatesStartTime, nowString);
                 _registryEditor.WriteLocalMachineRegistryString(UXRegistryKey, PauseQualityUpdatesEndTime, pauseDateString);
-                _logWriter.LogInfo($"Saving Quality Pause Date: {pauseDateString}");
+                LogWriter.LogInfo($"Saving Quality Pause Date: {pauseDateString}");
             }
             else
             {
                 _registryEditor.DeleteLocalMachineRegistryValue(UXRegistryKey, PauseQualityUpdatesStartTime);
                 _registryEditor.DeleteLocalMachineRegistryValue(UXRegistryKey, PauseQualityUpdatesEndTime);
-                _logWriter.LogInfo("Removing Quality Pause Date");
+                LogWriter.LogInfo("Removing Quality Pause Date");
             }
 
-            if (_model.QualityUpdateDelayDays > 0)
+            if (Model.QualityUpdateDelayDays > 0)
             {
-                _registryEditor.WriteLocalMachineRegistryDword(UXRegistryKey, DeferQualityUpdatesPeriodInDays, _model.QualityUpdateDelayDays.ToString());
-                _logWriter.LogInfo($"Saving Quality Deferral Days: {_model.QualityUpdateDelayDays}");
+                _registryEditor.WriteLocalMachineRegistryDword(UXRegistryKey, DeferQualityUpdatesPeriodInDays, Model.QualityUpdateDelayDays.ToString());
+                LogWriter.LogInfo($"Saving Quality Deferral Days: {Model.QualityUpdateDelayDays}");
             }
             else
             {
                 _registryEditor.WriteLocalMachineRegistryDword(UXRegistryKey, DeferQualityUpdatesPeriodInDays, "0");
-                _logWriter.LogInfo($"Saving Quality Deferral Days: {_model.FeatureUpdateDelayDays}");
+                LogWriter.LogInfo($"Saving Quality Deferral Days: {Model.FeatureUpdateDelayDays}");
             }
 
-            var latestDate = Math.Max(_model.FeatureUpdatePauseDate?.Ticks ?? 0, _model.QualityUpdatePauseDate?.Ticks ?? 0);
+            var latestDate = Math.Max(Model.FeatureUpdatePauseDate?.Ticks ?? 0, Model.QualityUpdatePauseDate?.Ticks ?? 0);
             if (latestDate > 0)
             {
                 var pauseDateString = GetDateString(new DateTime(latestDate));
                 _registryEditor.WriteLocalMachineRegistryString(UXRegistryKey, PauseUpdatesExpiryTime, GetDateString(new DateTime(latestDate)));
-                _logWriter.LogInfo($"Saving Pause Date Expiry: {pauseDateString}");
+                LogWriter.LogInfo($"Saving Pause Date Expiry: {pauseDateString}");
             }
             else
             {
                 _registryEditor.DeleteLocalMachineRegistryValue(UXRegistryKey, PauseUpdatesExpiryTime);
-                _logWriter.LogInfo($"Removing Pause Date Expiry");
+                LogWriter.LogInfo($"Removing Pause Date Expiry");
             }
 
-            MessageBox.Show($"Windows Update pause dates and deferal period have been saved.", TabTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            MessageBox.Show($"Windows Update pause dates and deferal period have been saved.", TabTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private string GetDateString(DateTime datetime)

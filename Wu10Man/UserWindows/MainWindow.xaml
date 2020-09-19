@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:usercontrols="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
+        xmlns:localControls="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
         mc:Ignorable="d"
         Title="Wu10Man - Windows 10 Update Manager"
         Height="450" 
@@ -12,7 +12,6 @@
         VerticalAlignment="Center" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize">
-    
     <Grid>
         <Menu DockPanel.Dock="Top" Height="20" Margin="5,0,5,0" VerticalAlignment="Top" Background="Transparent">
             <Menu.ItemsPanel>
@@ -32,33 +31,22 @@
             </MenuItem>
         </Menu>
         <Grid Margin="0,20,0,0">
-            <TabControl HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" >
-                <TabItem Header="Windows Services">
-                    <Grid Background="#f25022">
-                        <usercontrols:WindowsServicesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Pause Updates">
-                    <Grid Background="#01a4ef">
-                        <usercontrols:PauseUpdatesControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                    </Grid>
-                </TabItem>
-                <TabItem Header="BETA - Declutter">
-                    <Grid Background="#ffb901">
-                        <usercontrols:DeclutterControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                    </Grid>
-                </TabItem>
-                <TabItem Header="LEGACY - Hosts File" Visibility="{Binding LegacyVisibility}">
-                    <Grid>
-                        <usercontrols:HostsFileControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                    </Grid>
-                </TabItem>
-                <TabItem Header="LEGACY - Group Policy" Visibility="{Binding LegacyVisibility}">
-                    <Grid>
-                        <usercontrols:GroupPolicyControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                    </Grid>
-                </TabItem>
+            <TabControl HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" ItemsSource="{Binding VisibleTabItems}" SelectedIndex="0">
+                <TabControl.ItemTemplate>
+                    <!-- this is the header template-->
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Header}" Visibility="{Binding TabVisibility}"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <Grid Background="{Binding BackgroundColor}" Visibility="{Binding TabVisibility}">
+                            <ContentControl Content="{Binding UserControl}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
+                        </Grid>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
             </TabControl>
         </Grid>
+        <localControls:ProgressBarControl Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ProgressBar"></localControls:ProgressBarControl>
     </Grid>
 </Window>

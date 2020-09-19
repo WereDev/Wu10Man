@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
-using WereDev.Utils.Wu10Man.Providers;
 using WereDev.Utils.Wu10Man.Services;
+using WereDev.Utils.Wu10Man.UserControls;
 using WereDev.Utils.Wu10Man.UserWindows.Models;
 
 namespace WereDev.Utils.Wu10Man.UserWindows
@@ -19,7 +20,17 @@ namespace WereDev.Utils.Wu10Man.UserWindows
         public MainWindow()
         {
             _logWriter = DependencyManager.LogWriter;
-            _mainWindowModel = new MainWindowModel();
+            _mainWindowModel = new MainWindowModel()
+            {
+                TabItems = new ITabItemModel<UserControl>[]
+                {
+                    new TabItemModel<WindowsServicesControl> { BackgroundColor = "#f25022", Header = "Windows Services" },
+                    new TabItemModel<PauseUpdatesControl> { BackgroundColor = "#01a4ef", Header = "Pause Updates" },
+                    new TabItemModel<DeclutterControl> { BackgroundColor = "#ffb901", Header = "BETA - Declutter" },
+                    new TabItemModel<HostsFileControl> { BackgroundColor = "LightGray", Header = "LEGACY - Hosts File", IsLegacy = true },
+                    new TabItemModel<GroupPolicyControl> { BackgroundColor = "LightGray", Header = "LEGACY - Group Policy", IsLegacy = true },
+                },
+            };
 
             _logWriter.LogInfo("Main window initializing.");
             InitializeComponent();
