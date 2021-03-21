@@ -8,6 +8,7 @@ If you've found this a useful app, perhaps you'd like to <a class="bmc-button" t
 
 ## Top Caffeinators
 Thank you so much for your contributions and helping fun the battle against Windows Update!
+
  - Someone<sub>4</sub> - for the super buzzed week, or normally buzzed two weeks!
  - Redfella - kept me caffeinated for a whole month!!
  - piratour20 - for the late evening coffee!
