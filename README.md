@@ -6,7 +6,8 @@ With 4.0, I realized another major annoyance of Windows 10 is a lot of bloatware
 
 If you've found this a useful app, perhaps you'd like to <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/weredev"><span style="margin-left:5px;font-size:28px !important;">buy me a coffee?</span></a>
 
-## Special Thanks
+## Top Caffeinators
+Thank you so much for your contributions and helping fun the battle against Windows Update!
  - Someone<sub>4</sub> - for the super buzzed week, or normally buzzed two weeks!
  - Redfella - kept me caffeinated for a whole month!!
  - piratour20 - for the late evening coffee!
@@ -17,6 +18,8 @@ If you've found this a useful app, perhaps you'd like to <a class="bmc-button" t
  - Wes - who coffeed me through hump day!
  - Someone<sub>1</sub> - who bought me a keg of coffee!
  - Govardhan - who bought me a coffee!
+
+## Special Thanks
  - [Cereal-Killa](https://github.com/Cereal-Killa) - for providing a solution to [Issue #28](https://github.com/WereDev/Wu10Man/issues/28) and for making a "Select All" button.
  - [sungerbob](https://github.com/sungerbob) - for helping with research on [GPO in Windows 10, version 2004](https://github.com/WereDev/Wu10Man/issues/19)
  - [JohnnyTech](https://github.com/JonnyTech) - for contributing to code with some [typo and text fixes](https://github.com/WereDev/Wu10Man/pull/17).
