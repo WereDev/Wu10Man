@@ -35,12 +35,12 @@
                 <TabControl.ItemTemplate>
                     <!-- this is the header template-->
                     <DataTemplate>
-                        <TextBlock Text="{Binding Header}" Visibility="{Binding TabVisibility}"/>
+                        <TextBlock Text="{Binding Header}"/>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <Grid Background="{Binding BackgroundColor}" Visibility="{Binding TabVisibility}">
+                        <Grid Background="{Binding BackgroundColor}">
                             <ContentControl Content="{Binding UserControl}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                         </Grid>
                     </DataTemplate>

@@ -7,7 +7,7 @@ namespace WereDev.Utils.Wu10Man.UserWindows.Models
 {
     public class MainWindowModel : ModelBase
     {
-        private bool _showLegacy = false;
+        private bool _showLegacy;
 
         public bool ShowLegacy
         {
