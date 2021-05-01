@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using WereDev.Utils.Wu10Man.Core;
@@ -69,7 +68,6 @@ namespace WereDev.Utils.Wu10Man.UserControls
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "_worker part of larger scope.")]
         private void UpdateServices(object sender, RoutedEventArgs e)
         {
             var count = Model.Services.Where(x => x.ServiceExists).Count();

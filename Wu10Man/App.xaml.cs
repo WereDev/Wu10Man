@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Windows;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Core.Services;
-using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.Providers;
 using WereDev.Utils.Wu10Man.Services;
 using WereDev.Utils.Wu10Man.UserWindows;
@@ -48,9 +49,9 @@ namespace WereDev.Utils.Wu10Man
         private void RegisterDependencies()
         {
             DependencyManager.LogWriter = _logWriter;
+            var appSettings = GetAppSettings();
 
             // Providers
-            var configurationReader = new ConfigurationReader();
             var credentialsProvider = new CredentialsProvider();
             var fileIoProvider = new FileIoProvider();
             var registryProvider = new RegistryProvider();
@@ -58,15 +59,24 @@ namespace WereDev.Utils.Wu10Man
             var windowsApiProvider = new WindowsApiProvider();
             var windowsServiceProviderFactory = new WindowsServiceProviderFactory();
             var powerShellProvider = new PowerShellProvider();
+            var windowsTaskProvider = new WindowsTaskProvider();
 
             // Services
             var fileManager = new FileManager(fileIoProvider, windowsApiProvider, credentialsProvider);
             DependencyManager.FileManager = fileManager;
-            DependencyManager.HostsFileEditor = new HostsFileEditor(fileIoProvider, configurationReader);
+            DependencyManager.HostsFileEditor = new HostsFileEditor(fileIoProvider, appSettings.WindowsUpdateUrls);
             var registryEditor = new RegistryEditor(windowsApiProvider, registryProvider, userProvider);
             DependencyManager.RegistryEditor = registryEditor;
-            DependencyManager.WindowsServiceManager = new WindowsServiceManager(windowsServiceProviderFactory, registryEditor, fileManager, configurationReader);
-            DependencyManager.WindowsPackageManager = new WindowsPackageManager(powerShellProvider, configurationReader);
+            DependencyManager.WindowsServiceManager = new WindowsServiceManager(windowsServiceProviderFactory, registryEditor, fileManager, appSettings.WindowsServices);
+            DependencyManager.WindowsPackageManager = new WindowsPackageManager(powerShellProvider, appSettings.Declutter);
+            DependencyManager.WindowsTaskManager = new WindowsTaskManager(windowsTaskProvider, appSettings.WindowsTasks);
+        }
+
+        private AppSettings GetAppSettings()
+        {
+            var appSettingsFile = File.ReadAllText("./app.settings.json");
+            var appSettings = JsonConvert.DeserializeObject<AppSettings>(appSettingsFile);
+            return appSettings;
         }
 
         private void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

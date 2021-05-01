@@ -15,5 +15,7 @@ namespace WereDev.Utils.Wu10Man.Core
         public static IHostsFileEditor HostsFileEditor { get; set; }
 
         public static IWindowsServiceManager WindowsServiceManager { get; set; }
+
+        public static IWindowsTaskManager WindowsTaskManager { get; set; }
     }
 }

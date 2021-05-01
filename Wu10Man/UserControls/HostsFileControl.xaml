@@ -10,10 +10,10 @@
     xmlns:localModels="clr-namespace:WereDev.Utils.Wu10Man.UserControls.Models"
     mc:Ignorable="d"
     d:DesignHeight="353"
-    d:DesignWidth="558">
+    d:DesignWidth="670  ">
     <Grid Background="LightGray">
         <Label Content="Windows Hosts File" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
-        <Grid Width="276" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
+        <Grid Width="326" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
@@ -29,7 +29,7 @@
                         <TextBlock Margin="0, 20, 0, 0">
                             <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />
                         </TextBlock>
-                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
+                        <TextBlock Margin="20, -16, 0, 0" TextWrapping="Wrap">
                             NOTE: Windows Defender seems to not like this particular part of Wu10Man.  You might need to allow it through.
                         </TextBlock>
                         <TextBlock Margin="0, 20, 0, 0">
@@ -43,15 +43,10 @@
                 </Label.Content>
             </Label>
         </Grid>
-        <Grid Width="276" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
-            <ListView Height="290" Margin="0,0,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="280">
+        <Grid Width="326" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
+            <ListView Height="290" Margin="0,0,0,0" VerticalAlignment="Top" Name="HostsListBox" ItemsSource="{Binding Path=HostStatus}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="330">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path= ServiceExists}" Value="False">
-                                <Setter Property="Border.Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
                         <Setter Property="Background" Value="Transparent" />
                         <Setter Property="Height" Value="34" />
                         <Setter Property="Template">
@@ -66,16 +61,16 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5">
-                            <Label Content="{Binding Host}" Width="210" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Host}" Width="272" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <wpfspark:ToggleSwitch IsChecked="{Binding IsActive}" CheckedToolTip="Access to host allowed." UncheckedToolTip="Access to host blocked."
                                                    Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ToggleHostItem"
-                                                    AccentMode="User" AccentBrush="#7fba00"/>
+                                                    AccentMode="User" AccentBrush="#01a4ef"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="125" Click="UnblockAllHosts_Click"/>
-            <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="125" Click="BlockAllHosts_Click"/>
+            <Button x:Name="UnblockAllHosts" Content="Unblock All Hosts" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="150" Click="UnblockAllHosts_Click"/>
+            <Button x:Name="BlockAllHosts" Content="Block All Hosts" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="150" Click="BlockAllHosts_Click"/>
         </Grid>
     </Grid>
 </localControls:UserControlBase>

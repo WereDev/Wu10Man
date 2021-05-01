@@ -58,7 +58,7 @@
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Enums\WindowsApiPrivelegeNames.cs" />
     <Compile Include="Interfaces\IWindowsPackageManager.cs" />
-    <Compile Include="Interfaces\Providers\IConfigurationReader.cs" />
+    <Compile Include="Interfaces\IWindowsTaskManager.cs" />
     <Compile Include="Interfaces\Providers\IFileIoProvider.cs" />
     <Compile Include="Interfaces\IFileManager.cs" />
     <Compile Include="Interfaces\IHostsFileEditor.cs" />
@@ -72,17 +72,21 @@
     <Compile Include="Interfaces\Providers\IWindowsPackageProvider.cs" />
     <Compile Include="Interfaces\Providers\IWindowsServiceProvider.cs" />
     <Compile Include="Interfaces\Providers\IWindowsServiceProviderFactory.cs" />
+    <Compile Include="Interfaces\Providers\IWindowsTaskProvider.cs" />
     <Compile Include="Models\AppInfo.cs" />
-    <Compile Include="Models\Declutter.cs" />
+    <Compile Include="Models\DeclutterConfig.cs" />
     <Compile Include="Models\PackageInfo.cs" />
     <Compile Include="Models\AppInfoExtended.cs" />
     <Compile Include="Models\SplitHostsFile.cs" />
+    <Compile Include="Models\WindowsTask.cs" />
+    <Compile Include="Models\WindowsTaskConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileManager.cs" />
     <Compile Include="Services\HostsFileEditor.cs" />
     <Compile Include="Services\RegistryEditor.cs" />
     <Compile Include="Services\WindowsPackageManager.cs" />
     <Compile Include="Services\WindowsServiceManager.cs" />
+    <Compile Include="Services\WindowsTaskManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json">

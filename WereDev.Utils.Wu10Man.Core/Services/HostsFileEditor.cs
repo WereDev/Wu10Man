@@ -17,12 +17,12 @@ namespace WereDev.Utils.Wu10Man.Core.Services
         private const string NullEndpoint = "0.0.0.0\t";
 
         private readonly IFileIoProvider _fileIoProvider;
-        private readonly IConfigurationReader _configurationReader;
+        private readonly string[] _windowsUpdateUrls;
 
-        public HostsFileEditor(IFileIoProvider fileIoProvider, IConfigurationReader configurationReader)
+        public HostsFileEditor(IFileIoProvider fileIoProvider, string[] windowsUpateUrls)
         {
             _fileIoProvider = fileIoProvider ?? throw new ArgumentNullException(nameof(fileIoProvider));
-            _configurationReader = configurationReader ?? throw new ArgumentNullException(nameof(configurationReader));
+            _windowsUpdateUrls = windowsUpateUrls ?? new string[0];
         }
 
         private string HostsFile => _fileIoProvider.Combine(Environment.SystemDirectory, HostsFilePath);
@@ -58,8 +58,7 @@ namespace WereDev.Utils.Wu10Man.Core.Services
 
         public string[] GetManagedHosts()
         {
-            var windowsUpdateUrls = _configurationReader.GetWindowsUpdateHosts();
-            var uniques = windowsUpdateUrls.Select(x => StandardizeHostUrl(x)).Distinct();
+            var uniques = _windowsUpdateUrls.Select(x => StandardizeHostUrl(x)).Distinct();
             return uniques.ToArray();
         }
 

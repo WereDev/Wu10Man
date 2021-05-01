@@ -138,8 +138,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Services\EnvironmentVersionHelper.cs" />
-    <Compile Include="Services\ConfigurationReader.cs" />
     <Compile Include="Services\Wu10Logger.cs" />
     <Compile Include="UserControls\DeclutterControl.xaml.cs">
       <DependentUpon>DeclutterControl.xaml</DependentUpon>
@@ -147,11 +147,16 @@
     <Compile Include="UserControls\Models\DeclutterModel.cs" />
     <Compile Include="UserControls\Models\PackageInfo.cs" />
     <Compile Include="UserControls\Models\ProgressBarModel.cs" />
+    <Compile Include="UserControls\Models\WindowsTasksStatusModel.cs" />
+    <Compile Include="UserControls\Models\WindowsTasksModel.cs" />
     <Compile Include="UserControls\ProgressBarControl.xaml.cs">
       <DependentUpon>ProgressBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UserControlBase.cs" />
     <Compile Include="UserControls\UserControlBaseWithWorker.cs" />
+    <Compile Include="UserControls\WindowsTasksControl.xaml.cs">
+      <DependentUpon>WindowsTasksControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserWindows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -187,6 +192,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\WindowsTasksControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserWindows\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,16 +230,13 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="app.manifest" />
-    <None Include="declutter.json">
+    <None Include="app.settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="wu10man.ico" />

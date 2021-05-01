@@ -6,14 +6,14 @@
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="353"
-             d:DesignWidth="558">
+             d:DesignWidth="670">
     <Grid Background="LightGray">
         <Label Content="Windows Update Group Policy" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
-        <Grid Width="276" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
+        <Grid Width="326" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
-                        <TextBlock Width="270" TextWrapping="Wrap">
+                        <TextBlock TextWrapping="Wrap">
                             You can use Group Policy to define how computers
                             and users can interact with Windows Updates to
                             obtain automatic updates from Windows Server
@@ -22,17 +22,17 @@
                         <TextBlock Margin="0, 20, 0, 0">
                             <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />    
                         </TextBlock>
-                        <TextBlock Margin="20, -16, 0, 0"  Width="250" TextWrapping="Wrap">
+                        <TextBlock Margin="20, -16, 0, 0" TextWrapping="Wrap">
                             NOTE: This has not worked for anyone I've talked with and now appears to be removed functionality as of Windows 10 build 2004.
                         </TextBlock>
                     </StackPanel>
                 </Label.Content>
             </Label>
         </Grid>
-        <Grid Width="276" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
+        <Grid Width="326" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <ComboBox x:Name="cmbGroupPolicies" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="240"
                   ItemsSource="{Binding PolicyOptions}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedPolicyOption}" SelectionChanged="GroupPoliciesSelectionChanged" />
-            <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="99" Click="SetGroupPolicy"/>
+            <Button x:Name="btnSetGroupPolicy" Content="Update Policy" HorizontalAlignment="Center" Margin="0,117,0,0" VerticalAlignment="Top" Width="150" Click="SetGroupPolicy"/>
             <TextBlock HorizontalAlignment="Center" Margin="25,194,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="223" Width="200"/>
         </Grid>
     </Grid>
