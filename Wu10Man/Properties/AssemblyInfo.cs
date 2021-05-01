@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WereDev")]
 [assembly: AssemblyProduct("Wu10Man")]
-[assembly: AssemblyCopyright("Copyright WereDev ©  2018-2020")]
+[assembly: AssemblyCopyright("Copyright WereDev ©  2018-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
