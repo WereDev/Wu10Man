@@ -1,12 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using WereDev.Utils.Wu10Man.Core;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
-using WereDev.Utils.Wu10Man.Helpers;
 using WereDev.Utils.Wu10Man.UserControls.Models;
 
 namespace WereDev.Utils.Wu10Man.UserControls

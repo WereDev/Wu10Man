@@ -9,11 +9,11 @@
     xmlns:localModels="clr-namespace:WereDev.Utils.Wu10Man.UserControls.Models"
     mc:Ignorable="d" 
     d:DesignHeight="353"
-    d:DesignWidth="558">
+    d:DesignWidth="670">
     <Grid Background="LightGray">
         <Label Content="Uninstall Windows Clutter" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
         
-        <Grid Width="200" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
+        <Grid Width="250" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
@@ -30,7 +30,7 @@
                 </Label.Content>
             </Label>
         </Grid>
-        <Grid Width="350" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE" Name="grdMicrosoft" Visibility="Visible">
+        <Grid Width="400" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE" Name="grdMicrosoft" Visibility="Visible">
             <ListView Height="275" Width="350" VerticalAlignment="Top" ItemsSource="{Binding Path=Packages}"
                       BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Name="ListViewWindowsApps">
                 <ListView.ItemContainerStyle>
@@ -55,8 +55,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Content="Remove Checked Apps" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="150" Click="RemoveCheckedApps" />
-            <Button Content="{Binding SelectButtonText}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="150" Click="ToggleAppsSelection" />
+            <Button Content="Remove Checked Apps" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" Width="185" Click="RemoveCheckedApps" />
+            <Button Content="{Binding SelectButtonText}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="185" Click="ToggleAppsSelection" />
         </Grid>
     </Grid>
 </localControls:UserControlBaseWithWorker>

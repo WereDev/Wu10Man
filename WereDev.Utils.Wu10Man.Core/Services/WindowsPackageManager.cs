@@ -10,17 +10,17 @@ namespace WereDev.Utils.Wu10Man.Core.Services
     public class WindowsPackageManager : IWindowsPackageManager
     {
         private readonly IWindowsPackageProvider _packageProvider;
-        private readonly IConfigurationReader _configReader;
+        private readonly DeclutterConfig _declutterConfig;
 
-        public WindowsPackageManager(IWindowsPackageProvider packageProvider, IConfigurationReader configReader)
+        public WindowsPackageManager(IWindowsPackageProvider packageProvider, DeclutterConfig declutterConfig)
         {
             _packageProvider = packageProvider ?? throw new ArgumentNullException(nameof(packageProvider));
-            _configReader = configReader ?? throw new ArgumentNullException(nameof(configReader));
+            _declutterConfig = declutterConfig ?? new DeclutterConfig();
         }
 
-        public Declutter GetDeclutterConfig()
+        public DeclutterConfig GetDeclutterConfig()
         {
-            return _configReader.GetDeclutter();
+            return _declutterConfig;
         }
 
         public PackageInfo[] ListInstalledPackages()

@@ -6,8 +6,8 @@
         xmlns:localControls="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
         mc:Ignorable="d"
         Title="Wu10Man - Windows 10 Update Manager"
-        Height="450" 
-        Width="600" 
+        Height="450"
+        Width="700"
         HorizontalAlignment="Center" 
         VerticalAlignment="Center" 
         WindowStartupLocation="CenterScreen" 
@@ -16,7 +16,7 @@
         <Menu DockPanel.Dock="Top" Height="20" Margin="5,0,5,0" VerticalAlignment="Top" Background="Transparent">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
+                    <DockPanel HorizontalAlignment="Stretch" />
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="_File" >
@@ -35,12 +35,12 @@
                 <TabControl.ItemTemplate>
                     <!-- this is the header template-->
                     <DataTemplate>
-                        <TextBlock Text="{Binding Header}" Visibility="{Binding TabVisibility}"/>
+                        <TextBlock Text="{Binding Header}"/>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <Grid Background="{Binding BackgroundColor}" Visibility="{Binding TabVisibility}">
+                        <Grid Background="{Binding BackgroundColor}">
                             <ContentControl Content="{Binding UserControl}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
                         </Grid>
                     </DataTemplate>

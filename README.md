@@ -9,6 +9,8 @@ If you've found this a useful app, perhaps you'd like to <a class="bmc-button" t
 ## Top Caffeinators
 Thank you so much for your contributions and helping fun the battle against Windows Update!
 
+ - Ihor - for keeping me awake all week!
+ - Someone<sub>5</sub> - for all the caffeine goodness!
  - Someone<sub>4</sub> - for the super buzzed week, or normally buzzed two weeks!
  - Redfella - kept me caffeinated for a whole month!!
  - piratour20 - for the late evening coffee!
@@ -40,8 +42,12 @@ A few months ago, Windows added a pause feature to some of the business license 
 ## BETA - Declutter
 Windows 10 comes with a lot of clutter.  There's the random stuff that they install that aren't particularly necessary, and then there's the 3rd party apps that Windows tries to include.  There's plenty of apps and scripts to remove a bunch of these, but I wanted to add it here as well so that I had a single solution.
 
-This is still sort of in BETA, so definitely use with added caution.
+There has been some limited success with this, but not all the clutter is created equal.  This is still sort of in BETA, so definitely use with added caution.
 
+## BETA - Windows Scheduled Tasks
+I've had a couple requests to find some of the Scheduled Tasks that are also involved with Windows Updates and see if I can shut them down as well.  That ends up being trickier than services because there is extra security around them for some reason.  The implementation for this is a bit hacky, but seems to work.
+
+This is definitely BETA functionality, so use with added caution and make sure you have a system backup.
 
 ## Legacy
 With any application, somethings things just are no longer necessary.  With that, there comes some depricated parts of this application as well.  These parts aren't really supported any more, as much as this application has support.

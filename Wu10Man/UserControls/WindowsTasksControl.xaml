@@ -1,6 +1,6 @@
 ﻿<localControls:UserControlBaseWithWorker
-    x:Class="WereDev.Utils.Wu10Man.UserControls.WindowsServicesControl"
-    x:TypeArguments="localModels:WindowsServicesModel"
+    x:Class="WereDev.Utils.Wu10Man.UserControls.WindowsTasksControl"
+    x:TypeArguments="localModels:WindowsTasksModel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,54 +15,28 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
     </UserControl.Resources>
     <Grid Background="LightGray">
-        <Label Content="Windows Services" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Windows Scheduled Tasks" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
         <Grid Width="326" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
                         <TextBlock TextWrapping="Wrap">
-                            Windows Services are at the heart of how Windows
-                            Update Works.
+                            Tinkering with adding support to disable Windows Scheduled Tasks to further support getting control
+                            over the whole Windows Updates engine.
                         </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Update:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            Enables the detection, download, and installation of
-                            updates for Windows and other programs.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Modules Installer:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            AKA Trusted Installer. Enables installation,
-                            modification, and removal of Windows updates
-                            and optional components.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Update Medic Service:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            AKA WaaSMedicSvc. Enables remediation and
-                            protection of Windows Update components.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Remediation Service:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            Still on some earlier builds of Windows, helps to
-                            protect Windows Update components.
+                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap">
+                            This is still Beta so make sure you you have a good handle on how Tasks work and that you have a backup of your system incase things don't go as planned.
                         </TextBlock>
                     </StackPanel>
                 </Label.Content>
             </Label>
         </Grid>
         <Grid Width="326" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
-            <ListView Height="289" Margin="0,0,0,0" VerticalAlignment="Top" Name="ServicesListBox" ItemsSource="{Binding Path=Services}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="330">
+            <ListView Height="289" Margin="0,0,0,0" VerticalAlignment="Top" Name="TasksListBox" ItemsSource="{Binding Path=Tasks}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="330">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path= ServiceExists}" Value="False">
+                            <DataTrigger Binding="{Binding Path= TaskExists}" Value="False">
                                 <Setter Property="Border.Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -81,14 +55,14 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <Label Content="{Binding DisplayName}" Width="272" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                            <wpfspark:ToggleSwitch IsChecked="{Binding IsServiceEnabled}" CheckedToolTip="Service enabled." UncheckedToolTip="Service disabled." 
+                            <wpfspark:ToggleSwitch IsChecked="{Binding IsTaskEnabled}" CheckedToolTip="Scheduled Task enabled." UncheckedToolTip="Scheduled Task disabled." 
                                                    Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                   Click="ToggleService" AccentMode="User" AccentBrush="#f25022"/>
+                                                   Click="ToggleTask" AccentMode="User" AccentBrush="#7fba00"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button HorizontalAlignment="Center" Margin="10" VerticalAlignment="Bottom" Width="200" Content="{Binding AllServicesButtonLabel}" Click="UpdateServices" />
+            <Button HorizontalAlignment="Center" Margin="10" VerticalAlignment="Bottom" Width="200" Content="{Binding AllTasksButtonLabel}" Click="UpdateTasks" />
         </Grid>
     </Grid>
 </localControls:UserControlBaseWithWorker>

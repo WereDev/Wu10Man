@@ -27,6 +27,7 @@ namespace WereDev.Utils.Wu10Man.UserWindows
                     new TabItemModel<WindowsServicesControl> { BackgroundColor = "#f25022", Header = "Windows Services" },
                     new TabItemModel<PauseUpdatesControl> { BackgroundColor = "#01a4ef", Header = "Pause Updates" },
                     new TabItemModel<DeclutterControl> { BackgroundColor = "#ffb901", Header = "BETA - Declutter" },
+                    new TabItemModel<WindowsTasksControl> { BackgroundColor = "#7fba00", Header = "BETA - Scheduled Tasks" },
                     new TabItemModel<HostsFileControl> { BackgroundColor = "LightGray", Header = "LEGACY - Hosts File", IsLegacy = true },
                     new TabItemModel<GroupPolicyControl> { BackgroundColor = "LightGray", Header = "LEGACY - Group Policy", IsLegacy = true },
                 },

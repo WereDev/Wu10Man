@@ -1,0 +1,258 @@
+{
+  "windowsUpdateUrls": [
+    "stats.microsoft.com",
+    "download.microsoft.com",
+    "update.microsoft.com",
+    "windowsupdate.microsoft.com",
+    "windowsupdate.com",
+    "download.windowsupdate.com",
+    "ntservicepack.microsoft.com",
+    "wustat.windows.com"
+  ],
+  "windowsServices": [
+    "wuauserv",
+    "TrustedInstaller",
+    "WaaSMedicSvc",
+    "sedsvc"
+  ],
+  "declutter": {
+    "microsoft": [
+      {
+        "appName": "3d Viewer",
+        "packageName": "Microsoft.Microsoft3DViewer"
+      },
+      {
+        "appName": "Advertising",
+        "packageName": "Microsoft.Advertising.Xaml"
+      },
+      {
+        "appName": "Alarms",
+        "packageName": "Microsoft.WindowsAlarms"
+      },
+      {
+        "appName": "Bing News",
+        "packageName": "Microsoft.BingNews"
+      },
+      {
+        "appName": "Bing Weather",
+        "packageName": "Microsoft.BingWeather"
+      },
+      {
+        "appName": "Calculator",
+        "packageName": "Microsoft.WindowsCalculator"
+      },
+      {
+        "appName": "Camera",
+        "packageName": "Microsoft.WindowsCamera"
+      },
+      {
+        "appName": "Communication Apps",
+        "packageName": "microsoft.windowscommunicationsapps"
+      },
+      {
+        "appName": "Feedback Hub",
+        "packageName": "Microsoft.WindowsFeedbackHub"
+      },
+      {
+        "appName": "Get Help",
+        "packageName": "Microsoft.GetHelp"
+      },
+      {
+        "appName": "Get Started",
+        "packageName": "Microsoft.Getstarted"
+      },
+      {
+        "appName": "Maps",
+        "packageName": "Microsoft.WindowsMaps"
+      },
+      {
+        "appName": "Messaging",
+        "packageName": "Microsoft.Messaging"
+      },
+      {
+        "appName": "Office Hub",
+        "packageName": "Microsoft.MicrosoftOfficeHub"
+      },
+      {
+        "appName": "Office Sway",
+        "packageName": "Microsoft.Office.Sway"
+      },
+      {
+        "appName": "One Connect",
+        "packageName": "Microsoft.OneConnect"
+      },
+      {
+        "appName": "OneNote",
+        "packageName": "Microsoft.Office.OneNote"
+      },
+      {
+        "appName": "Paint 3d",
+        "packageName": "Microsoft.MSPaint"
+      },
+      {
+        "appName": "People",
+        "packageName": "Microsoft.People"
+      },
+      {
+        "appName": "Photos",
+        "packageName": "Microsoft.Windows.Photos"
+      },
+      {
+        "appName": "Print 3d",
+        "packageName": "Microsoft.Print3D"
+      },
+      {
+        "appName": "Skype",
+        "packageName": "Microsoft.SkypeApp"
+      },
+      {
+        "appName": "Solitaire Colletion",
+        "packageName": "Microsoft.MicrosoftSolitaireCollection"
+      },
+      {
+        "appName": "Sound Recorder",
+        "packageName": "Microsoft.WindowsSoundRecorder"
+      },
+      {
+        "appName": "Sticky Notes",
+        "packageName": "Microsoft.MicrosoftStickyNotes"
+      },
+      {
+        "appName": "Sway",
+        "packageName": "Microsoft.Office.Sway"
+      },
+      {
+        "appName": "Xbox App",
+        "packageName": "Microsoft.XboxApp"
+      },
+      {
+        "appName": "Xbox Game Bar",
+        "packageName": "Microsoft.XboxGameOverlay"
+      },
+      {
+        "appName": "Xbox Game Overlay",
+        "packageName": "Microsoft.XboxGamingOverlay"
+      },
+      {
+        "appName": "Xbox Identity Provider",
+        "packageName": "Microsoft.XboxIdentityProvider"
+      },
+      {
+        "appName": "Xbox Live",
+        "packageName": "Microsoft.Xbox.TCUI"
+      },
+      {
+        "appName": "Xbox Beta UI",
+        "packageName": "Microsoft.XboxGameCallableUI"
+      },
+      {
+        "appName": "Xbox Speech to Text",
+        "packageName": "Microsoft.XboxSpeechToTextOverlay"
+      },
+      {
+        "appName": "Zune Music",
+        "packageName": "Microsoft.ZuneMusic"
+      },
+      {
+        "appName": "Zune Video",
+        "packageName": "Microsoft.ZuneVideo"
+      }
+    ],
+    "thirdParty": [
+      {
+        "appName": "Actipro",
+        "packageName": "ActiproSoftwareLLC"
+      },
+      {
+        "appName": "Adobe Photoshop Express",
+        "packageName": "AdobeSystemsIncorporated.AdobePhotoshopExpress"
+      },
+      {
+        "appName": "Candy Crush",
+        "packageName": "king.com.CandyCrush"
+      },
+      {
+        "appName": "Candy Crush Saga",
+        "packageName": "king.com.CandyCrushSaga"
+      },
+      {
+        "appName": "Duolingo",
+        "packageName": "Duolingo-LearnLanguagesforFree"
+      },
+      {
+        "appName": "Eclipse Manager",
+        "packageName": "EclipseManager"
+      },
+      {
+        "appName": "Facebook",
+        "packageName": "Facebook"
+      },
+      {
+        "appName": "Flipboard",
+        "packageName": "Flipboard"
+      },
+      {
+        "appName": "Pandora",
+        "packageName": "PandoraMediaInc"
+      },
+      {
+        "appName": "Spotify",
+        "packageName": "SpotifyAB.SpotifyMusic"
+      },
+      {
+        "appName": "Twitter",
+        "packageName": "Twitter"
+      },
+      {
+        "appName": "Wunderlist",
+        "packageName": "Wunderlist"
+      },
+      {
+        "appName": "Farm Heroes Saga",
+        "packageName": "king.com.FarmHeroesSaga"
+      },
+      {
+        "appName": "Candy Crush Friends",
+        "packageName": "king.com.CandyCrushFriends"
+      },
+      {
+        "appName": "Pandora",
+        "packageName": "PandoraMediaInc.29680B314EFC2"
+      }
+    ]
+  },
+  "windowsTasks": [
+    {
+      "taskName": "Update Orchestrator - Schedule Scan",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Scan"
+    },
+    {
+      "taskName": "Update Orchestrator - Schedule Scan Static Task",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Scan Static Task"
+    },
+    {
+      "taskName": "Update Orchestrator - Schedule Work",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Work"
+    },
+    {
+      "taskName": "Update Orchestrator - Report Policies",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Report policies"
+    },
+    {
+      "taskName": "Update Orchestrator - Update Model Task",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\UpdateModelTask"
+    },
+    {
+      "taskName": "Update Orchestrator - UX Broker",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\USO_UxBroker"
+    },
+    {
+      "taskName": "Windows Medic - Remediation",
+      "taskPath": "\\Microsoft\\Windows\\WaaSMedic\\PerformRemediation"
+    },
+    {
+      "taskName": "Windows Update - Scheduled Start",
+      "taskPath": "\\Microsoft\\Windows\\WindowsUpdate\\Scheduled Start"
+    }
+  ]
+}

@@ -8,6 +8,7 @@ namespace WereDev.Utils.Wu10Man.UserControls.Models
 
         protected void TriggerPropertyChanged(params string[] properties)
         {
+            properties = properties ?? new string[0];
             foreach (var property in properties)
             {
                 TriggerPropertyChanged(property);

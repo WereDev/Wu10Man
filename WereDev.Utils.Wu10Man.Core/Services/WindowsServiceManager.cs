@@ -13,19 +13,19 @@ namespace WereDev.Utils.Wu10Man.Core.Services
         private readonly IWindowsServiceProviderFactory _providerFactory;
         private readonly IRegistryEditor _registryEditor; // TODO: Not a fan of this because of possible circular reference
         private readonly IFileManager _fileManager;
-        private readonly IConfigurationReader _configurationReader;
+        private readonly string[] _windowsServices;
 
-        public WindowsServiceManager(IWindowsServiceProviderFactory providerFactory, IRegistryEditor registryEditor, IFileManager fileManager, IConfigurationReader configurationReader)
+        public WindowsServiceManager(IWindowsServiceProviderFactory providerFactory, IRegistryEditor registryEditor, IFileManager fileManager, string[] windowsServices)
         {
             _providerFactory = providerFactory ?? throw new ArgumentNullException(nameof(providerFactory));
             _registryEditor = registryEditor ?? throw new ArgumentNullException(nameof(registryEditor));
             _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager));
-            _configurationReader = configurationReader ?? throw new ArgumentNullException(nameof(configurationReader));
+            _windowsServices = windowsServices ?? new string[0];
         }
 
         public string[] ListAllServices()
         {
-            return _configurationReader.GetWindowsServices();
+            return _windowsServices;
         }
 
         public bool ServiceExists(string serviceName)
