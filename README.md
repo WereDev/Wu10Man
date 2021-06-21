@@ -36,6 +36,12 @@ You could try to disable those tasks, but I went another route.  When disabling 
 
 If you were running an older version of Wu10Man, don't worry, the new versions will still restore user settings as needed.
 
+### Services:
+ - **Windows Update Service (wuauserv):** The service that performs the updates.  This is where most blogs/articles start when advising how to disable Windows Updates.
+ - **Trusted Installer (TrustedInstaller):** This service controls how Windows modules get installed at a system levl instead of at the user level.  Disabling this can interfere with installations other than Windows Updates, for instance I believe disabling this can interfere with installing NVidia graphics drivers.
+ - **Windows Update Medic Service (WaaSMedicSvc):** If you've ever manually disabled the Windows Update Service and then come back later to see that it's enabled again, it's likely this service that did it.  The job of this service to identify and fix issues with the Windows Update Service.
+ - **Windows Remediation Service (sedsvc):** This is a predecessor to the Windows Update Medic Service.  I haven't seen this on Windows 10 in the last couple years.
+
 ## Pausing Updates
 
 A few months ago, Windows added a pause feature to some of the business license of Windows 10.  Recently they added the ability to pause updates as well, but the UI only allows you to go out a few weeks.  I added a screen that allows for a longer pause scenario.  This isn't adding new functionality to Windows, only using the functionality that is built in.  This feature will only work correctly on those versions of Windows that already support Pause/Defer.
@@ -49,6 +55,21 @@ There has been some limited success with this, but not all the clutter is create
 I've had a couple requests to find some of the Scheduled Tasks that are also involved with Windows Updates and see if I can shut them down as well.  That ends up being trickier than services because there is extra security around them for some reason.  The implementation for this is a bit hacky, but seems to work.
 
 This is definitely BETA functionality, so use with added caution and make sure you have a system backup.
+
+### Scheduled Tasks
+ - **Scheduled Start:** \Microsoft\Windows\WindowsUpdate\Scheduled Start
+ - **Schedule Scan:** Microsoft\Windows\UpdateOrchestrator\Schedule Scan
+ - **Schedule Scan Static Task:** \Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task
+ - **Schedule Work:** \Microsoft\Windows\UpdateOrchestrator\Schedule Work
+ - **Report Policies:** \Microsoft\Windows\UpdateOrchestrator\Report policies
+ - **Update Model Task:** \Microsoft\Windows\UpdateOrchestrator\UpdateModelTask
+ - **UX Broker:** \Microsoft\Windows\UpdateOrchestrator\USO_UxBroker
+ - **Remediation:** \Microsoft\Windows\WaaSMedic\PerformRemediation
+
+"Scheduled Start" is the task that Windows uses to schedule when checks for any updates should be done.
+The tasks in the `Microsoft\Windows\UpdateOrchestrator\` path are part of the various steps during Windows Update.
+The "Remediation" task triggers the Medic Service which looks for issues with Windows Update and tries to fix them.
+
 
 ## Legacy
 With any application, somethings things just are no longer necessary.  With that, there comes some depricated parts of this application as well.  These parts aren't really supported any more, as much as this application has support.
