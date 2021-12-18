@@ -4,7 +4,7 @@ This started out as a project to shut down the Windows Update mechanic.  It grew
 
 With 4.0, I realized another major annoyance of Windows 10 is a lot of bloatware.  Random apps that either aren't needed or that are added bloatware.
 
-If you've found this a useful app, perhaps you'd like to <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/weredev"><span class="bmc-text">buy me a coffee?</span></a>
+If you've found this a useful app, perhaps you'd like to [buy me a coffee?](https://www.buymeacoffee.com/weredev)
 
 ## Top Caffeinators
 Thank you so much for your contributions and helping fun the battle against Windows Update!
@@ -100,12 +100,3 @@ There was a fair amount of research that went into this, but a couple sites stoo
 
 ## Downloads
 [Wu10Man Download](https://github.com/WereDev/Wu10Man/releases)
-
-<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
-<style>
-    .bmc-button img{ height: 20px !important;width: 14px !important; }
-    .bmc-button{ text-decoration: none !important;
-        font-size: 16px !important;letter-spacing: 0.6px !important;
-        font-family:'Cookie', cursive !important; }
-    .bmc-text { margin-left:5px; font-size:28px !important; }
-</style>
