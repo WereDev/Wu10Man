@@ -16,12 +16,19 @@
             <Label>
                 <Label.Content>
                     <StackPanel>
+                        <TextBlock Margin="0, 0, 0, 0">
+                            <Image Width="16" Height="16" Source="/Wu10Man;component/warning.png" />
+                        </TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="20, -16, 0, 0" TextWrapping="Wrap">
+                            This may not stop Windows Updates!
+                        </TextBlock>
                         <TextBlock TextWrapping="Wrap">
-                            This is new functionality introduced around early 2019.
-                            You can gain access to these settings via the normal
-                            Windows Update Advanced Settings.  Those screens put a limit
-                            on the amount of time you can pause updates, so I added
-                            this functionality to bypass those limits.
+                            This exposes a Windows Update feature that is part of Windows and is
+                            not really a Wu10Man feature. You can gain access to
+                            these settings via the normal Windows Update
+                            Advanced Settings.  Those screens put a limit on the
+                            amount of time you can pause updates, so I added this
+                            functionality to bypass those limits.
                         </TextBlock>
                         <TextBlock FontWeight="Bold" TextWrapping="Wrap" Margin="0,15,0,0">
                             Feature Updates:
