@@ -21,18 +21,16 @@ namespace WereDev.Utils.Wu10Man.Converters
         {
             // Parse value into equation and remove spaces
             var mathEquation = parameter as string;
-            mathEquation = mathEquation.Replace(" ", "");
-            mathEquation = mathEquation.Replace("@VALUE", value.ToString());
+            mathEquation = mathEquation.Replace(" ", string.Empty);
+            mathEquation = mathEquation.Replace("@VALUE", value?.ToString() ?? string.Empty);
 
             // Validate values and get list of numbers in equation
             var numbers = new List<double>();
-            double tmp;
-
             foreach (string s in mathEquation.Split(_allOperators))
             {
-                if (s != string.Empty)
+                if (!string.IsNullOrEmpty(s))
                 {
-                    if (double.TryParse(s, out tmp))
+                    if (double.TryParse(s, out var tmp))
                     {
                         numbers.Add(tmp);
                     }
@@ -62,7 +60,7 @@ namespace WereDev.Utils.Wu10Man.Converters
             // Loop through each mathemtaical token in the equation
             string token = GetNextToken(mathEquation);
 
-            while (token != string.Empty)
+            while (!string.IsNullOrEmpty(token))
             {
                 // Remove token from mathEquation
                 mathEquation = mathEquation.Remove(0, token.Length);
@@ -115,6 +113,7 @@ namespace WereDev.Utils.Wu10Man.Converters
                                 numbers[index] = numbers[index] % numbers[index + 1];
                                 break;
                         }
+
                         numbers.RemoveAt(index + 1);
                     }
                     else
@@ -132,7 +131,7 @@ namespace WereDev.Utils.Wu10Man.Converters
         private string GetNextToken(string mathEquation)
         {
             // If we're at the end of the equation, return string.empty
-            if (mathEquation == string.Empty)
+            if (string.IsNullOrEmpty(mathEquation))
             {
                 return string.Empty;
             }
@@ -143,7 +142,7 @@ namespace WereDev.Utils.Wu10Man.Converters
             {
                 if (_allOperators.Contains(c))
                 {
-                    return tmp == string.Empty ? c.ToString() : tmp;
+                    return string.IsNullOrEmpty(tmp) ? c.ToString() : tmp;
                 }
                 else
                 {

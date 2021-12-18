@@ -65,7 +65,6 @@ namespace WereDev.Utils.Wu10Man.Core.Services
                 var pathSplit = task.FullPath.Split('\\');
                 task.Name = pathSplit[pathSplit.Length - 2] + " - " + task.Name;
                 tasks.Add(task);
-                //task.Name = config.TaskName;
             }
 
             return tasks.ToArray();
