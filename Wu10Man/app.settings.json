@@ -223,6 +223,14 @@
   },
   "windowsTasks": [
     {
+      "taskName": "Update Orchestrator - Report Policies",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Report policies"
+    },
+    {
+      "taskName": "Update Orchestrator - Schedule Maintenance Work",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Maintenance Work"
+    },
+    {
       "taskName": "Update Orchestrator - Schedule Scan",
       "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Scan"
     },
@@ -231,12 +239,12 @@
       "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Scan Static Task"
     },
     {
-      "taskName": "Update Orchestrator - Schedule Work",
-      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Work"
+      "taskName": "Update Orchestrator - Schedule Wake To Work",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Wake To Work"
     },
     {
-      "taskName": "Update Orchestrator - Report Policies",
-      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Report policies"
+      "taskName": "Update Orchestrator - Schedule Work",
+      "taskPath": "\\Microsoft\\Windows\\UpdateOrchestrator\\Schedule Work"
     },
     {
       "taskName": "Update Orchestrator - Update Model Task",

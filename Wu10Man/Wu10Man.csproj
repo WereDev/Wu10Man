@@ -139,6 +139,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Services\EnvironmentVersionHelper.cs" />
     <Compile Include="Services\Wu10Logger.cs" />
     <Compile Include="UserControls\DeclutterControl.xaml.cs">
