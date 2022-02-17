@@ -28,6 +28,7 @@ Thank you so much for your contributions and helping fun the battle against Wind
  - Someone<sub>9</sub> - for an honest cup!
  - typtre - for the scone to go with the coffee!
  - Someone<sub>10</sub> - keeping me going over the weekend!
+ - Someone<sub>11</sub> - enough oomph for another release!
 
 ## Special Thanks
  - [Cereal-Killa](https://github.com/Cereal-Killa) - for providing a solution to [Issue #28](https://github.com/WereDev/Wu10Man/issues/28) and for making a "Select All" button.
