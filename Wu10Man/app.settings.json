@@ -13,7 +13,8 @@
     "wuauserv",
     "TrustedInstaller",
     "WaaSMedicSvc",
-    "sedsvc"
+    "sedsvc",
+    "DiagTrack"
   ],
   "declutter": {
     "microsoft": [
