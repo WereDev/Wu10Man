@@ -4,23 +4,31 @@ This started out as a project to shut down the Windows Update mechanic.  It grew
 
 With 4.0, I realized another major annoyance of Windows 10 is a lot of bloatware.  Random apps that either aren't needed or that are added bloatware.
 
-If you've found this a useful app, perhaps you'd like to <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/weredev"><span style="margin-left:5px;font-size:28px !important;">buy me a coffee?</span></a>
+If you've found this a useful app, perhaps you'd like to [buy me a coffee?](https://www.buymeacoffee.com/weredev)
 
 ## Top Caffeinators
 Thank you so much for your contributions and helping fun the battle against Windows Update!
 
- - Ihor - for keeping me awake all week!
- - Someone<sub>5</sub> - for all the caffeine goodness!
- - Someone<sub>4</sub> - for the super buzzed week, or normally buzzed two weeks!
- - Redfella - kept me caffeinated for a whole month!!
- - piratour20 - for the late evening coffee!
- - Someone<sub>3</sub> - provided a couple good jolts of caffeine!
- - pc305.com - got me a wake-up cup o' joe!
- - John - coffeed me through a long week!
- - Someone<sub>2</sub> - coffeed me through a long week at work!
- - Wes - who coffeed me through hump day!
- - Someone<sub>1</sub> - who bought me a keg of coffee!
  - Govardhan - who bought me a coffee!
+ - Someone<sub>1</sub> - who bought me a keg of coffee!
+ - Wes - who coffeed me through hump day!
+ - Someone<sub>2</sub> - coffeed me through a long week at work!
+ - John - coffeed me through a long week!
+ - pc305.com - got me a wake-up cup o' joe!
+ - Someone<sub>3</sub> - provided a couple good jolts of caffeine!
+ - piratour20 - for the late evening coffee!
+ - Redfella - kept me caffeinated for a whole month!!
+ - Someone<sub>4</sub> - for the super buzzed week, or normally buzzed two weeks!
+ - Someone<sub>5</sub> - for all the caffeine goodness!
+ - Someone<sub>6</sub> - for the fancy mocah!
+ - Ihor - for keeping me awake all week!
+ - LTM - for a whole vat!
+ - Someone<sub>7</sub> - for a week of sunny mornings!
+ - Someone<sub>8</sub> - for a late night pick-me-up!
+ - Someone<sub>9</sub> - for an honest cup!
+ - typtre - for the scone to go with the coffee!
+ - Someone<sub>10</sub> - keeping me going over the weekend!
+ - Someone<sub>11</sub> - enough oomph for another release!
 
 ## Special Thanks
  - [Cereal-Killa](https://github.com/Cereal-Killa) - for providing a solution to [Issue #28](https://github.com/WereDev/Wu10Man/issues/28) and for making a "Select All" button.
@@ -44,7 +52,9 @@ If you were running an older version of Wu10Man, don't worry, the new versions w
 
 ## Pausing Updates
 
-A few months ago, Windows added a pause feature to some of the business license of Windows 10.  Recently they added the ability to pause updates as well, but the UI only allows you to go out a few weeks.  I added a screen that allows for a longer pause scenario.  This isn't adding new functionality to Windows, only using the functionality that is built in.  This feature will only work correctly on those versions of Windows that already support Pause/Defer.
+A while ago, Windows added a pause feature to some of the business license of Windows 10.  Not long after, added the ability to pause updates as well, but the UI only allows you to go out a few weeks.  I added a screen that allows for a longer pause scenario.  Wu10Man is NOT adding new functionality to Windows, only using the functionality that is built in.  This feature will only work correctly on those versions of Windows that already support Pause/Defer.
+
+As a note, this doesn't necessarily stop updates.  Microsoft can, and has, pushed updates anyway if they deem the update important enough.  I don't recommend using the Pause feature and I'll likely push it into Legacy in the near future.
 
 ## BETA - Declutter
 Windows 10 comes with a lot of clutter.  There's the random stuff that they install that aren't particularly necessary, and then there's the 3rd party apps that Windows tries to include.  There's plenty of apps and scripts to remove a bunch of these, but I wanted to add it here as well so that I had a single solution.

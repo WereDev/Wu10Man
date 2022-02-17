@@ -19,41 +19,51 @@
         <Grid Width="326" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
-                    <StackPanel>
-                        <TextBlock TextWrapping="Wrap">
-                            Windows Services are at the heart of how Windows
-                            Update Works.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Update:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            Enables the detection, download, and installation of
-                            updates for Windows and other programs.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Modules Installer:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            AKA Trusted Installer. Enables installation,
-                            modification, and removal of Windows updates
-                            and optional components.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Update Medic Service:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            AKA WaaSMedicSvc. Enables remediation and
-                            protection of Windows Update components.
-                        </TextBlock>
-                        <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
-                            Windows Remediation Service:
-                        </TextBlock>
-                        <TextBlock TextWrapping="Wrap">
-                            Still on some earlier builds of Windows, helps to
-                            protect Windows Update components.
-                        </TextBlock>
-                    </StackPanel>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock TextWrapping="Wrap">
+                                Below are a list of services involved in Windows Updates and
+                                Telemetry.  If you don't see a service listed below on the right, then
+                                your version of Windows isn't running that service.
+                            </TextBlock>
+                            <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                                Windows Update:
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap">
+                                Enables the detection, download, and installation of
+                                updates for Windows and other programs.
+                            </TextBlock>
+                            <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                                Windows Modules Installer:
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap">
+                                AKA Trusted Installer. Enables installation,
+                                modification, and removal of Windows updates
+                                and optional components.
+                            </TextBlock>
+                            <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                                Windows Update Medic Service:
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap">
+                                AKA WaaSMedicSvc. Enables remediation and
+                                protection of Windows Update components.
+                            </TextBlock>
+                            <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                                Windows Remediation Service:
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap">
+                                Still on some earlier builds of Windows, helps to
+                                protect Windows Update components.
+                            </TextBlock>
+                            <TextBlock Margin="0,15, 0, 0" TextWrapping="Wrap" FontWeight="Bold">
+                                Connected User Experiences and Telemetry:
+                            </TextBlock>
+                            <TextBlock TextWrapping="Wrap">
+                                Primary service used to report Telemetry back to Microsoft.
+                                I haven't fully tested Windows with this disabled.
+                            </TextBlock>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Label.Content>
             </Label>
         </Grid>

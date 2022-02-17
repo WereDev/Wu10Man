@@ -72,8 +72,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>wu10man-snk.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -81,7 +80,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFSpark.1.4.0\lib\net461\Microsoft.Expression.Interactions.dll</HintPath>
+      <HintPath>..\packages\WPFSpark.1.4.0\lib\net472\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -122,7 +121,7 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFSpark.1.4.0\lib\net461\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\WPFSpark.1.4.0\lib\net472\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -130,7 +129,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFSpark, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFSpark.1.4.0\lib\net461\WPFSpark.dll</HintPath>
+      <HintPath>..\packages\WPFSpark.1.4.0\lib\net472\WPFSpark.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +138,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppSettings.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
     <Compile Include="Services\EnvironmentVersionHelper.cs" />
     <Compile Include="Services\Wu10Logger.cs" />
     <Compile Include="UserControls\DeclutterControl.xaml.cs">
@@ -237,6 +237,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="weredev.snk.pfx" />
+    <None Include="wu10man-snk.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="wu10man.ico" />
