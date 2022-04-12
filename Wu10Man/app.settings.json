@@ -151,6 +151,10 @@
         "packageName": "Microsoft.XboxSpeechToTextOverlay"
       },
       {
+        "appName": "Your Phone",
+        "packageName": "Microsoft.YourPhone"
+      },
+      {
         "appName": "Zune Music",
         "packageName": "Microsoft.ZuneMusic"
       },
