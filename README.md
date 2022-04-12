@@ -32,8 +32,9 @@ Thank you so much for your contributions and helping fun the battle against Wind
 
 ## Special Thanks
  - [Cereal-Killa](https://github.com/Cereal-Killa) - for providing a solution to [Issue #28](https://github.com/WereDev/Wu10Man/issues/28) and for making a "Select All" button.
- - [sungerbob](https://github.com/sungerbob) - for helping with research on [GPO in Windows 10, version 2004](https://github.com/WereDev/Wu10Man/issues/19)
+ - [sungerbob](https://github.com/sungerbob) - for helping with research on [GPO in Windows 10, version 2004](https://github.com/WereDev/Wu10Man/issues/19).
  - [JohnnyTech](https://github.com/JonnyTech) - for contributing to code with some [typo and text fixes](https://github.com/WereDev/Wu10Man/pull/17).
+ - [Ihor Drachuk](https://github.com/ihor-drachuk) - for catching that I should [update the copyright year](https://github.com/WereDev/Wu10Man/pull/38).
 
 ## Disabling Services:
 
@@ -42,6 +43,12 @@ When in doubt, you can disable the Windows 10 services that run the updates.  Th
 You could try to disable those tasks, but I went another route.  When disabling a service through this app, it also renames the underlying service file so that it's not possible to run the service.  Previous versions of this changed the running credentials, but I could get whatever security access to the new Medic servie to change that, so I went the file route instead.
 
 If you were running an older version of Wu10Man, don't worry, the new versions will still restore user settings as needed.
+
+### Services:
+ - **Windows Update Service (wuauserv):** The service that performs the updates.  This is where most blogs/articles start when advising how to disable Windows Updates.
+ - **Trusted Installer (TrustedInstaller):** This service controls how Windows modules get installed at a system levl instead of at the user level.  Disabling this can interfere with installations other than Windows Updates, for instance I believe disabling this can interfere with installing NVidia graphics drivers.
+ - **Windows Update Medic Service (WaaSMedicSvc):** If you've ever manually disabled the Windows Update Service and then come back later to see that it's enabled again, it's likely this service that did it.  The job of this service to identify and fix issues with the Windows Update Service.
+ - **Windows Remediation Service (sedsvc):** This is a predecessor to the Windows Update Medic Service.  I haven't seen this on Windows 10 in the last couple years.
 
 ## Pausing Updates
 
@@ -58,6 +65,21 @@ There has been some limited success with this, but not all the clutter is create
 I've had a couple requests to find some of the Scheduled Tasks that are also involved with Windows Updates and see if I can shut them down as well.  That ends up being trickier than services because there is extra security around them for some reason.  The implementation for this is a bit hacky, but seems to work.
 
 This is definitely BETA functionality, so use with added caution and make sure you have a system backup.
+
+### Scheduled Tasks
+ - **Scheduled Start:** \Microsoft\Windows\WindowsUpdate\Scheduled Start
+ - **Schedule Scan:** Microsoft\Windows\UpdateOrchestrator\Schedule Scan
+ - **Schedule Scan Static Task:** \Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task
+ - **Schedule Work:** \Microsoft\Windows\UpdateOrchestrator\Schedule Work
+ - **Report Policies:** \Microsoft\Windows\UpdateOrchestrator\Report policies
+ - **Update Model Task:** \Microsoft\Windows\UpdateOrchestrator\UpdateModelTask
+ - **UX Broker:** \Microsoft\Windows\UpdateOrchestrator\USO_UxBroker
+ - **Remediation:** \Microsoft\Windows\WaaSMedic\PerformRemediation
+
+"Scheduled Start" is the task that Windows uses to schedule when checks for any updates should be done.
+The tasks in the `Microsoft\Windows\UpdateOrchestrator\` path are part of the various steps during Windows Update.
+The "Remediation" task triggers the Medic Service which looks for issues with Windows Update and tries to fix them.
+
 
 ## Legacy
 With any application, somethings things just are no longer necessary.  With that, there comes some depricated parts of this application as well.  These parts aren't really supported any more, as much as this application has support.
@@ -80,7 +102,7 @@ If you have Windows 10 Home, you don't have access to the Group Policy Editor, b
 ## Additional Info
 
 ### System Updates
-**Warning!** This program makes changes to your Registry and alters system files. Make sure you have set a System Restore Point before using this software.
+**Warning!** This program makes changes to your Registry, Scheduled Tasks, and other system files. Make sure you have set a System Restore Point before using this software.
 
 ### Admin Access
 
@@ -98,6 +120,7 @@ There was a fair amount of research that went into this, but a couple sites stoo
 - [Understand the different apps included in Windows 10](https://docs.microsoft.com/en-us/windows/application-management/apps-in-windows-10)
 - [Remove-Win10-Apps](https://github.com/Digressive/Remove-Win10-Apps)
 - [Windows10Debloater](https://github.com/Sycnex/Windows10Debloater)
+- [Updating Scheduled Tasks w/ PowerShell](https://devblogs.microsoft.com/scripting/use-scheduled-tasks-to-run-powershell-commands-on-windows/)
 
 ## Downloads
 [Wu10Man Download](https://github.com/WereDev/Wu10Man/releases)

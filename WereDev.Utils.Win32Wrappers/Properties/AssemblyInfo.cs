@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WereDev")]
 [assembly: AssemblyProduct("WereDev.Utils.Win32Wrappers")]
-[assembly: AssemblyCopyright("Copyright ©  2018-2021")]
+[assembly: AssemblyCopyright("Copyright ©  2018-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
