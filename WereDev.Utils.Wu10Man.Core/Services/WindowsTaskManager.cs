@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using WereDev.Utils.Wu10Man.Core.Interfaces;
 using WereDev.Utils.Wu10Man.Core.Interfaces.Providers;
@@ -56,18 +55,16 @@ namespace WereDev.Utils.Wu10Man.Core.Services
 
         public WindowsTask[] GetTasks()
         {
-            var tasks = new List<WindowsTask>();
-            foreach (var config in _windowsTaskConfigs)
+            var tasks = new WindowsTask[_windowsTaskConfigs.Length];
+            for (int i = 0; i < tasks.Length; i++)
             {
-                var task = _taskProvider.GetTask(config.TaskPath);
-                if (task == null)
-                    continue;
-                var pathSplit = task.FullPath.Split('\\');
-                task.Name = pathSplit[pathSplit.Length - 2] + " - " + task.Name;
-                tasks.Add(task);
+                var windowsTaskConfig = _windowsTaskConfigs[i];
+                var task = _taskProvider.GetTask(windowsTaskConfig.TaskPath);
+                task.Name = windowsTaskConfig.TaskName;
+                tasks[i] = task;
             }
 
-            return tasks.ToArray();
+            return tasks;
         }
 
         public WindowsTask GetTask(string path)

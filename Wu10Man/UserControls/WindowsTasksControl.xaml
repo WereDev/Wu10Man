@@ -8,25 +8,15 @@
     xmlns:wpfspark="clr-namespace:WPFSpark;assembly=WPFSpark"
     xmlns:localControls="clr-namespace:WereDev.Utils.Wu10Man.UserControls"
     xmlns:localModels="clr-namespace:WereDev.Utils.Wu10Man.UserControls.Models"
-    xmlns:localConverters="clr-namespace:WereDev.Utils.Wu10Man.Converters"
     mc:Ignorable="d"
     d:DesignHeight="353"
     d:DesignWidth="670">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"></BooleanToVisibilityConverter>
-        <localConverters:MathConverter x:Key="MathConverter"></localConverters:MathConverter>
     </UserControl.Resources>
     <Grid Background="LightGray">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
-            <ColumnDefinition Width="5*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Label Content="Windows Scheduled Tasks" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Grid Margin="5, 30, 5, 5" Background="#EEEEEE" Grid.Column="0" Grid.Row="1">
+        <Label Content="Windows Scheduled Tasks" HorizontalAlignment="Center" VerticalAlignment="Top" ClipToBounds="True" FontSize="14" FontWeight="Bold"/>
+        <Grid Width="326" HorizontalAlignment="Left" Margin="5, 30, 5, 5" Background="#EEEEEE">
             <Label>
                 <Label.Content>
                     <StackPanel>
@@ -41,9 +31,8 @@
                 </Label.Content>
             </Label>
         </Grid>
-        <Grid Margin="5, 30, 5, 5" Background="#EEEEEE" Grid.Column="1" Grid.Row="1" Name="ToggleColumn">
-            <ListView Height="275" Margin="0,0,0,0" VerticalAlignment="Top" Name="TasksListBox"
-                      ItemsSource="{Binding Path=Tasks}" BorderThickness="0" Background="Transparent">
+        <Grid Width="326" HorizontalAlignment="Right" Margin="5, 30, 5, 5" Background="#EEEEEE">
+            <ListView Height="289" Margin="0,0,0,0" VerticalAlignment="Top" Name="TasksListBox" ItemsSource="{Binding Path=Tasks}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Center" Width="330">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
@@ -52,6 +41,7 @@
                             </DataTrigger>
                         </Style.Triggers>
                         <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Height" Value="34" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -63,19 +53,12 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{Binding ElementName=ToggleColumn, Path=ActualWidth, Converter={StaticResource MathConverter}, ConverterParameter=(@VALUE-65)}" />
-                                <ColumnDefinition Width="40" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="34" />
-                            </Grid.RowDefinitions>
-                            <Label Content="{Binding DisplayName}" ToolTip="{Binding TaskPath}" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <Label Content="{Binding DisplayName}" Width="272" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <wpfspark:ToggleSwitch IsChecked="{Binding IsTaskEnabled}" CheckedToolTip="Scheduled Task enabled." UncheckedToolTip="Scheduled Task disabled." 
-                                                Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                Click="ToggleTask" AccentMode="User" AccentBrush="#7fba00" Grid.Column="1" Grid.Row="0"/>
-                        </Grid>
+                                                   Width="40" Height="20" MinWidth="40" MinHeight="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                   Click="ToggleTask" AccentMode="User" AccentBrush="#7fba00"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
