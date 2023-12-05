@@ -1,3 +1,7 @@
+# Goodbye Windows: End of Support for Wu10Man
+
+Hello all.  I want to thank those who've support Wu10Man and found it useful, but I will be archiving this project and officially won't be working on it anymore. Really, I haven't been maintaining this for over a year now anyway, but as I sometimes get a ping about it, I figured I would make an announcement here.  Overall, the reason is a couple things.  The easy answer is I've been using Linux more and more over the last year and more or less use that exclusively now.  It just became easier to learn Linux than it was to figure out all the whatsits with Windows 11.  Between that and life deciding that I needed to have other priorities besides programming side projects, it just makes sense to officially call it quits on Wu10Man.
+
 # Wu10Man
 
 This started out as a project to shut down the Windows Update mechanic.  It grew from there as Microsoft tweaked how they ran and protected the update service.  It probably would have died there, but it seems people are liking this application.  Version 3.1.0 has over 10k downloads and 4.0.0 over 17k!  So I've felt a little obiligated to keep this updated.
